@@ -1,0 +1,61 @@
+$dark-primary: #121212;
+$light-primary: #F5F5F5;
+$active-primary: #F05454;
+
+a{
+  color:$dark-primary;
+}
+
+button,
+button.button-primary{
+  position: relative;
+  display: block;
+  font-size:16px;
+  border: 0px;
+  line-height: 40px;
+  padding: 0 22px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+  background-color: $light-primary;
+  color:$dark-primary;
+  border-radius: 20px;
+  &:hover{ 
+    background-color: $active-primary;
+    color:$light-primary;
+  }
+  &.inverse{
+    background-color: $dark-primary;
+    color:$active-primary;
+    &:hover{
+      background-color: $active-primary;
+      color:$dark-primary;
+    }
+  }
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+input.input-primary{
+  width: 207px;
+  outline: none;
+  background-color: $light-primary;
+  border:0px;
+  margin-bottom: 22px;
+  padding:6px 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+.nohighlight {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.clearfix{
+  float: none;
+  clear: both;
+}
