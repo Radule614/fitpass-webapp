@@ -1,6 +1,5 @@
 <script>
   import ModalComponent from '../ModalComponent.vue'
-  import RadioBlock from '../utility/RadioBlock.vue';
   export default{
     props: {
       show: Boolean
@@ -15,14 +14,12 @@
           firstname: "",
           lastname: "",
           password: "",
-          passwordConfirm: "",
-          gender: null
+          passwordConfirm: ""
         }
       }
     },
     components: {
-    ModalComponent,
-    RadioBlock
+    ModalComponent
 },
     methods:{
       resetInputData() {
@@ -31,7 +28,6 @@
         this.formData.lastname = "";
         this.formData.password = "";
         this.formData.passwordConfirm = "";
-        this.formData.gender = null;
       },
       resetValidation(){
         this.errorMessage = "";
@@ -39,31 +35,29 @@
       },
 
       async registerSubmit(event){
-        console.log(this.formData.gender)
-        
-        // this.loading = true
-        // this.resetValidation();
-        // let requestBody = {
-        //   username: this.formData.username,
-        //   firstname: this.formData.firstname,
-        //   lastname: this.formData.lastname,
-        //   password: this.formData.password
-        // }
-        // this.error = false
-        // try{
-        //   await this.$store.dispatch('auth/signup', requestBody);
-        // }catch(e){
-        //   this.errorMessage = e;
-        //   this.loading = false
-        //   this.error = true
-        // }
+        this.loading = true
+        this.resetValidation();
+        let requestBody = {
+          username: this.formData.username,
+          firstname: this.formData.firstname,
+          lastname: this.formData.lastname,
+          password: this.formData.password
+        }
+        this.error = false
+        try{
+          await this.$store.dispatch('auth/signup', requestBody);
+        }catch(e){
+          this.errorMessage = e;
+          this.loading = false
+          this.error = true
+        }
 
-        // if(!this.error){
-        //   this.resetValidation();
-        //   this.resetInputData();
-        //   this.loading = false
-        //   this.$emit('close')
-        // }
+        if(!this.error){
+          this.resetValidation();
+          this.resetInputData();
+          this.loading = false
+          this.$emit('close')
+        }
       }
     }
   }
@@ -86,7 +80,6 @@
           <div class="col-6">
             <input type="password" class="input-primary" name="password" placeholder="password" v-model="formData.password">
             <input type="password" class="input-primary" name="password-confirm" placeholder="confirm password" v-model="formData.passwordConfirm">
-            <radio-block v-model="formData.gender"></radio-block>
           </div>
           <div class="info-block">
             <div class="loader" v-if="loading"></div>

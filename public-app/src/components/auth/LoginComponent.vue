@@ -28,6 +28,7 @@
         this.error = false
       },
       async loginSubmit(event) {
+
         this.loading = true
         this.resetValidation();
         try{

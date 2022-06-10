@@ -2,6 +2,10 @@ $dark-primary: #121212;
 $light-primary: #F5F5F5;
 $active-primary: #F05454;
 
+html{
+  scroll-behavior: smooth;
+}
+
 a{
   color:$dark-primary;
 }
