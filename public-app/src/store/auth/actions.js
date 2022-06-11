@@ -17,11 +17,10 @@ export default {
       throw error;
     }
 
-    const expiresIn = +responseData.expirationTime;
-    const expirationDate = new Date().getTime() + expiresIn;    
+    const expiresIn = +responseData.expirationTime - new Date().getTime();
 
     localStorage.setItem('token', responseData.token);
-    localStorage.setItem('tokenExpiration', expirationDate);
+    localStorage.setItem('tokenExpiration', responseData.expirationTime);
 
     timer = setTimeout(() => {
       context.dispatch('logout');
@@ -45,13 +44,16 @@ export default {
         'Authorization': 'Bearer ' + payload.token
       }
     })
-
     const responseData = await response.json();
-    
     if (!response.ok) {
       const error = new Error(responseData.message || 'Failed to fetch user data.');
       throw error;
     }
+    console.log(responseData);
+
+    context.commit('setUserData', {
+      user: responseData
+    });
   },
   logout(context, payload){
     localStorage.removeItem('token');
@@ -76,13 +78,13 @@ export default {
 
     timer = setTimeout(() => {
       context.dispatch('logout');
-      return;
     }, expiresIn);
 
     if(token){
       context.commit('setToken', {
         token: token
       });
+      context.dispatch('getUserData', {token: token});
     }
   }
 }

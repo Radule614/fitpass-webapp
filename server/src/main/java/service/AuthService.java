@@ -7,7 +7,6 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import model.User;
-import repository.UserRepository;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -19,7 +18,7 @@ import java.util.UUID;
 
 public class AuthService {
     private static final String secret = "asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4";
-    private static final long expirationLength = 5L;
+    private static final long expirationLength = 60L;
 
     public AuthService() {}
 
@@ -32,8 +31,14 @@ public class AuthService {
     }
 
     public String isTokenValid(String token){
-        Jws<Claims> jws = parseToken(token);
-        String username = (String) jws.getBody().get("username");
+        Jws<Claims> jws = null;
+        try{
+            jws = parseToken(token);
+        }catch (Exception e){
+            return null;
+        }
+
+        String username = jws.getBody().get("username").toString();
         return new UserService().getUser(username) == null ? null : username;
     }
 

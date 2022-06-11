@@ -11,9 +11,7 @@ import static spark.Spark.halt;
 
 public class AuthController {
     public static String login(Request request, Response response) {
-
         Gson g = new Gson();
-
         LoginDTO loginDTO = g.fromJson(request.body(), LoginDTO.class);
 
         LoginResponseDTO ret = new AuthService().login(loginDTO);
@@ -25,7 +23,7 @@ public class AuthController {
         return json;
     }
     public static String register(Request request, Response response){
-        return "";
+        return null;
     }
 
     public static void authenticate(Request request, Response response){
@@ -33,7 +31,7 @@ public class AuthController {
         String token = request.headers("Authorization").split(" ")[1];
         String username = new AuthService().isTokenValid(token);
         if(username == null){
-            halt(403);
+            halt(401, "{\"message\": \"authentication error\"}");
         }
         request.attribute("username", username);
     }

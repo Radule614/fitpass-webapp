@@ -17,6 +17,9 @@
     computed: {
       isLogged(){
         return this.$store.getters['auth/isLogged'];
+      },
+      userData(){
+        return this.$store.getters['auth/user'];
       }
     },
     methods: {
@@ -34,10 +37,13 @@
         <img src="../assets/logo.png" alt="nologo">
       </div>
       <navigation-menu></navigation-menu>
-      <div class="account-btn-group">
+      <div class="account-group">
         <button class="btn-register inverse" v-if="!isLogged" @click="showRegister = true">Register</button>
         <button class="btn-login" v-if="!isLogged" @click="showLogin = true">Login</button>
         <button class="btn-logout inverse" v-if="isLogged" @click="logout">Logout</button>
+        <div class="profile-mini" v-if="isLogged && userData">
+          {{userData.username}}
+        </div>
       </div>
     </div>
     <div class="header-line">
@@ -79,7 +85,7 @@
           height: 50px;
         }
       }
-      .account-btn-group{
+      .account-group{
         flex-grow: 1;
         display: flex;
         flex-direction:row-reverse;
@@ -89,7 +95,11 @@
           line-height: 30px;
           height: 40px;
           margin: 16px 16px 0px 0px;
-          
+        }
+        .profile-mini{
+          line-height: 70px;
+          font-size: 19px;
+          margin-right: 30px;
         }
       }
     }
