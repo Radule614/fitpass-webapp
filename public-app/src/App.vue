@@ -4,6 +4,9 @@
     <router-view></router-view>
   </div>
   <footer-component></footer-component>
+  <button class="btn-up" v-if="btnUpEnabled" @click="btnUpClick">
+    <fa-icon :icon="['fas', 'arrow-up']"></fa-icon>
+  </button>
 </template>
 
 <script>
@@ -15,8 +18,25 @@ export default {
       FooterComponent
   },
   created(){
+    window.addEventListener('scroll', this.handleScroll);
     this.$store.dispatch('auth/checkAuthentication');
-  }
+  },
+  data(){
+    return {
+      btnUpEnabled: false,
+    }
+  },
+  unmounted () {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    btnUpClick(event){
+      window.scrollTo(0, 0);
+    },
+    handleScroll(event){
+      this.btnUpEnabled = window.scrollY >= window.innerHeight
+    }
+  },
 }
 
 </script>
@@ -31,6 +51,21 @@ export default {
     padding-top: 80px;
     min-height: 900px;
   }
+  .btn-up{
+    background-color: $dark-primary;
+    color: $light-primary;
+    position:fixed;
+    bottom:10px;
+    left:10px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding:0px;
+    margin:0px;
+    border:2px solid $light-primary;
+    box-shadow: none;
+  }
+
 }
 
 </style>

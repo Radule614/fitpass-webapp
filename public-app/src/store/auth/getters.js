@@ -1,6 +1,6 @@
 export default {
-  usedId(state){
-    return state.usedId;
+  user(state){
+    return state.user;
   },
   isLogged(state){
     return !!state.token

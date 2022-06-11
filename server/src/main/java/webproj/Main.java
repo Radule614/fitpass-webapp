@@ -2,17 +2,51 @@ package webproj;
 
 import static spark.Spark.*;
 
+import controller.*;
+import spark.Filter;
+
 public class Main {
 	static int port = 9999;
     public static void main(String[] args) {
     	port(port);
     	staticFiles.location("/public");
-    	
-        get("/hello", (req, res) -> "Hello World");
-        
-        before("*", (req, res) -> {
-        	res.redirect("/");
-    	});
+
+        path("/api", () -> {
+            before("/*", (req, res) -> {
+                res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+                res.header("Access-Control-Allow-Origin", "*");
+                res.header("Access-Control-Allow-Headers","*");
+            });
+            options("/*", (req, res) -> {
+                res.status(200);
+                return "";
+            });
+            path("/auth", () -> {
+                post("/login", AuthController::login);
+                post("/register", AuthController::register);
+            });
+            path("/users", () -> {
+                before("/*", AuthController::authenticate);
+                get("/get", UserController::getUser);
+            });
+
+        });
+
+
+
+
         
     }
+    
+    
 }
+
+
+
+
+
+
+
+
+
+

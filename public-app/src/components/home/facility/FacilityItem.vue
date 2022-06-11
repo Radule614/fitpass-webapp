@@ -9,6 +9,30 @@
         grade: Number,
         workHours: String
       }
+    },
+    created () {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    mounted(){
+      this.checkAnimations();
+    },
+    unmounted () {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+      handleScroll(event){
+        this.checkAnimations();
+      },
+      checkAnimations(){
+        const element = this.$el;
+
+        let windowHeight = window.innerHeight;
+        
+        let distanceFromTop = element.getBoundingClientRect().top;
+        if(distanceFromTop - windowHeight + element.offsetHeight <= 0){
+          element.classList.add('appear');
+        }
+      }
     }
   }
 </script>
@@ -46,6 +70,15 @@
     padding-right: 50px;
     position: relative;
     margin-bottom: 35px;
+    opacity: 0;
+    &.appear:nth-child(odd){
+      animation: appearance-from-left 0.4s ease-out forwards;
+    }
+
+    &.appear:nth-child(even){
+      animation: appearance-from-right 0.4s ease-out forwards;
+      animation-delay: 0.1s;
+    }
     .item-inner{
       position: relative;
       background-color:$light-primary;
