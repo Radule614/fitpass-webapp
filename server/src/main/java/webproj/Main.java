@@ -3,7 +3,6 @@ package webproj;
 import static spark.Spark.*;
 
 import controller.*;
-import spark.Filter;
 
 public class Main {
 	static int port = 9999;
@@ -29,16 +28,11 @@ public class Main {
                 before("/*", AuthController::authenticate);
                 get("/get", UserController::getUser);
             });
-
+            path("/facilities", () -> {
+                get("/all", FacilityController::getAllFacilities);
+            });
         });
-
-
-
-
-        
     }
-    
-    
 }
 
 

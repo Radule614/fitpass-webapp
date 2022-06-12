@@ -1,66 +1,66 @@
 <script>
-  import ModalComponent from '../ModalComponent.vue'
-  export default{
-    props: {
-      show: Boolean
-    },
-    data(){
-      return {
-        loading: false,
-        error: false,
-        errorMessage: "",
-        formData: {
-          username: "",
-          firstname: "",
-          lastname: "",
-          password: "",
-          passwordConfirm: ""
-        }
+import ModalComponent from '../ModalComponent.vue'
+export default{
+  props: {
+    show: Boolean
+  },
+  data(){
+    return {
+      loading: false,
+      error: false,
+      errorMessage: "",
+      formData: {
+        username: "",
+        firstname: "",
+        lastname: "",
+        password: "",
+        passwordConfirm: ""
       }
-    },
-    components: {
-    ModalComponent
+    }
+  },
+  components: {
+  ModalComponent
 },
-    methods:{
-      resetInputData() {
-        this.formData.username = "";
-        this.formData.firstname = "";
-        this.formData.lastname = "";
-        this.formData.password = "";
-        this.formData.passwordConfirm = "";
-      },
-      resetValidation(){
-        this.errorMessage = "";
-        this.error = false
-      },
+  methods:{
+    resetInputData() {
+      this.formData.username = "";
+      this.formData.firstname = "";
+      this.formData.lastname = "";
+      this.formData.password = "";
+      this.formData.passwordConfirm = "";
+    },
+    resetValidation(){
+      this.errorMessage = "";
+      this.error = false
+    },
 
-      async registerSubmit(event){
-        this.loading = true
+    async registerSubmit(event){
+      this.loading = true
+      this.resetValidation();
+      let requestBody = {
+        username: this.formData.username,
+        firstname: this.formData.firstname,
+        lastname: this.formData.lastname,
+        password: this.formData.password
+      }
+      this.error = false
+      try{
+        await this.$store.dispatch('auth/signup', requestBody);
+      }catch(e){
+        this.errorMessage = e;
+        this.loading = false
+        this.error = true
+      }
+
+      if(!this.error){
         this.resetValidation();
-        let requestBody = {
-          username: this.formData.username,
-          firstname: this.formData.firstname,
-          lastname: this.formData.lastname,
-          password: this.formData.password
-        }
-        this.error = false
-        try{
-          await this.$store.dispatch('auth/signup', requestBody);
-        }catch(e){
-          this.errorMessage = e;
-          this.loading = false
-          this.error = true
-        }
-
-        if(!this.error){
-          this.resetValidation();
-          this.resetInputData();
-          this.loading = false
-          this.$emit('close')
-        }
+        this.resetInputData();
+        this.loading = false
+        this.$emit('close')
       }
     }
   }
+}
 </script>
 
 <template>

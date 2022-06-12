@@ -22,8 +22,6 @@
     },
     methods: {
       handleScroll(event){
-        
-        
         this.checkAnimations();
       },
       checkAnimations(){

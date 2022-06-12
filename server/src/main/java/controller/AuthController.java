@@ -22,6 +22,7 @@ public class AuthController {
         response.type("application/json");
         return json;
     }
+
     public static String register(Request request, Response response){
         return null;
     }

@@ -1,8 +1,12 @@
+import Settings from '../../settings.js';
+
+
 let timer;
+
 
 export default {
   async login(context, payload) {
-    const response = await fetch('http://localhost:9999/api/auth/login', {
+    const response = await fetch(`${Settings.serverUrl}/api/auth/login`, {
       method: 'POST',
       body: JSON.stringify({
         username: payload.username,
@@ -38,7 +42,7 @@ export default {
 
   },
   async getUserData(context, payload){
-    const response = await fetch('http://localhost:9999/api/users/get', {
+    const response = await fetch(`${Settings.serverUrl}/api/users/get`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + payload.token

@@ -1,33 +1,33 @@
 <script>
-  import NavigationMenu from './navigation/NavigationMenu.vue'
-  import LoginComponent from './auth/LoginComponent.vue'
-  import RegisterComponent from './auth/RegisterComponent.vue'
-  export default{
-    components: {
-      NavigationMenu,
-      LoginComponent,
-      RegisterComponent
+import NavigationMenu from './navigation/NavigationMenu.vue'
+import LoginComponent from './auth/LoginComponent.vue'
+import RegisterComponent from './auth/RegisterComponent.vue'
+export default{
+  components: {
+    NavigationMenu,
+    LoginComponent,
+    RegisterComponent
+  },
+  data(){
+    return{
+      showLogin: false,
+      showRegister: false
+    }
+  },
+  computed: {
+    isLogged(){
+      return this.$store.getters['auth/isLogged'];
     },
-    data(){
-      return{
-        showLogin: false,
-        showRegister: false
-      }
-    },
-    computed: {
-      isLogged(){
-        return this.$store.getters['auth/isLogged'];
-      },
-      userData(){
-        return this.$store.getters['auth/user'];
-      }
-    },
-    methods: {
-      logout(event){
-        this.$store.dispatch('auth/logout');
-      }
+    userData(){
+      return this.$store.getters['auth/user'];
+    }
+  },
+  methods: {
+    logout(event){
+      this.$store.dispatch('auth/logout');
     }
   }
+}
 </script>
 
 <template>

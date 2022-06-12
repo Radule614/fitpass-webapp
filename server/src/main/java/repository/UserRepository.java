@@ -1,21 +1,23 @@
 package repository;
 
-import java.util.ArrayList;
-
 import model.User;
 import model.admin.Admin;
 import model.customer.Customer;
 import model.manager.Manager;
 import model.trainer.Trainer;
 import model.utility.Gender;
+import repository.generic.GenericRepository;
 
-public class UserRepository {
+public class UserRepository extends GenericRepository<User> {
 	private static UserRepository instance;
-	ArrayList<User> users;
-	
+	public static UserRepository getInstance(){
+		if(instance == null){
+			instance = new UserRepository();
+		}
+		return instance;
+	}
+
 	private UserRepository() {
-		users = new ArrayList<User>();
-		
 		Customer customer = new Customer();
 		customer.username = "Radule614";
 		customer.firstname = "Rade";
@@ -45,20 +47,11 @@ public class UserRepository {
 		admin.password = "123";
 		admin.gender = Gender.FEMALE;
 
-		users.add(customer);
-		users.add(trainer);
-		users.add(manager);
-		users.add(admin);
+		data.add(customer);
+		data.add(trainer);
+		data.add(manager);
+		data.add(admin);
 	}
 
-	public static UserRepository getInstance(){
-		if(instance == null){
-			instance = new UserRepository();
-		}
-		return instance;
-	}
-	
-	public ArrayList<User> getUsers(){
-		return this.users;
-	}
+
 }
