@@ -42,7 +42,7 @@
     <div class="text">{{price.text}}</div>
     <div class="price">{{price.amount}} <span class="unit">RSD</span></div>
     <div class="timespan">/monthly</div>
-    <button v-bind:class="{ 'inverse': price.bold }">Learn More</button>
+    <custom-button v-bind:class="{ 'inverse': price.bold }">Learn More</custom-button>
   </div>
 </template>
 

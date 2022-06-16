@@ -58,7 +58,7 @@
             <div class="animated-2">Body and Mind.</div>
           </h2>
           <div class="text animated-3">Choose from hundreds of workouts, healthy recipes, relaxing meditations, and expert articles, for a whole body and mind approach to feeling great.</div>
-          <button class="btn-join-now animated-4" @click="btnJoinNowClick">Join Now</button>
+          <custom-button class="btn-join-now animated-4" @click="btnJoinNowClick">Join Now</custom-button>
         </div>
         <div class="col-6">
           <img src="../assets/home-header-image.png" alt="noimage">
@@ -88,10 +88,10 @@
       <facility-section></facility-section>
     </div>
     <div class="fade-wrapper">
-      <button class="btn-more" @click="btnMoreClick">
+      <custom-button class="btn-more" @click="btnMoreClick">
         <fa-icon :icon="['fas', 'arrow-right']"></fa-icon>
         <span>see more</span>
-      </button>
+      </custom-button>
     </div>
   </section>
 </template>
@@ -224,14 +224,7 @@
         right: 0px;
         width: 150px;
         margin:auto;
-        opacity: 0.95;
-        background-color: $light-primary;
-        color: $dark-primary;
-        &:hover{
-          background-color: $dark-primary;
-          color: $active-primary;
-          opacity: 1;
-        }
+        padding:0px;
         span{
           padding-left: 16px;
         }

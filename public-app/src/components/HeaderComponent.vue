@@ -38,9 +38,9 @@ export default{
       </div>
       <navigation-menu></navigation-menu>
       <div class="account-group">
-        <button class="btn-register inverse" v-if="!isLogged" @click="showRegister = true">Register</button>
-        <button class="btn-login" v-if="!isLogged" @click="showLogin = true">Login</button>
-        <button class="btn-logout inverse" v-if="isLogged" @click="logout">Logout</button>
+        <custom-button class="btn-register inverse" v-if="!isLogged" @click="showRegister = true">Register</custom-button>
+        <custom-button class="btn-login" v-if="!isLogged" @click="showLogin = true">Login</custom-button>
+        <custom-button class="btn-logout inverse" v-if="isLogged" @click="logout">Logout</custom-button>
         <div class="profile-mini" v-if="isLogged && userData">
           {{userData.username}}
         </div>

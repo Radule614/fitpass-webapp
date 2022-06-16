@@ -41,8 +41,8 @@ export default {
             </div>
             <div class="modal-footer">
               <slot name="footer">
-                <button type="button" :disabled="isDisabled" class="button-primary" @click="$emit('close')">cancel</button>
-                <button type="submit" :disabled="isDisabled" class="button-primary inverse" @click="$emit('confirm')">{{ buttonText }}</button>
+                <custom-button type="button" :disabled="isDisabled" @click="$emit('close')">cancel</custom-button>
+                <custom-button type="submit" :disabled="isDisabled" class="inverse" @click="$emit('confirm')">{{ buttonText }}</custom-button>
               </slot>
             </div>
           </div>
