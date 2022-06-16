@@ -1,55 +1,66 @@
 <script>
-  export default {
-    props: {
-      facility: {
-        name: String,
-        ftype: String,
-        status: String,
-        address: String,
-        grade: Number,
-        workHours: String
+export default {
+  props: {
+    facility: {
+      available: Boolean,
+      content: String,
+      facilityType: String,
+      name: String,
+      grade: Number,
+      workingHours: {
+        startHour: Number,
+        startMinute: Number,
+        endHour: Number,
+        endMinute: Number
       }
-    },
-    created () {
-      window.addEventListener('scroll', this.handleScroll);
-    },
-    mounted(){
+    }
+  },
+  computed:{
+    workHourDisplay(){
+      let temp = this.facility.workingHours;
+      return `${temp.startHour}:${temp.startMinute} - ${temp.endHour}:${temp.endMinute}`
+    }
+  },
+  created () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  mounted(){
+    this.checkAnimations();
+  },
+  unmounted () {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll(event){
       this.checkAnimations();
     },
-    unmounted () {
-      window.removeEventListener('scroll', this.handleScroll);
-    },
-    methods: {
-      handleScroll(event){
-        this.checkAnimations();
-      },
-      checkAnimations(){
-        const element = this.$el;
+    checkAnimations(){
+      const element = this.$el;
 
-        let windowHeight = window.innerHeight;
-        
-        let distanceFromTop = element.getBoundingClientRect().top;
-        if(distanceFromTop - windowHeight + element.offsetHeight <= 0){
-          element.classList.add('appear');
-        }
+      let windowHeight = window.innerHeight;
+      
+      let distanceFromTop = element.getBoundingClientRect().top;
+      if(distanceFromTop - windowHeight + element.offsetHeight <= 0){
+        element.classList.add('appear');
       }
     }
   }
+}
 </script>
 
 <template>
   <div class="item">
     <div class="item-inner">
-      <div class="header">{{facility.name}} <span class="type">/ {{facility.ftype}}</span></div>
+      <div class="header">{{facility.name}} <span class="type">/ {{facility.facilityType}}</span></div>
       <div class="body">
         <table>
           <tr>
-            <td>status: </td>
-            <td>{{facility.status}}</td>
+            <td>available: </td>
+            <td>{{facility.available}}</td>
           </tr>
           <tr>
-            <td>address: </td>
-            <td>{{facility.address}}</td>
+            <td>content: </td>
+            <td>{{facility.content}}</td>
           </tr>
           <tr>
             <td>grade: </td>
@@ -57,7 +68,7 @@
           </tr>
           <tr>
             <td>work hours: </td>
-            <td>{{facility.workHours}}</td>
+            <td>{{workHourDisplay}}</td>
           </tr>
         </table>
       </div>

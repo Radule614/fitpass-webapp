@@ -4,13 +4,11 @@ import model.User;
 import repository.UserRepository;
 
 public class UserService {
-    private static UserRepository userRepository;
-    public UserService(){
-        userRepository = UserRepository.getInstance();
-    }
+    private static final UserRepository userRepository = UserRepository.getInstance();
+    public UserService(){}
 
     public User getUser(String username) {
-        for(User u: userRepository.getUsers()) {
+        for(User u: userRepository.getAll()) {
             if(u.username.equals(username)) {
                 return u;
             }

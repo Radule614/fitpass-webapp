@@ -1,33 +1,33 @@
 <script>
-  import NavigationMenu from './navigation/NavigationMenu.vue'
-  import LoginComponent from './auth/LoginComponent.vue'
-  import RegisterComponent from './auth/RegisterComponent.vue'
-  export default{
-    components: {
-      NavigationMenu,
-      LoginComponent,
-      RegisterComponent
+import NavigationMenu from './navigation/NavigationMenu.vue'
+import LoginComponent from './auth/LoginComponent.vue'
+import RegisterComponent from './auth/RegisterComponent.vue'
+export default{
+  components: {
+    NavigationMenu,
+    LoginComponent,
+    RegisterComponent
+  },
+  data(){
+    return{
+      showLogin: false,
+      showRegister: false
+    }
+  },
+  computed: {
+    isLogged(){
+      return this.$store.getters['auth/isLogged'];
     },
-    data(){
-      return{
-        showLogin: false,
-        showRegister: false
-      }
-    },
-    computed: {
-      isLogged(){
-        return this.$store.getters['auth/isLogged'];
-      },
-      userData(){
-        return this.$store.getters['auth/user'];
-      }
-    },
-    methods: {
-      logout(event){
-        this.$store.dispatch('auth/logout');
-      }
+    userData(){
+      return this.$store.getters['auth/user'];
+    }
+  },
+  methods: {
+    logout(event){
+      this.$store.dispatch('auth/logout');
     }
   }
+}
 </script>
 
 <template>
@@ -38,9 +38,9 @@
       </div>
       <navigation-menu></navigation-menu>
       <div class="account-group">
-        <button class="btn-register inverse" v-if="!isLogged" @click="showRegister = true">Register</button>
-        <button class="btn-login" v-if="!isLogged" @click="showLogin = true">Login</button>
-        <button class="btn-logout inverse" v-if="isLogged" @click="logout">Logout</button>
+        <custom-button class="btn-register inverse" v-if="!isLogged" @click="showRegister = true">Register</custom-button>
+        <custom-button class="btn-login" v-if="!isLogged" @click="showLogin = true">Login</custom-button>
+        <custom-button class="btn-logout inverse" v-if="isLogged" @click="logout">Logout</custom-button>
         <div class="profile-mini" v-if="isLogged && userData">
           {{userData.username}}
         </div>
