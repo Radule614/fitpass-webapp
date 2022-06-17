@@ -21,24 +21,32 @@ public class FacilityRepository extends GenericRepository<Facility> {
         f.facilityType = FacilityType.GYM;
         f.available = true;
         f.location = new Location();
-        f.logoUrl = "img/slika_0.jpg";
+        f.logoUrl = "facilities/gym_00.jpg";
         f.workingHours = new WorkingHours(7, 0, 22, 0);
         f.content = "123";
         data.add(f);
 
         f = new Facility(f);
         f.name = "bazen";
+        f.logoUrl = "facilities/pool_00.jpg";
         f.facilityType = FacilityType.POOL;
         f.workingHours = new WorkingHours(10, 0, 20, 0);
         data.add(f);
 
         for (int i = 0; i < 10; i++){
-            data.add(new Facility(f));
+            f = new Facility(f);
+            if(i%2==0){
+                f.name = "djim";
+                f.logoUrl = "facilities/gym_00.jpg";
+                f.facilityType = FacilityType.GYM;
+                f.available = false;
+            }else{
+                f.name = "bazen";
+                f.logoUrl = "facilities/pool_00.jpg";
+                f.facilityType = FacilityType.POOL;
+                f.available = true;
+            }
+            data.add(f);
         }
-
-        f = new Facility(f);
-        f.name = "djim";
-        f.facilityType = FacilityType.GYM;
-        data.add(f);
     }
 }
