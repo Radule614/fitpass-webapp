@@ -4,7 +4,7 @@
     "facilityType": "GYM",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/gym_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 7,
@@ -19,7 +19,7 @@
     "facilityType": "POOL",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/pool_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -34,7 +34,7 @@
     "facilityType": "POOL",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/pool_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -49,7 +49,7 @@
     "facilityType": "POOL",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/pool_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -64,7 +64,7 @@
     "facilityType": "POOL",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/pool_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -79,7 +79,7 @@
     "facilityType": "POOL",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/pool_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -94,7 +94,52 @@
     "facilityType": "POOL",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/pool_00.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 10,
+      "startMinute": 0,
+      "endHour": 20,
+      "endMinute": 0
+    },
+    "content": "123"
+  },
+  {
+    "name": "bazen",
+    "facilityType": "POOL",
+    "available": false,
+    "location": {},
+    "logoUrl": "facilities/pool_00.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 10,
+      "startMinute": 0,
+      "endHour": 20,
+      "endMinute": 0
+    },
+    "content": "123"
+  },
+  {
+    "name": "bazen",
+    "facilityType": "POOL",
+    "available": false,
+    "location": {},
+    "logoUrl": "facilities/pool_00.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 10,
+      "startMinute": 0,
+      "endHour": 20,
+      "endMinute": 0
+    },
+    "content": "123"
+  },
+  {
+    "name": "bazen",
+    "facilityType": "POOL",
+    "available": false,
+    "location": {},
+    "logoUrl": "facilities/pool_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -109,7 +154,7 @@
     "facilityType": "POOL",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/pool_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -124,52 +169,7 @@
     "facilityType": "POOL",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "img/slika_0.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "img/slika_0.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/pool_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -184,7 +184,7 @@
     "facilityType": "GYM",
     "available": true,
     "location": {},
-    "logoUrl": "img/slika_0.jpg",
+    "logoUrl": "facilities/gym_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,

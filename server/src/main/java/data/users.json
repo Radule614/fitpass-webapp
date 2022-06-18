@@ -105,5 +105,18 @@
     "lastname": "Ljubisavljevic",
     "dateOfBirth": "30/01/1979",
     "gender": "MALE"
+  },
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 0,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Radovan123",
+    "password": "radovan123",
+    "firstname": "Luka",
+    "lastname": "Lukovic",
+    "dateOfBirth": "7/01/1997",
+    "gender": "MALE"
   }
 ]
