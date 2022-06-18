@@ -29,10 +29,10 @@ button {
     height: 100%;
     top:0px;
     left:0px;
-    border-radius: 25px;
+    border-radius: 50%;
     background-color: $active-primary;
     transform: scale(0);
-    transition: transform 0.35s ease-in-out;
+    transition: transform 0.3s ease-in-out, border-radius 0.3s ease-in-out;
   }
   &.block{
     border-radius: 0px;
@@ -42,14 +42,16 @@ button {
   }
   span{
     position: relative;
-    transition:color 0.35s ease-in-out 0.1s;
+    transition:color 0.3s ease-in-out 0.1s;
   }
   &:hover{ 
     span{
       color:$light-primary;
-      transition:color 0.35s ease-in-out;
+      transition:color 0.3s ease-in-out;
     }
     &::before{
+      transition: transform 0.3s ease-in-out, border-radius 0.7s ease-in-out;
+      border-radius: 25px;
       transform: scale(1);
     }
     &.block::before{

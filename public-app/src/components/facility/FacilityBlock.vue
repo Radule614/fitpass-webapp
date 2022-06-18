@@ -1,7 +1,11 @@
 <script>
 import Settings from '../../settings.js';
+import FacilityInfo from './FacilityInfo.vue';
 
 export default {
+  components:{
+    FacilityInfo
+  },
   props: {
     selected:Boolean,
     facility: {
@@ -17,24 +21,40 @@ export default {
         endHour: Number,
         endMinute: Number
       }
-    }
+    },
+    shallowShowcase: Boolean
   },
   data(){
     return {
+      facilityAppeared: false,
       detailsActive: false,
       imagePath: ""
     }
   },
   created(){
     this.imagePath = `${Settings.serverUrl}/${this.facility.logoUrl}`;
+    window.addEventListener('scroll', this.handleScroll);
   },
-  computed:{
-    workHourDisplay(){
-      let temp = this.facility.workingHours;
-      return `${temp.startHour}:${temp.startMinute} - ${temp.endHour}:${temp.endMinute}`
-    }
+  mounted(){
+    this.checkAnimations();
+  },
+  unmounted () {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    handleScroll(event){
+      this.checkAnimations();
+    },
+    checkAnimations(){
+      const element = this.$el;
+
+      let windowHeight = window.innerHeight;
+      
+      let distanceFromTop = element.getBoundingClientRect().top;
+      if(distanceFromTop - windowHeight + element.offsetHeight <= 0){
+        this.facilityAppeared = true;
+      }
+    },
     selectedHandler(){
       if(this.facility.available){
         this.$emit('selectedEvent');
@@ -45,7 +65,7 @@ export default {
 </script>
 
 <template>
-  <div class="facility" :class="{'details-active': detailsActive, 'selected': selected, 'facility-available': facility.available}">
+  <div class="facility" :class="{'appear': facilityAppeared,'details-active': detailsActive && !shallowShowcase, 'selected': selected && !shallowShowcase, 'facility-available': facility.available, 'shallow-showcase': shallowShowcase}">
     <div class="header">
       <div class="left" @click="selectedHandler">
         <div class="text-group">
@@ -58,23 +78,17 @@ export default {
         </div>
         <div class="image" ref="imageContainer" :style="{'background-image':`url(${this.imagePath})`}"></div>
       </div>
-      <div class="right btn-wrap">
+      <div v-if="!shallowShowcase" class="right btn-wrap">
         <custom-button class="btn-details block no-shadow" @click="detailsActive=!detailsActive">
           <fa-icon class="button-text" :icon="['fas', 'angle-left']"></fa-icon>
         </custom-button>
       </div>
     </div>
-      <div class="details">
-        <div class="details-inner">
-          <div>{{facility.name}}</div>
-          <div>{{workHourDisplay}}</div>
-          <div>{{workHourDisplay}}</div><div>{{facility.name}}</div>
-          <div>{{workHourDisplay}}</div><div>{{facility.name}}</div>
-          <div>{{workHourDisplay}}</div><div>{{facility.name}}</div>
-          <div>{{workHourDisplay}}</div><div>{{facility.name}}</div>
-          <div>{{workHourDisplay}}</div><div>{{facility.name}}</div>
-        </div>
+    <div v-if="!shallowShowcase" class="details">
+      <div class="details-inner">
+        <facility-info :facility="facility"></facility-info>
       </div>
+    </div>
   </div>
 </template>
 
@@ -82,8 +96,12 @@ export default {
 .facility{
   width: 100%;
   margin-top: 15px;
+  opacity: 0;
   &:first-child{
     margin-top: 0px;
+  }
+  &.appear{
+    animation: appearance-from-right 0.4s ease-in-out forwards;
   }
   .header{
     height: 100px;
@@ -99,6 +117,7 @@ export default {
       flex: 1;
       background-color: $light-primary;
       z-index: 1;
+      font-size: 18px;
       .text-group{
         display: flex;
         position: relative;
@@ -171,8 +190,7 @@ export default {
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
     position: relative;
     background-color: $light-primary;
-    transition: max-height 0.4s ease-out;
-    //transition: height 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    transition: max-height 0.4s ease-in-out;
     overflow: hidden;
     transform: translateY(-3px);
     .details-inner{
@@ -192,15 +210,14 @@ export default {
       }
       .image::after{
           border-color: transparent transparent transparent #fff;
-          transition: border 0.02s ease-in-out 0.33s;
+          transition: border 0.25s ease-in-out;
         }
       &:hover{
         .image::after{
           border-color: transparent transparent transparent $active-primary;
-          transition: none;
         }
       }
-      .text-group::before{
+      &::before{
         content: "";
         position:absolute;
         width: 100%;
@@ -208,29 +225,39 @@ export default {
         top:0px;
         left:0px;
         background-color: $active-primary;
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.35s ease-in-out;
+        transform: scale(0);
+        transition: transform 0.25s ease-in-out, border-radius 0.25s ease-in-out;
+        border-radius: 50%;
       }
     }    
+  }
+
+  &.shallow-showcase{
+    .header .left{
+      cursor: default;
+      &:hover .image::after{
+        border-color: transparent transparent transparent #fff;
+      }
+    }
   }
   &.selected{
     .header {
       .left{
         color: $light-primary;
-        transition: color 0.20s ease-in-out 0.15s;
+        transition: color 0.15s ease-in-out 0.1s;
         .text-group{
           .available-text-wrap{
             color: $light-primary;
-            transition: color 0.20s ease-in-out 0.15s;
+            transition: color 0.15s ease-in-out 0.1s;
           }
         }
         .image::after{
           border-color: transparent transparent transparent $active-primary;
-          transition: none;
         }
-        .text-group::before{
-          transform: scaleX(1);
+        &::before{
+          transform: scale(1);
+          border-radius: 0;
+          transition: transform 0.25s ease-in-out, border-radius 0.65s ease-in-out;
         }
       }
     }
@@ -243,7 +270,7 @@ export default {
     }
     .details{
       max-height: 350px;
-      transition: max-height 0.3s ease-in;
+      transition: max-height 0.3s ease-in-out;
     }
   }
 }

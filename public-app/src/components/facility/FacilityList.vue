@@ -4,6 +4,9 @@ export default {
   components:{
     FacilityBlock
   },
+  props:{
+    shallowShowcase: Boolean
+  },
   data(){
     return {
       selectedIndex: -1
@@ -11,7 +14,10 @@ export default {
   },
   computed: {
     facilities(){
-      return this.$store.getters['facility/facilities'];
+      let facilities = this.$store.getters['facility/facilities'];
+      if(!facilities) return facilities;
+      facilities.sort((a, b) => a.available ? -1 : 0);      
+      return this.shallowShowcase && facilities.length > 6 ? facilities.splice(0, 6) : facilities;
     }
   },
   methods:{
@@ -31,17 +37,31 @@ export default {
 </script>
 
 <template>
-  <div class="container" ref="facilities">
+<div class="facility-list">
+  <div v-if="!shallowShowcase" class="search-block">
+
+    search
+
+  </div>
+  <div ref="facilities">
     <facility-block v-for="(facility, index) in facilities" 
                     :data-id="index" 
                     v-bind:key="index" 
                     :facility="facility" 
-                    :selected="determineSelected(index)" 
+                    :selected="determineSelected(index)"
+                    :shallowShowcase="shallowShowcase"
                     @selectedEvent="facilitySelected(index)">
     </facility-block>
   </div>
+</div>
 </template>
 
 <style scoped lang="scss">
-
+.facility-list{
+  .search-block{
+    box-shadow:  0 3px 3px -3px rgba(0,0,0,0.3); 
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+  }
+}
 </style>

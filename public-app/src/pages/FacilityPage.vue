@@ -10,9 +10,9 @@ export default {
 <template>
   <div>
     <div class="page-header">
-      <h2>Facilities</h2>
+      <h1>Facilities</h1>
     </div>
-    <div class="facilities">
+    <div class="facilities container">
       <facility-list></facility-list>
     </div>
   </div>
@@ -20,9 +20,9 @@ export default {
 
 <style scoped lang="scss">
   .page-header{
-    h2{
+    h1{
       margin: 0px;
-      padding:50px 0px;
+      padding:50px 0px 70px 0px;
       text-align: center;
       color: $dark-primary;
     }
