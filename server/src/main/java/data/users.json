@@ -1,0 +1,86 @@
+[
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 25,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Radule614",
+    "password": "123",
+    "firstname": "Rade",
+    "lastname": "Stojanovic",
+    "dateOfBirth": "21/09/1999",
+    "gender": "MALE"
+  },
+  {
+    "workoutHistory": null,
+    "userType": "TRAINER",
+    "username": "trainer",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "12/05/1995",
+    "gender": "FEMALE"
+  },
+  {
+    "facility": null,
+    "userType": "MANAGER",
+    "username": "manager",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "25/02/1990",
+    "gender": "FEMALE"
+  },
+  {
+    "userType": "ADMIN",
+    "username": "admin",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "2/03/1988",
+    "gender": "FEMALE"
+  },
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 25,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Radule614",
+    "password": "123",
+    "firstname": "Rade",
+    "lastname": "Stojanovic",
+    "dateOfBirth": "21/09/1999",
+    "gender": "MALE"
+  },
+  {
+    "workoutHistory": null,
+    "userType": "TRAINER",
+    "username": "trainer",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "12/05/1995",
+    "gender": "FEMALE"
+  },
+  {
+    "facility": null,
+    "userType": "MANAGER",
+    "username": "manager",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "25/02/1990",
+    "gender": "FEMALE"
+  },
+  {
+    "userType": "ADMIN",
+    "username": "admin",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "2/03/1988",
+    "gender": "FEMALE"
+  }
+]
