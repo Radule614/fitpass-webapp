@@ -12,10 +12,12 @@ export default{}
 
 <style scoped lang="scss">
   footer{
+    z-index: 2;
     padding-top: 50px;
     background-color: $dark-primary;
     color: $light-primary;
     line-height: 100px;
     text-align: center;
+    position: relative;
   }
 </style>

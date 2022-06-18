@@ -29,7 +29,7 @@ export default {
       window.scrollTo(0, 0);
     },
     handleScroll(event){
-      this.btnUpEnabled = window.scrollY >= window.innerHeight
+      this.btnUpEnabled = window.scrollY >= 400
     }
   },
 }
@@ -73,6 +73,7 @@ export default {
     margin:0px;
     border:2px solid $light-primary;
     box-shadow: none;
+    z-index: 2;
   }
   .loading-screen{
     position: fixed;

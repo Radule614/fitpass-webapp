@@ -1,93 +1,277 @@
 <script>
+import Settings from '../../settings.js';
+import FacilityInfo from './FacilityInfo.vue';
+
 export default {
+  components:{
+    FacilityInfo
+  },
   props: {
+    selected:Boolean,
     facility: {
       available: Boolean,
       content: String,
       facilityType: String,
       name: String,
       grade: Number,
+      logoUrl: String,
       workingHours: {
         startHour: Number,
         startMinute: Number,
         endHour: Number,
         endMinute: Number
       }
+    },
+    shallowShowcase: Boolean
+  },
+  data(){
+    return {
+      facilityAppeared: false,
+      detailsActive: false,
+      imagePath: ""
     }
   },
-  computed:{
-    workHourDisplay(){
-      let temp = this.facility.workingHours;
-      return `${temp.startHour}:${temp.startMinute} - ${temp.endHour}:${temp.endMinute}`
-    }
+  created(){
+    this.imagePath = `${Settings.serverUrl}/${this.facility.logoUrl}`;
+    window.addEventListener('scroll', this.handleScroll);
   },
+  mounted(){
+    this.checkAnimations();
+  },
+  unmounted () {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll(event){
+      this.checkAnimations();
+    },
+    checkAnimations(){
+      const element = this.$el;
+
+      let windowHeight = window.innerHeight;
+      
+      let distanceFromTop = element.getBoundingClientRect().top;
+      if(distanceFromTop - windowHeight + element.offsetHeight <= 0){
+        this.facilityAppeared = true;
+      }
+    },
+    selectedHandler(){
+      if(this.facility.available){
+        this.$emit('selectedEvent');
+      }
+    }
+  }
 }
 </script>
 
 <template>
-  <div class="facility-wrap">
-    <div class="background"></div>
-    <div class="facility">
-      {{facility.name}}
+  <div class="facility" :class="{'appear': facilityAppeared,'details-active': detailsActive && !shallowShowcase, 'selected': selected && !shallowShowcase, 'facility-available': facility.available, 'shallow-showcase': shallowShowcase}">
+    <div class="header">
+      <div class="left" @click="selectedHandler">
+        <div class="text-group">
+          <div class="text">{{facility.name}}</div>
+          <div class="text">{{facility.facilityType}}</div>
+          <div class="text available-text-wrap">
+            <span v-if="facility.available">Available</span>
+            <span v-else style="color:red;">Not available</span>
+          </div>
+        </div>
+        <div class="image" ref="imageContainer" :style="{'background-image':`url(${this.imagePath})`}"></div>
+      </div>
+      <div v-if="!shallowShowcase" class="right btn-wrap">
+        <custom-button class="btn-details block no-shadow" @click="detailsActive=!detailsActive">
+          <fa-icon class="button-text" :icon="['fas', 'angle-left']"></fa-icon>
+        </custom-button>
+      </div>
+    </div>
+    <div v-if="!shallowShowcase" class="details">
+      <div class="details-inner">
+        <facility-info :facility="facility"></facility-info>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-  .facility-wrap{
-    height: 400px;
-    background-color: $light-primary;
+.facility{
+  width: 100%;
+  margin-top: 15px;
+  opacity: 0;
+  &:first-child{
+    margin-top: 0px;
+  }
+  &.appear{
+    animation: appearance-from-right 0.4s ease-in-out forwards;
+  }
+  .header{
+    height: 100px;
+    display: flex;
+    flex-direction: row;
     position: relative;
-    .background{
-      background-color: $active-primary;
-      position: absolute;
-      width:100%;
-      height: 100%;
-      top:0px;
-      left:0px;
-      &::before,
-      &::after{
-        content:"";
-        width: 0px;
-        transition: all 0.2s;
-        position:absolute;
-        width: 0px;
-        height: 0px;
-        background-color: $active-primary;
-        transform: rotate(-45deg) translateX(0px) translateY(0px);
-      }
-      &::before{
-        top:0px;
-        left: 0px;
-      }
-      &::after{
-        bottom:0px;
-        right: 0px;
-      }
-    }
-    .facility{
-      background-color: $light-primary;
-      height: 400px;
-      transition: transform 0.2s;
+    background-color: #fff;
+    .left{
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: row;
       position: relative;
-    }
-    &:hover{
-      .background{
-        &::before,
-        &::after{
-          width: 16.97px;
-          height: 16.97px;
-        }
-        &::before{
-          transform: rotate(-45deg) translateX(8.5px) translateY(-3.5px);
-        }
-        &::after{
-          transform: rotate(-45deg) translateX(8.8px) translateY(3.4px);
+      flex: 1;
+      background-color: $light-primary;
+      z-index: 1;
+      font-size: 18px;
+      .text-group{
+        display: flex;
+        position: relative;
+        .text{
+          width: 150px;
+          position: relative;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          padding-left: 30px;
+          .available-text-wrap{
+            color: red;
+          }
         }
       }
-      .facility{
-        transform:translateX(12px) translateY(-12px);
+      .image{
+        height: 100px;
+        background-size: cover;
+        background-position-y: center;
+        background-repeat: no-repeat;
+        flex: 1;
+        position: relative;
+        &::after{
+          content: "";
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 100px 0 0 20px;
+          border-color: transparent transparent transparent $light-primary;
+          position: absolute;
+          left:0px;
+          bottom:0px;
+        }
+      }
+    }
+    .right{
+      position: relative;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+      margin-left: 0px;
+      background-color: #fff;
+      z-index: 2;
+      &.btn-wrap{
+        width: 100px;
+        .btn-details{
+          outline:none;
+          border:none;
+          background-color: #fff;
+          text-align: center;
+          margin:auto;
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top:0px;
+          right:0px;
+          bottom:0px;
+          left:0px;
+          font-size: 24px;
+          .button-text{
+            transition: transform 0.3s;
+            transform: rotate(0deg);
+          }
+        } 
       }
     }
   }
+
+  .details{
+    max-height: 0;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    background-color: $light-primary;
+    transition: max-height 0.4s ease-in-out;
+    overflow: hidden;
+    transform: translateY(-3px);
+    .details-inner{
+        padding:30px;
+      }
+  }
+
+  &.facility-available{
+    .header .left {
+      cursor: pointer;
+      background-color: #fff;
+      position: relative;
+      .text-group{
+        .available-text-wrap{
+          color: green;
+        }
+      }
+      .image::after{
+          border-color: transparent transparent transparent #fff;
+          transition: border 0.25s ease-in-out;
+        }
+      &:hover{
+        .image::after{
+          border-color: transparent transparent transparent $active-primary;
+        }
+      }
+      &::before{
+        content: "";
+        position:absolute;
+        width: 100%;
+        height: 100%;
+        top:0px;
+        left:0px;
+        background-color: $active-primary;
+        transform: scale(0);
+        transition: transform 0.25s ease-in-out, border-radius 0.25s ease-in-out;
+        border-radius: 50%;
+      }
+    }    
+  }
+
+  &.shallow-showcase{
+    .header .left{
+      cursor: default;
+      &:hover .image::after{
+        border-color: transparent transparent transparent #fff;
+      }
+    }
+  }
+  &.selected{
+    .header {
+      .left{
+        color: $light-primary;
+        transition: color 0.15s ease-in-out 0.1s;
+        .text-group{
+          .available-text-wrap{
+            color: $light-primary;
+            transition: color 0.15s ease-in-out 0.1s;
+          }
+        }
+        .image::after{
+          border-color: transparent transparent transparent $active-primary;
+        }
+        &::before{
+          transform: scale(1);
+          border-radius: 0;
+          transition: transform 0.25s ease-in-out, border-radius 0.65s ease-in-out;
+        }
+      }
+    }
+  }
+  &.details-active{
+    .header .right.btn-wrap .btn-details {
+      .button-text{
+        transform: rotate(-90deg);
+      }
+    }
+    .details{
+      max-height: 350px;
+      transition: max-height 0.3s ease-in-out;
+    }
+  }
+}
 </style>
