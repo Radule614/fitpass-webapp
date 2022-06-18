@@ -2,13 +2,18 @@ package service;
 
 import dto.LoginDTO;
 import dto.LoginResponseDTO;
+import dto.RegisterDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import model.User;
+import model.customer.Customer;
+import model.customer.CustomerType;
 
 import javax.crypto.spec.SecretKeySpec;
+
+import java.awt.Cursor;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -28,6 +33,10 @@ public class AuthService {
             return createToken(user);
         }
         return null;
+    }
+    
+    public Customer register(RegisterDTO registerDTO) {
+    	return new UserService().createNewCustomer(registerDTO);
     }
 
     public String isTokenValid(String token){
@@ -67,4 +76,5 @@ public class AuthService {
                 .build()
                 .parseClaimsJws(jwtToken);
     }
+    
 }

@@ -22,3 +22,4 @@
 *.njsproj
 *.sln
 *.sw?
+/.metadata/

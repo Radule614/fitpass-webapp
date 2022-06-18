@@ -1,5 +1,5 @@
 import Settings from '../../settings.js';
-
+import axios from 'axios';
 
 let timer;
 
@@ -37,9 +37,19 @@ export default {
     
   },
   async signup(context, payload) {
+    const response = await axios.post(`${Settings.serverUrl}/api/auth/register`, payload);
 
-    //TODO
+    console.log(response);
+    if(response.status !== 200) {
+      throw new Error(response.message);
+    }
 
+    console.log(response.data);
+
+    context.commit('setUserData', {
+      user: response.data
+    });
+    await context.dispatch('login', response.data);
   },
   async getUserData(context, payload){
     const response = await fetch(`${Settings.serverUrl}/api/users/get`, {

@@ -3,6 +3,9 @@ package controller;
 import com.google.gson.Gson;
 import dto.LoginDTO;
 import dto.LoginResponseDTO;
+import dto.RegisterDTO;
+import dto.RegisterResponseDTO;
+import model.customer.Customer;
 import service.AuthService;
 import spark.Request;
 import spark.Response;
@@ -24,7 +27,19 @@ public class AuthController {
     }
 
     public static String register(Request request, Response response){
-        return null;
+        Gson gson = new Gson();
+        RegisterDTO registerDTO = gson.fromJson(request.body(), RegisterDTO.class);
+        
+        Customer registredCustomer = new AuthService().register(registerDTO);
+        if(registredCustomer == null) {
+        	halt(401, "Username already in use.");
+        }
+        RegisterResponseDTO registerResponseDTO = new RegisterResponseDTO();
+        registerResponseDTO.username = registredCustomer.username;
+        registerResponseDTO.password = registredCustomer.password;
+    	String responseData = gson.toJson(registerResponseDTO);
+        response.type("application/json");
+        return responseData;
     }
 
     public static void authenticate(Request request, Response response){

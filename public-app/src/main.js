@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import "bootstrap/dist/css/bootstrap.min.css";
+import Toaster from "@meforma/vue-toaster";
 
 import router from './router.js';
 import store from './store/index.js';
@@ -15,6 +16,7 @@ import CustomButton from './components/utility/CustomButton.vue';
 const app = createApp(App);
 app.use(router);
 app.use(store);
+app.use(Toaster);
 app.component('fa-icon', FontAwesomeIcon);
 app.component('custom-button', CustomButton);
 app.mount('#app');

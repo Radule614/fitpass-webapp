@@ -1,6 +1,10 @@
 package controller;
 
+import java.time.LocalDate;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import dto.user.AdminDTO;
 import dto.user.CustomerDTO;
 import dto.user.ManagerDTO;
@@ -10,13 +14,16 @@ import model.admin.Admin;
 import model.customer.Customer;
 import model.manager.Manager;
 import model.trainer.Trainer;
+import repository.util.LocalDateAdapter;
 import service.UserService;
 import spark.Request;
 import spark.Response;
 
 public class UserController {
     public static String getUser(Request request, Response response){
-        Gson g = new Gson();
+        Gson g = new GsonBuilder()
+        		.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        		.create();
         String username = request.attribute("username");
         User user = new UserService().getUser(username);
         response.type("application/json");
