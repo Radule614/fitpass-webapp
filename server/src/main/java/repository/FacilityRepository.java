@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.facility.Facility;
+import model.facility.FacilityType;
+import model.facility.Location;
+import model.facility.WorkingHours;
 import repository.fileHandler.FileHandler;
 import repository.generic.GenericRepository;
 

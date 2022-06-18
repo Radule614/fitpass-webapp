@@ -24,7 +24,6 @@ public class FileHandler<T> implements IFileHandler<T> {
 		filePath = fp;
 		this.listType = listType;
 		this.deserializeGson = deserializeGson;
-		
 	}
 	
 	@Override

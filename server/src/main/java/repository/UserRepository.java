@@ -37,45 +37,50 @@ public class UserRepository extends GenericRepository<User> {
 
 	private UserRepository() {
 		createFileHandlerAndReadData();
-		Customer customer = new Customer();
-		customer.username = "Radule614";
-		customer.firstname = "Rade";
-		customer.lastname = "Stojanovic";
-		customer.password = "123";
-		customer.gender = Gender.MALE;
-		customer.points = 25;
-		customer.dateOfBirth = LocalDate.of(1999, 9, 21);
-
-		Trainer trainer = new Trainer();
-		trainer.username = "trainer";
-		trainer.firstname = "ime";
-		trainer.lastname = "prezime";
-		trainer.password = "123";
-		trainer.gender = Gender.FEMALE;
-		trainer.dateOfBirth = LocalDate.of(1995, 5, 12);
-
-		Manager manager = new Manager();
-		manager.username = "manager";
-		manager.firstname = "ime";
-		manager.lastname = "prezime";
-		manager.password = "123";
-		manager.gender = Gender.FEMALE;
-		manager.dateOfBirth = LocalDate.of(1990, 2, 25);
-
-		Admin admin = new Admin();
-		admin.username = "admin";
-		admin.firstname = "ime";
-		admin.lastname = "prezime";
-		admin.password = "123";
-		admin.gender = Gender.FEMALE;
-		admin.dateOfBirth = LocalDate.of(1988, 3, 2);
-
-		data.add(customer);
-		data.add(trainer);
-		data.add(manager);
-		data.add(admin);
-		
-		saveAll();
+//		Customer customer = new Customer();
+//		customer.username = "Radule614";
+//		customer.firstname = "Rade";
+//		customer.lastname = "Stojanovic";
+//		customer.password = "123";
+//		customer.gender = Gender.MALE;
+//		customer.points = 25;
+//		customer.dateOfBirth = LocalDate.of(1999, 9, 21);
+//
+//		Trainer trainer = new Trainer();
+//		trainer.username = "trainer";
+//		trainer.firstname = "ime";
+//		trainer.lastname = "prezime";
+//		trainer.password = "123";
+//		trainer.gender = Gender.FEMALE;
+//		trainer.dateOfBirth = LocalDate.of(1995, 5, 12);
+//
+//		Manager manager = new Manager();
+//		manager.username = "manager";
+//		manager.firstname = "ime";
+//		manager.lastname = "prezime";
+//		manager.password = "123";
+//		manager.gender = Gender.FEMALE;
+//		manager.dateOfBirth = LocalDate.of(1990, 2, 25);
+//
+//		Admin admin = new Admin();
+//		admin.username = "admin";
+//		admin.firstname = "ime";
+//		admin.lastname = "prezime";
+//		admin.password = "123";
+//		admin.gender = Gender.FEMALE;
+//		admin.dateOfBirth = LocalDate.of(1988, 3, 2);
+//
+//		data.add(customer);
+//		data.add(trainer);
+//		data.add(manager);
+//		data.add(admin);
+//		
+//		saveAll();
+	}
+	
+	public void addNewUser(User newUser) {
+		this.data.add(newUser);
+		this.fileHandler.saveAll(data);
 	}
 	
 	// Private/Protected Helpers
