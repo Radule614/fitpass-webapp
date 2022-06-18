@@ -1,10 +1,10 @@
 <script>
-  import PriceSection from '@/components/home/price/PriceSection.vue'
-  import FacilitySection from '@/components/home/facility/FacilitySection.vue'
+  import PriceSection from '@/components/home/price/PriceSection.vue';
+  import FacilityList from '@/components/facility/FacilityList.vue';
   export default {
     components:{
       PriceSection,
-      FacilitySection
+      FacilityList
     },
     data () {
       return{
@@ -84,8 +84,8 @@
     </div>
   </section>
   <section>
-    <div class="container">
-      <facility-section></facility-section>
+    <div class="container facilities">
+      <facility-list :shallowShowcase="true"></facility-list>
     </div>
     <div class="fade-wrapper">
       <custom-button class="btn-more" @click="btnMoreClick">
@@ -209,14 +209,18 @@
         color: $active-primary;
       }
     }
+    .facilities{
+      max-height: 650px;
+    }
     .fade-wrapper{
       height: 300px;
       width: 100%;
       position: absolute;
       display: block;
-      background: linear-gradient(0deg, rgba(255,255,255,1) 25%, rgba(245,245,245,0) 100%);
+      background: linear-gradient(0deg, #fff 18%, rgba(245,245,245,0) 100%);
       bottom: 0px;
       left: 0px;
+      z-index: 1;
       button.btn-more{
         position: absolute;
         bottom:20px;
