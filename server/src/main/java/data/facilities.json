@@ -5,7 +5,7 @@
     "available": true,
     "location": {},
     "logoUrl": "facilities/gym_00.jpg",
-    "grade": 0.0,
+    "grade": 2.4,
     "workingHours": {
       "startHour": 7,
       "startMinute": 0,
@@ -20,7 +20,7 @@
     "available": true,
     "location": {},
     "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
+    "grade": 2.8,
     "workingHours": {
       "startHour": 10,
       "startMinute": 0,
@@ -35,7 +35,7 @@
     "available": true,
     "location": {},
     "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
+    "grade": 3.6,
     "workingHours": {
       "startHour": 10,
       "startMinute": 0,
@@ -50,7 +50,7 @@
     "available": true,
     "location": {},
     "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
+    "grade": 4.0,
     "workingHours": {
       "startHour": 10,
       "startMinute": 0,

@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state(){
     return {
-      facilities: null
+      facilities: null,
+      filteredFacilities: null
     }
   },
   mutations: facilityMutations,

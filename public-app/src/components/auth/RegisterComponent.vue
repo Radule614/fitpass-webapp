@@ -35,7 +35,6 @@
 <script>
 import ModalComponent from "../ModalComponent.vue"
 import { mapActions } from 'vuex';
-import { tupleExpression } from "@babel/types";
 
 export default {
     name: "RegisterComponent",
