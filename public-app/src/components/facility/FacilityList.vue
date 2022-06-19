@@ -30,7 +30,8 @@ export default {
       return this.shallowShowcase && facilities.length > 6 ? facilities.splice(0, 6) : facilities;
     },
     filteredFacilities() {
-      return this.getFilteredFacilities;
+      let facilities = this.getFilteredFacilities();
+      return facilities ? facilities.sort((a, b) => a.available ? -1 : 0) : facilities;
     }
   },
   methods:{
@@ -69,7 +70,7 @@ export default {
         this.lists.homePageFacilities = this.facilities;
         return this.lists.homePageFacilities;
       } else {
-        this.lists.facilityPageFacilities = this.filteredFacilities();
+        this.lists.facilityPageFacilities = this.filteredFacilities;
         return this.lists.facilityPageFacilities;
       }
     },

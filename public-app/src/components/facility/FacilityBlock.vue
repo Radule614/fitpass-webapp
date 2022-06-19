@@ -27,12 +27,10 @@ export default {
   data(){
     return {
       facilityAppeared: false,
-      detailsActive: false,
-      imagePath: ""
+      detailsActive: false
     }
   },
   created(){
-    this.imagePath = `${Settings.serverUrl}/${this.facility.logoUrl}`;
     window.addEventListener('scroll', this.handleScroll);
   },
   mounted(){
@@ -40,6 +38,11 @@ export default {
   },
   unmounted () {
     window.removeEventListener('scroll', this.handleScroll);
+  },
+  computed:{
+    imagePath(){
+      return `${Settings.serverUrl}/${this.facility.logoUrl}`;
+    }
   },
   methods: {
     handleScroll(event){
