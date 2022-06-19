@@ -42,7 +42,7 @@
     <div class="text">{{price.text}}</div>
     <div class="price">{{price.amount}} <span class="unit">RSD</span></div>
     <div class="timespan">/monthly</div>
-    <button v-bind:class="{ 'inverse': price.bold }">Learn More</button>
+    <custom-button v-bind:class="{ 'inverse': price.bold }">Learn More</custom-button>
   </div>
 </template>
 
@@ -53,7 +53,7 @@
     min-height: 250px;
     max-width: 500px;
     background-color:$light-primary;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
     border-radius: 12px;
     margin-left: 50px;
     transition: box-shadow 0.1s;
@@ -72,7 +72,7 @@
         margin-left: 0px;
     }
     &:hover{
-      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 0px 12px rgba(240, 84, 84, 0.4);
     }
     .header{
       border-radius: 12px 12px 0px 0px;

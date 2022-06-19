@@ -1,14 +1,3 @@
-<template>
-  <header-component></header-component>
-  <div class="content-wrapper">
-    <router-view></router-view>
-  </div>
-  <footer-component></footer-component>
-  <button class="btn-up" v-if="btnUpEnabled" @click="btnUpClick">
-    <fa-icon :icon="['fas', 'arrow-up']"></fa-icon>
-  </button>
-</template>
-
 <script>
 import HeaderComponent from "./components/HeaderComponent.vue";
 import FooterComponent from "./components/FooterComponent.vue";
@@ -17,14 +6,20 @@ export default {
       HeaderComponent,
       FooterComponent
   },
+  data(){
+    return {
+      btnUpEnabled: false
+    }
+  },
+  computed:{
+    loading(){
+      return !this.$store.getters['facility/facilities'];
+    }
+  },
   created(){
     window.addEventListener('scroll', this.handleScroll);
     this.$store.dispatch('auth/checkAuthentication');
-  },
-  data(){
-    return {
-      btnUpEnabled: false,
-    }
+    this.$store.dispatch('facility/fetchFacilities');
   },
   unmounted () {
     window.removeEventListener('scroll', this.handleScroll);
@@ -34,12 +29,26 @@ export default {
       window.scrollTo(0, 0);
     },
     handleScroll(event){
-      this.btnUpEnabled = window.scrollY >= window.innerHeight
+      this.btnUpEnabled = window.scrollY >= 400
     }
   },
 }
-
 </script>
+
+<template>
+  <header-component></header-component>
+  <div class="content-wrapper">
+    <router-view></router-view>
+  </div>
+  <footer-component></footer-component>
+  <button class="btn-up" v-if="btnUpEnabled" @click="btnUpClick">
+    <fa-icon :icon="['fas', 'arrow-up']"></fa-icon>
+  </button>
+  <div class="loading-screen" v-if="loading">
+    <div class="background"></div>
+    <div class="loader"></div>
+  </div>
+</template>
 
 <style lang="scss">
 #app {
@@ -64,6 +73,32 @@ export default {
     margin:0px;
     border:2px solid $light-primary;
     box-shadow: none;
+    z-index: 2;
+  }
+  .loading-screen{
+    position: fixed;
+    width:100%;
+    height: 100%;
+    top:0px;
+    left:0px;
+    z-index: 100;
+    .background{
+      background-color: $light-primary;
+      position: absolute;
+      width:100%;
+      height: 100%;
+      top:0px;
+      left:0px;
+      opacity: 0.7;
+    }
+    .loader{
+      position: absolute;
+      top:0px;
+      left:0px;
+      right: 0px;
+      bottom:0px;
+      margin:auto;
+    }
   }
 
 }

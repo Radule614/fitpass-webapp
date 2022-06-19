@@ -1,5 +1,7 @@
 $dark-primary: #121212;
+$dark-secondary: #30475E;
 $light-primary: #F5F5F5;
+$light-secondary: #ddd;
 $active-primary: #F05454;
 
 html{
@@ -14,7 +16,6 @@ body{
   overflow-x: hidden;
 }
 
-button,
 button.button-primary{
   position: relative;
   display: block;
@@ -43,6 +44,8 @@ button.button-primary{
 input[type=text],
 input[type=password],
 input[type=email],
+input[type=date],
+input[type=search],
 input.input-primary{
   width: 207px;
   outline: none;

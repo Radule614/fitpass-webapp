@@ -1,53 +1,53 @@
 <script>
-  import ModalComponent from '../ModalComponent.vue'
-  export default {
-    props: {
-      show: Boolean
-    },
-    components: {
-      ModalComponent
-    },
-    data() {
-      return {
-        loading: false,
-        error: false,
-        errorMessage: "",
-        formData: {
-          username: "",
-          password: ""
-        }
+import ModalComponent from '../ModalComponent.vue'
+export default {
+  props: {
+    show: Boolean
+  },
+  components: {
+    ModalComponent
+  },
+  data() {
+    return {
+      loading: false,
+      error: false,
+      errorMessage: "",
+      formData: {
+        username: "",
+        password: ""
       }
+    }
+  },
+  methods: {
+    resetInputData() {
+      this.formData.username = "";
+      this.formData.password = "";
     },
-    methods: {
-      resetInputData() {
-        this.formData.username = "";
-        this.formData.password = "";
-      },
-      resetValidation(){
-        this.errorMessage = "";
-        this.error = false
-      },
-      async loginSubmit(event) {
+    resetValidation(){
+      this.errorMessage = "";
+      this.error = false
+    },
+    async loginSubmit(event) {
 
-        this.loading = true
+      this.loading = true
+      this.resetValidation();
+      try{
+        await this.$store.dispatch('auth/login', this.formData);
+      }catch(e){
+        this.errorMessage = e;
+        this.loading = false
+        this.error = true
+      }
+
+      if(!this.error){
         this.resetValidation();
-        try{
-          await this.$store.dispatch('auth/login', this.formData);
-        }catch(e){
-          this.errorMessage = e;
-          this.loading = false
-          this.error = true
-        }
-
-        if(!this.error){
-          this.resetValidation();
-          this.resetInputData();
-          this.loading = false
-          this.$emit('close')
-        }
+        this.resetInputData();
+        this.loading = false
+        this.$emit('close')
       }
     }
   }
+}
 </script>
 
 <template>

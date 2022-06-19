@@ -1,0 +1,122 @@
+[
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 25,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Radule614",
+    "password": "123",
+    "firstname": "Rade",
+    "lastname": "Stojanovic",
+    "dateOfBirth": "21/09/1999",
+    "gender": "MALE"
+  },
+  {
+    "workoutHistory": null,
+    "userType": "TRAINER",
+    "username": "trainer",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "12/05/1995",
+    "gender": "FEMALE"
+  },
+  {
+    "facility": null,
+    "userType": "MANAGER",
+    "username": "manager",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "25/02/1990",
+    "gender": "FEMALE"
+  },
+  {
+    "userType": "ADMIN",
+    "username": "admin",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "2/03/1988",
+    "gender": "FEMALE"
+  },
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 0,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Ljubica123",
+    "password": "ljubi123",
+    "firstname": "Ljubica",
+    "lastname": "Lukic",
+    "dateOfBirth": "9/06/1999",
+    "gender": "FEMALE"
+  },
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 0,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Dragan123",
+    "password": "dragan123",
+    "firstname": "Dragan",
+    "lastname": "Djukic",
+    "dateOfBirth": "11/06/1996",
+    "gender": "MALE"
+  },
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 0,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Petar123",
+    "password": "perica123",
+    "firstname": "Petar",
+    "lastname": "Petrovic",
+    "dateOfBirth": "6/05/1996",
+    "gender": "MALE"
+  },
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 0,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Luka123",
+    "password": "luka123",
+    "firstname": "Luka",
+    "lastname": "Lukic",
+    "dateOfBirth": "17/02/1994",
+    "gender": "MALE"
+  },
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 0,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Milutin123",
+    "password": "milutin123",
+    "firstname": "Milutin",
+    "lastname": "Ljubisavljevic",
+    "dateOfBirth": "30/01/1979",
+    "gender": "MALE"
+  },
+  {
+    "membership": null,
+    "VisitedFacilities": null,
+    "points": 0,
+    "type": null,
+    "userType": "CUSTOMER",
+    "username": "Radovan123",
+    "password": "radovan123",
+    "firstname": "Luka",
+    "lastname": "Lukovic",
+    "dateOfBirth": "7/01/1997",
+    "gender": "MALE"
+  }
+]

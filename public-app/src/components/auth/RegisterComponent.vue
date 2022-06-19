@@ -1,101 +1,186 @@
+<template>
+  <modal-component :show="show" @confirm="register()" @close="$emit('close')" buttonText="register" :width="600" :disabled="loading">
+    <template #header>
+      Register
+    </template>
+    <template #body>
+      <form>
+        <div class="grid-container">
+          <input type="text" placeholder="Username" v-model="formData.username"/>
+          <input type="text" placeholder="First name" v-model="formData.firstName"/>
+          <input type="password" placeholder="Password" v-model="formData.password">
+          <input type="text" placeholder="Last name" v-model="formData.lastName">
+          <input type="password" placeholder="Confirm password" v-model="formData.confirmPassword"/>
+          <input placeholder="Date Of Birth" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" 
+                 min="1900-01-01" :max="this.today" v-model="formData.dateOfBirth">
+          <div class="radio-buttons">
+            <label for="">Gender:</label>
+            <input type="radio" id="male" value="male" name="gender" v-model="formData.gender"/>
+            <label for="male">Male</label>
+            <input type="radio" id="female" value="female" name="gender" v-model="formData.gender"/>
+            <label for="female">Female</label>
+          </div>
+          <div class="info">
+            <div class="error" v-show="this.error">
+              {{this.errorMsg}}
+            </div>
+            <div class="loader" v-show="this.loading"></div>
+          </div>
+        </div>
+      </form>
+    </template>
+  </modal-component>
+</template>
+
 <script>
-  import ModalComponent from '../ModalComponent.vue'
-  export default{
+import ModalComponent from "../ModalComponent.vue"
+import { mapActions } from 'vuex';
+
+export default {
+    name: "RegisterComponent",
     props: {
-      show: Boolean
+      show: Boolean,
     },
-    data(){
+    data() {
       return {
         loading: false,
         error: false,
-        errorMessage: "",
+        errorMsg: "",
         formData: {
           username: "",
-          firstname: "",
-          lastname: "",
           password: "",
-          passwordConfirm: ""
+          confirmPassword: "",
+          firstName: "",
+          lastName: "",
+          dateOfBirth: "",
+          gender: ""
         }
       }
     },
-    components: {
-    ModalComponent
-},
-    methods:{
-      resetInputData() {
-        this.formData.username = "";
-        this.formData.firstname = "";
-        this.formData.lastname = "";
-        this.formData.password = "";
-        this.formData.passwordConfirm = "";
-      },
-      resetValidation(){
-        this.errorMessage = "";
-        this.error = false
-      },
-
-      async registerSubmit(event){
-        this.loading = true
+    methods: {
+      ...mapActions("auth", ["signup"]),
+      async register() {
+        // Reset validation data
         this.resetValidation();
+        // Da li su uneti svi podaci
+        if(!this.isAllDataFilled()) {
+          this.error = true;
+          this.errorMsg = "Please insert all informations.";
+          return;
+        } 
+        // Da li je sifra validna
+        if(!this.isPasswordValid()) {
+          this.error = true;
+          this.errorMsg = "Password must containt at least 8 characters and 1 of them must be a digit.";
+          return;
+        }
+        // Da li je sifra dobro uneta
+        if(this.formData.password !== this.formData.confirmPassword) {
+          this.error = true;
+          this.errorMsg = "Your password and confirmation password do not match."
+          return;
+        }
+
+        this.loading = true;
         let requestBody = {
           username: this.formData.username,
-          firstname: this.formData.firstname,
-          lastname: this.formData.lastname,
-          password: this.formData.password
-        }
-        this.error = false
-        try{
-          await this.$store.dispatch('auth/signup', requestBody);
-        }catch(e){
-          this.errorMessage = e;
-          this.loading = false
-          this.error = true
+          password: this.formData.password,
+          firstName: this.formData.firstName,
+          lastName: this.formData.lastName,
+          dateOfBirth: this.formData.dateOfBirth,
+          gender: this.formData.gender
         }
 
-        if(!this.error){
+        await this.signup(requestBody)
+          .catch(err => {
+            this.error = true;
+            this.loading = false;
+            this.errorMsg = err.response.data;
+          });
+
+        if(!this.error) {
+          this.resetFormData();
           this.resetValidation();
-          this.resetInputData();
-          this.loading = false
-          this.$emit('close')
+          this.loading = false;
+          this.$emit('close');
+          this.$toast.success(`Your registration has been successfully completed.`, {
+            position: "top"
+          });
+          setTimeout(this.$toast.clear, 3000);
         }
+      },
+      isAllDataFilled() {
+        if(this.formData.username === "" ||
+           this.formData.password === "" ||
+           this.formData.confirmPassword === "" ||
+           this.formData.firstName === "" ||
+           this.formData.lastName === "" ||
+           this.formData.dateOfBirth === "" ||
+           this.formData.gender === "") {
+            return false;
+           }
+        return true;
+      },
+      isPasswordValid() {
+        // Da li je sifra ima bar 8 karaktera i barem jednu cifru
+        if(this.formData.password.length < 8 || this.formData.password.replace(/[^0-9]/g, '').length < 1) {
+          return false;
+        }
+        return true;
+      },
+      resetValidation() {
+        this.error = false;
+        this.errorMsg = "";
+      },
+      resetFormData() {
+        this.formData.username = "",
+        this.formData.password = "",
+        this.formData.confirmPassword = "",
+        this.formData.firstName = "",
+        this.formData.lastName = "",
+        this.formData.dateOfBirth = "",
+        this.formData.gender = ""
       }
+    },
+    computed: {
+      today() {
+        return new Date().toISOString().split("T")[0];
+      }
+    },
+    components: {
+      ModalComponent
     }
-  }
+}
+
 </script>
 
-<template>
-  <form @submit.prevent="registerSubmit">
-    <modal-component :show="show" :disabled="loading" :width="500" buttonText="register" @close="$emit('close')">
-      <template #header>
-        Register a new account
-      </template>
-
-      <template #body>
-        <div class="row">
-          <div class="col-6">
-            <input type="text" class="input-primary" name="username" placeholder="username" v-model="formData.username">     
-            <input type="text" class="input-primary" name="firstname" placeholder="firstname" v-model="formData.firstname">  
-            <input type="text" class="input-primary" name="lastname" placeholder="lastname" v-model="formData.lastname">  
-          </div>
-          <div class="col-6">
-            <input type="password" class="input-primary" name="password" placeholder="password" v-model="formData.password">
-            <input type="password" class="input-primary" name="password-confirm" placeholder="confirm password" v-model="formData.passwordConfirm">
-          </div>
-          <div class="info-block">
-            <div class="loader" v-if="loading"></div>
-            <div class="error" v-if="error">{{errorMessage}}</div>
-          </div>
-        </div>
-      </template>
-    </modal-component>
-  </form>
-</template>
-
 <style scoped lang="scss">
-  .info-block{
-    .error{
-      font-size: 14px;
-      color:$active-primary;
-    }
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0px;
   }
+
+  .radio-buttons {
+    grid-column: span 2;
+  }
+
+  .radio-buttons label {
+    margin-right: 20px;
+  }
+
+  .radio-buttons input[type=radio] {
+    margin-right: 5px;
+  }
+
+  .info {
+    grid-column: span 2;
+    justify-self: center;
+    margin-top: 15px;
+  }
+
+  .error {
+    color: $active-primary;
+  }
+
 </style>

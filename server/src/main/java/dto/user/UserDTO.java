@@ -1,8 +1,11 @@
 package dto.user;
 
+import java.time.LocalDate;
+
 import model.User;
 import model.UserType;
 import model.utility.Gender;
+import repository.util.LocalDateAdapter;
 
 public abstract class UserDTO {
     public UserType userType;
@@ -10,6 +13,7 @@ public abstract class UserDTO {
     public String firstname;
     public String lastname;
     public Gender gender;
+    public LocalDate dateOfBirth;
 
     public UserDTO(User user){
         this.userType = user.userType;
@@ -17,5 +21,6 @@ public abstract class UserDTO {
         this.firstname = user.firstname;
         this.lastname = user.lastname;
         this.gender = user.gender;
+        this.dateOfBirth = user.dateOfBirth;
     }
 }

@@ -2,7 +2,7 @@ package model.customer;
 
 import java.util.HashMap;
 
-import model.Facility;
+import model.facility.Facility;
 import model.User;
 import model.UserType;
 

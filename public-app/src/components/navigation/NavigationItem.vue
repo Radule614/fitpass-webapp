@@ -72,11 +72,11 @@
   }
 
   @keyframes nav-active-animation{
-  0%{
-    transform: scaleX(0.2);
+    0%{
+      transform: scaleX(0.05);
+    }
+    100%{
+      transform: scaleX(1);
+    }
   }
-  100%{
-    transform: scaleX(1);
-  }
-}
 </style>
