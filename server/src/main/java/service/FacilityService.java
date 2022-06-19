@@ -55,31 +55,6 @@ public class FacilityService {
     	return (ArrayList<Facility>) requestedFacilities;
     }
     
-//    public ArrayList<Facility> getFacilitiesWithRequestedTypeAndAvgGrade(FacilityType facType, AvgGradeRangeDTO avgGradeRange) {
-//    	List<Facility> requestedFacilities = facilityRepository.getAll().stream()
-//				.filter(facility -> facility.facilityType == facType && (facility.grade >= avgGradeRange.lowerBound &&
-//							facility.grade <= avgGradeRange.upperBound))
-//				.collect(Collectors.toList());
-//
-//    	return (ArrayList<Facility>) requestedFacilities;
-//    }
-//    
-//    public ArrayList<Facility> getRequestedFacilitiesByType(FacilityType facType) {
-//    	List<Facility> requestedFacilities = facilityRepository.getAll().stream()
-//				.filter(facility -> facility.facilityType == facType)
-//				.collect(Collectors.toList());
-//    	
-//    	return (ArrayList<Facility>) requestedFacilities;
-//    }
-//    
-//    public ArrayList<Facility> getRequestedFacilitiesByAvgGrade(AvgGradeRangeDTO avgGradeRange) {
-//    	List<Facility> requestedFacilities = facilityRepository.getAll().stream()
-//				.filter(facility -> (facility.grade >= avgGradeRange.lowerBound && facility.grade <= avgGradeRange.upperBound))
-//				.collect(Collectors.toList());
-//    	
-//    	return (ArrayList<Facility>) requestedFacilities;
-//    }
-    
     public FacilityType getFacilityTypeFromText(String text) {
     	FacilityType facilityType = null;
     	text = text.toUpperCase().trim();
