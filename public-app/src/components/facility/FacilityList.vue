@@ -66,7 +66,6 @@ export default {
     },
     items() {
       if(this.shallowShowcase) {
-        this.searchFacilities(""); // Da se vrate svi objekti na facilityPage-u kad se predje na homePage
         this.lists.homePageFacilities = this.facilities;
         return this.lists.homePageFacilities;
       } else {
@@ -90,6 +89,9 @@ export default {
       }
       this.searchFacilities(searchText);
     }
+  },
+  unmounted() {
+    this.setFilteredFacilities({filteredFacilities : this.$store.getters["facility/facilities"]});
   }
 }
 </script>
