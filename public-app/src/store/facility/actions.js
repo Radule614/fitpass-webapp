@@ -1,4 +1,5 @@
 import Settings from '../../settings.js';
+import axios from "axios";
 
 export default {
   async fetchFacilities(context, payload){
@@ -14,6 +15,18 @@ export default {
     
     context.commit('setFacilities', {
       facilities: responseData
+    });
+
+    context.commit('setFilteredFacilities', {
+      filteredFacilities: responseData
+    });
+
+  },
+  async searchFacilities({ commit }, searchText) {
+    const response = await axios.get(`${Settings.serverUrl}/api/facilities/search/${searchText}`);
+    
+    commit('setFilteredFacilities', {
+      filteredFacilities: response.data
     });
   }
 }

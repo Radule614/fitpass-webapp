@@ -30,6 +30,8 @@ public class Main {
             });
             path("/facilities", () -> {
                 get("/all", FacilityController::getAllFacilities);
+                get("/search/:searchText", FacilityController::searchFacilities);
+                get("/search/", FacilityController::searchFacilities);
             });
         });
     }
