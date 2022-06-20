@@ -30,11 +30,11 @@
     "content": "123"
   },
   {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
+    "name": "teretana",
+    "facilityType": "GYM",
+    "available": false,
     "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
+    "logoUrl": "facilities/gym_00.jpg",
     "grade": 3.6,
     "workingHours": {
       "startHour": 10,
@@ -75,11 +75,11 @@
     "content": "123"
   },
   {
-    "name": "bazen",
-    "facilityType": "POOL",
+    "name": "teretana2",
+    "facilityType": "GYM",
     "available": true,
     "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
+    "logoUrl": "facilities/gym_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
@@ -105,11 +105,11 @@
     "content": "123"
   },
   {
-    "name": "bazen",
-    "facilityType": "POOL",
+    "name": "teretana3",
+    "facilityType": "GYM",
     "available": false,
     "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
+    "logoUrl": "facilities/gym_00.jpg",
     "grade": 0.0,
     "workingHours": {
       "startHour": 10,
