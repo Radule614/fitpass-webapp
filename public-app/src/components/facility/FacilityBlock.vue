@@ -54,7 +54,7 @@ export default {
       let windowHeight = window.innerHeight;
       
       let distanceFromTop = element.getBoundingClientRect().top;
-      if(distanceFromTop - windowHeight + element.offsetHeight <= 0){
+      if(distanceFromTop - windowHeight <= 0){
         this.facilityAppeared = true;
       }
     },
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <template>
-  <div class="facility" :class="{'appear': facilityAppeared,'details-active': detailsActive && !shallowShowcase, 'selected': selected && !shallowShowcase, 'facility-available': facility.available, 'shallow-showcase': shallowShowcase}">
+  <div class="facility" :class="{'appear': facilityAppeared,'details-active': detailsActive && !shallowShowcase, 'selected': selected && !shallowShowcase && facility.available, 'facility-available': facility.available, 'shallow-showcase': shallowShowcase}">
     <div class="header">
       <div class="left" @click="selectedHandler">
         <div class="text-group">
