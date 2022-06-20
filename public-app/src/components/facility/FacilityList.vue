@@ -50,9 +50,9 @@ export default {
       return this.selectedIndex==index;
     },
     search(e) {
-      let searchText = this.searchText + "&" + this.selectedType + "&" + this.selectedAvgGrade;
-      console.log(searchText);
-      console.log(e);
+      let safeSearchText = this.escapeInput(this.searchText);
+      let searchText = safeSearchText + "&" + this.selectedType + "&" + this.selectedAvgGrade;
+      console.log(safeSearchText);
       if(this.searchText === "" && e.key === "Backspace") {
         this.searchFacilities(searchText);
         return;
@@ -81,13 +81,23 @@ export default {
       this.searchFacilities(this.searchText + "&" + this.selectedType + "&" + this.selectedAvgGrade);
     },
     searchByTypeOrAvgGrade(e) {
-      let searchText = this.searchText + "&" + this.selectedType + "&" + this.selectedAvgGrade;
-      console.log(searchText);
+      let safeSearchText = this.escapeInput(this.searchText);
+      let searchText = safeSearchText + "&" + this.selectedType + "&" + this.selectedAvgGrade;
+      console.log(safeSearchText);
       if(searchText === "&ALL&ALL") {
         this.searchFacilities("");
         return;
       }
       this.searchFacilities(searchText);
+    },
+    escapeInput(unsafe) {
+     return unsafe
+         .replace(/&/g, "")
+         .replace(/</g, "")
+         .replace(/>/g, "")
+         .replace(/"/g, "")
+        .replace(/\//g, "")
+         .replace(/'/g, "");
     }
   },
   unmounted() {
