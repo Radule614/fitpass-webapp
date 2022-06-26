@@ -82,7 +82,7 @@ export default {
     });
     if(router) router.push('home');
   },
-  checkAuthentication(context, payload){
+  async checkAuthentication(context, payload){
     const token = localStorage.getItem('token');
     const tokenExpiration = localStorage.getItem('tokenExpiration');
 
@@ -100,7 +100,7 @@ export default {
       context.commit('setToken', {
         token: token
       });
-      context.dispatch('getUserData', {token: token});
+      await context.dispatch('getUserData', {token: token});
     }
   }
 }

@@ -31,4 +31,8 @@ public class FacilityController {
     	}
     	return g.toJson(facService.getAllFacilities());
     }
+
+	public static void addFacility(Request request, Response response){
+		
+	}
 }

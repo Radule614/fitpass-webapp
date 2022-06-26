@@ -16,7 +16,7 @@ import { routes } from '../../router.js';
 
 <template>
   <nav class="menu">
-    <navigation-item v-for="route in activeRoutes" v-bind:key="route.id" :routeName="route.name" :text="route.meta.nav"></navigation-item>
+    <navigation-item v-for="route in activeRoutes" v-bind:key="route.id" :path="route.path" :text="route.meta.nav"></navigation-item>
   </nav>
 </template>
 

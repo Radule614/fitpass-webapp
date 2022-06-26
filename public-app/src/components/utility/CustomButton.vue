@@ -2,7 +2,7 @@
 </script>
 
 <template>
- <button>
+  <button>
     <span>
       <slot></slot>
     </span>
@@ -22,6 +22,9 @@ button {
   color:$dark-primary;
   border-radius: 25px;
   outline: 0px;
+  &.flat{
+    padding: 0px;
+  }
   &::before{
     content: "";
     position:absolute;
@@ -50,11 +53,11 @@ button {
       transition:color 0.3s ease-in-out;
     }
     &::before{
-      transition: transform 0.3s ease-in-out, border-radius 0.7s ease-in-out;
       border-radius: 25px;
       transform: scale(1);
     }
     &.block::before{
+      transition: transform 0.3s ease-in-out, border-radius 0.7s ease-in-out;
       border-radius: 0px;
     }
   }

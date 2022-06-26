@@ -10,6 +10,16 @@ html{
 
 a{
   color:$dark-primary;
+  text-decoration: none;
+}
+
+button a{
+  color:inherit;
+  text-decoration: none;
+  display: block;
+  &:hover{
+    color: inherit;
+  }
 }
 
 body{
