@@ -1,4 +1,5 @@
 import Settings from '../../settings.js';
+import { router } from '../../router.js';
 import axios from 'axios';
 
 let timer;
@@ -79,6 +80,7 @@ export default {
       token: null,
       user: null
     });
+    if(router) router.push('home');
   },
   checkAuthentication(context, payload){
     const token = localStorage.getItem('token');

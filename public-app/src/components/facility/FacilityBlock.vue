@@ -103,9 +103,7 @@ export default {
   &:first-child{
     margin-top: 0px;
   }
-  &.appear{
-    animation: appearance-from-right 0.4s ease-in-out forwards;
-  }
+  
   .header{
     height: 100px;
     display: flex;
@@ -201,6 +199,8 @@ export default {
       }
   }
 
+  
+
   &.facility-available{
     .header .left {
       cursor: pointer;
@@ -235,12 +235,19 @@ export default {
     }    
   }
 
+  &.appear{
+    animation: appearance-from-bottom 0.4s ease-in-out forwards;
+  }
+
   &.shallow-showcase{
     .header .left{
       cursor: default;
       &:hover .image::after{
         border-color: transparent transparent transparent #fff;
       }
+    }
+    &.appear{
+      animation: appearance-from-right 0.4s ease-in-out forwards;
     }
   }
   &.selected{
