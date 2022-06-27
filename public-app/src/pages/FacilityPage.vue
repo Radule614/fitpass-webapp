@@ -13,6 +13,7 @@ export default {
       <h1>Facilities</h1>
     </div>
     <div class="facilities container">
+      <router-view></router-view>
       <facility-list></facility-list>
     </div>
   </div>

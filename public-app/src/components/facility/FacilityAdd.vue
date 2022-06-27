@@ -1,20 +1,113 @@
 <script>
-
+import CustomLink from '../utility/CustomLink.vue';
+import CustomButton from '../utility/CustomButton.vue';
+import CustomFileInput from '../utility/CustomFileInput.vue';
+export default{
+  components:{
+    CustomLink,
+    CustomFileInput,
+    CustomButton
+  },
+  computed:{
+    loggedUserType(){
+      return this.$store.getters['auth/userType'];
+    },
+    currentRouteName(){
+      return this.$router.currentRoute.value.name;
+    }
+  },
+  methods:{
+    scrollToTop(){
+      window.scrollTo(0, 0);
+    },
+    fileChanged(file){
+      console.log(file);
+    },
+    formSubmit(){
+      const data = new FormData(this.$refs.submitForm);
+      //console.log(JSON.stringify(Object.fromEntries(data)));
+      this.$store.dispatch('facility/addFacility', data);
+    }
+  }
+}
 </script>
 
 <template>
-  <form class="add-form">
+  <form class="add-form" ref="submitForm">
     <table>
       <tr>
-        <td><label for="name">name</label></td>
-        <td><input type="text" id="name"></td>
+        <td><label for="name">name:</label></td>
+        <td><input type="text" id="name" name="name"></td>
+        <td><label for="working-hours">working hours:</label></td>
+        <td>
+          <div class="time-group" id="working-hours">
+            <input type="time" name="startTime">
+            <span>-</span>
+            <input type="time" name="endTime">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="type">type:</label></td>
+        <td>
+          <select class="select-primary" name="type" id="type">
+            <option value="GYM">GYM</option>
+            <option value="POOL">POOL</option>
+            <option value="SPORTS_CENTER">SPORTS_CENTER</option>
+            <option value="DANCE_STUDIO">DANCE_STUDIO</option>
+            <option value="OTHER">OTHER</option>
+          </select>
+        </td>
+        <td><label for="available">available:</label></td>
+        <td><input type="checkbox" id="available" name="available"></td>
+      </tr>
+      <tr>
+        <td><label>image:</label></td>
+        <td colspan="3"><custom-file-input name="image" class="block" @fileChanged="fileChanged($event)"></custom-file-input></td>
+      </tr>
+      <tr>
+        <td style="vertical-align:top;"><label for="content">content summary:</label></td>
+        <td colspan="3"><textarea class="textarea-primary" name="content" id="" cols="30" rows="10"></textarea></td>
       </tr>
     </table>
+    <div class="button-group">
+      <custom-link v-if="currentRouteName == 'facilityAdd'" to="/facility" @click="scrollToTop">Cancel</custom-link>
+      <custom-button v-if="currentRouteName == 'facilityAdd'" class="inverse block" to="/facility" @click="formSubmit">Add</custom-button>
+    </div>
   </form>
 </template>
 
 <style scoped lang="scss">
 .add-form{
-  padding-bottom: 40px;
+  .button-group{
+    display: flex;
+    justify-content: right;
+    & > * {
+      margin-left: 15px;
+    }
+  }
+
+  td{
+    padding-bottom: 12px;
+    &:nth-child(3){
+      padding-left: 50px;
+    }
+    label{
+      padding-right: 20px;
+    }
+    input, 
+    select{
+      margin-bottom: 0px;
+      border-radius: 0px;
+    }
+    .time-group span{
+      margin: 0px 10px;
+    }
+    textarea{
+      width:100%;
+      margin-bottom: 0px;
+      border-radius: 0px;
+    }
+  }
 }
 </style>

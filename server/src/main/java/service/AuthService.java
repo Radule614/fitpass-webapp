@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class AuthService {
     private static final String secret = "asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4";
-    private static final long expirationLength = 60L;
+    private static final long expirationLength = 60L * 72L;
 
     public AuthService() {}
 

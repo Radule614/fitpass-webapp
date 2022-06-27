@@ -120,7 +120,6 @@ export default {
 <template>
 <div class="facility-list">
   <div v-if="!shallowShowcase" class="control-block">
-    <router-view></router-view>
     <div class="search-block" v-if="currentRouteName == 'facility'">
       <div class="search-wrapper">
         <input id="search" placeholder="Search facility..." v-model="this.searchText" @keyup="search"/>
@@ -151,10 +150,8 @@ export default {
       </div>
     </div>
     <div class="button-group">
-        <custom-link v-if="loggedUserType == 'ADMIN' && currentRouteName == 'facility'" class="inverse" to="/facility/add" @click="scrollToTop">Add Facility</custom-link>
-        <custom-link v-if="currentRouteName == 'facilityAdd'" to="/facility" @click="scrollToTop">Cancel</custom-link>
-        <custom-link v-if="currentRouteName == 'facilityAdd'" class="inverse" to="/facility" @click="scrollToTop">Add</custom-link>
-      </div>
+      <custom-link v-if="loggedUserType == 'ADMIN' && currentRouteName == 'facility'" class="inverse" to="/facility/add" @click="scrollToTop">Add Facility</custom-link>
+    </div>
   </div>
   <div ref="facilities">
     <facility-block v-for="(facility, index) in this.items()" 

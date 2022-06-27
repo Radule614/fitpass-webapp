@@ -64,7 +64,7 @@ export default {
       const error = new Error(responseData.message || 'Failed to fetch user data.');
       throw error;
     }
-    console.log(responseData);
+    //console.log(responseData);
 
     context.commit('setUserData', {
       user: responseData

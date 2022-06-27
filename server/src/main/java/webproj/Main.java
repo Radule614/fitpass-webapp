@@ -32,6 +32,9 @@ public class Main {
                 get("/all", FacilityController::getAllFacilities);
                 get("/search/:searchText", FacilityController::searchFacilities);
                 get("/search/", FacilityController::searchFacilities);
+
+                before("/add", AuthController::authenticate);
+                post("/add", FacilityController::addFacility);
             });
         });
     }
