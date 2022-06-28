@@ -5,10 +5,15 @@ import static spark.Spark.*;
 import controller.*;
 
 public class Main {
+    public final static String uploadDirPath = "src/main/resources/public/img/";
+
 	static int port = 9999;
     public static void main(String[] args) {
     	port(port);
-    	staticFiles.location("/public");
+    	//staticFiles.location("/public");
+        String projectDir = System.getProperty("user.dir");
+        String staticDir = "/src/main/resources/public";
+        staticFiles.externalLocation(projectDir + staticDir);
 
         path("/api", () -> {
             before("/*", (req, res) -> {

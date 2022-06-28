@@ -11,10 +11,16 @@ public abstract class GenericRepository<T> implements IRepository<T> {
     public ArrayList<T> getAll(){
         return (ArrayList<T>) this.data.clone();
     }
-    
+
     @Override
     public void saveAll() {
-    	fileHandler.saveAll(data);
+        fileHandler.saveAll(data);
+    }
+
+    @Override
+    public void add(T item){
+        this.data.add(item);
+        this.saveAll();
     }
     
     protected abstract void createFileHandlerAndReadData();

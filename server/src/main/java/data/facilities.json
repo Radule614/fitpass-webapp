@@ -1,197 +1,92 @@
 [
   {
-    "name": "teretana",
-    "facilityType": "GYM",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
-    "grade": 2.4,
-    "workingHours": {
-      "startHour": 7,
-      "startMinute": 0,
-      "endHour": 22,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 2.8,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "teretana",
-    "facilityType": "GYM",
-    "available": false,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
-    "grade": 3.6,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 4.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "teretana2",
-    "facilityType": "GYM",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "teretana3",
-    "facilityType": "GYM",
-    "available": false,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": false,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": false,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
     "name": "djim",
     "facilityType": "GYM",
     "available": true,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
+    "location": null,
+    "logoUrl": "img/facilities/14746986754921740631.jpg",
     "grade": 0.0,
     "workingHours": {
-      "startHour": 10,
+      "startHour": 0,
       "startMinute": 0,
-      "endHour": 20,
+      "endHour": 24,
       "endMinute": 0
     },
-    "content": "123"
+    "content": ""
+  },
+  {
+    "name": "teretana",
+    "facilityType": "GYM",
+    "available": false,
+    "location": null,
+    "logoUrl": "img/facilities/1980122726072711728.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 0,
+      "startMinute": 0,
+      "endHour": 24,
+      "endMinute": 0
+    },
+    "content": ""
+  },
+  {
+    "name": "teretana",
+    "facilityType": "GYM",
+    "available": false,
+    "location": null,
+    "logoUrl": "img/facilities/9473511335475128697.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 0,
+      "startMinute": 0,
+      "endHour": 24,
+      "endMinute": 0
+    },
+    "content": ""
+  },
+  {
+    "name": "teretana",
+    "facilityType": "GYM",
+    "available": true,
+    "location": null,
+    "logoUrl": "img/facilities/13144110068354647143.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 0,
+      "startMinute": 0,
+      "endHour": 24,
+      "endMinute": 0
+    },
+    "content": ""
+  },
+  {
+    "name": "bazen",
+    "facilityType": "POOL",
+    "available": true,
+    "location": null,
+    "logoUrl": "img/facilities/7747046874770737239.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 0,
+      "startMinute": 0,
+      "endHour": 24,
+      "endMinute": 0
+    },
+    "content": ""
+  },
+  {
+    "name": "bazen",
+    "facilityType": "POOL",
+    "available": false,
+    "location": null,
+    "logoUrl": "img/facilities/8020951329084730968.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 0,
+      "startMinute": 0,
+      "endHour": 24,
+      "endMinute": 0
+    },
+    "content": ""
   }
 ]

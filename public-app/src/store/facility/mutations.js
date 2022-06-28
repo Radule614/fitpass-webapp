@@ -4,5 +4,8 @@ export default {
   },
   setFilteredFacilities(state, payload) {
     state.filteredFacilities = payload.filteredFacilities;
+  },
+  addFacility(state, payload){
+    state.facilities.push(payload);
   }
 }

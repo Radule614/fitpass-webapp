@@ -2,6 +2,11 @@ package controller;
 
 import com.google.gson.Gson;
 
+import dto.FacilityDTO;
+import dto.FileDTO;
+import model.facility.Facility;
+import model.facility.FacilityType;
+import model.facility.WorkingHours;
 import service.FacilityService;
 import spark.Request;
 import spark.Response;
@@ -9,21 +14,16 @@ import spark.Response;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.io.*;
+
+import java.util.stream.Collectors;
 
 public class FacilityController {
-
     public static String getAllFacilities(Request request, Response response) {
         Gson g = new Gson();
         response.type("application/json");
         return g.toJson(new FacilityService().getAllFacilities());
     }
-    
     public static String searchFacilities(Request request, Response response) {
     	String searchText = request.params("searchText");
     	Gson g = new Gson();
@@ -42,30 +42,33 @@ public class FacilityController {
     	return g.toJson(facService.getAllFacilities());
     }
 
-	public static String addFacility(Request request, Response response) throws IOException, ServletException {
-		File uploadDir = new File("src/main/resources/public/img/facilities");
-		uploadDir.mkdir();
+	public static String addFacility(Request request, Response response) throws ServletException, IOException {
 		request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+		response.type("application/json");
 
-		String extension = getExtension(request.raw().getPart("file"));
+		String name = parseStringInput(request.raw().getPart("name"));
+		String startTime = parseStringInput(request.raw().getPart("startTime"));
+		String endTime = parseStringInput(request.raw().getPart("endTime"));
+		String type = parseStringInput(request.raw().getPart("type"));
+		String content = parseStringInput(request.raw().getPart("content"));
+		String available = parseStringInput(request.raw().getPart("available"));
+		FacilityDTO facilityDTO = new FacilityDTO(name, FacilityType.valueOf(type), available != null && available.equals("on"), null, new WorkingHours(startTime, endTime), content);
 
-		if(extension.trim().equals(".")){
-			return "no image";
-		}
-		Path tempFile = Files.createTempFile(uploadDir.toPath(), "", extension);
-		try (InputStream input = request.raw().getPart("file").getInputStream()) { // getPart needs to use same "name" as input field in form
-			Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		Part filePart = request.raw().getPart("file");
+		FileDTO fileDTO = new FileDTO(filePart.getInputStream(), getFileName(filePart), getExtension(filePart));
+		Facility facility = new FacilityService().addFacility(facilityDTO, fileDTO);
 
-		logInfo(request, tempFile);
-
-		return "<h1>You uploaded this image:<h1><img src='" + tempFile.getFileName() + "'>";
+		if(facility == null) return "{\"message\": \"error\"}";
+		return new Gson().toJson(facility);
 	}
 
-	private static void logInfo(Request req, Path tempFile) throws IOException, ServletException {
-		System.out.println("Uploaded file '" + getFileName(req.raw().getPart("file")) + "' saved as '" + tempFile.toAbsolutePath() + "'");
+	private static String parseStringInput(Part part){
+		try(InputStream input = part.getInputStream()){
+			return new BufferedReader(new InputStreamReader(input)).lines().collect(Collectors.joining("\n"));
+		}catch (Exception e){
+			//e.printStackTrace();
+		}
+		return null;
 	}
 
 	private static String getFileName(Part part) {
@@ -76,16 +79,13 @@ public class FacilityController {
 		}
 		return null;
 	}
-
 	private static String getExtension(Part part){
 		for (String cd : part.getHeader("content-disposition").split(";")) {
 			if (cd.trim().startsWith("filename")) {
 				String[] arr = cd.substring(cd.indexOf('=') + 1).split("\\.");
-				return "." + arr[arr.length-1].trim().replace("\"", "");
+				return arr[arr.length-1].trim().replace("\"", "");
 			}
 		}
 		return null;
 	}
-
-
 }

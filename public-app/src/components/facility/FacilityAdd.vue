@@ -20,13 +20,11 @@ export default{
     scrollToTop(){
       window.scrollTo(0, 0);
     },
-    fileChanged(file){
-      console.log(file);
-    },
-    formSubmit(){
+    async formSubmit(event){
+      event.preventDefault();
       const data = new FormData(this.$refs.submitForm);
-      //console.log(JSON.stringify(Object.fromEntries(data)));
-      this.$store.dispatch('facility/addFacility', data);
+      let res = await this.$store.dispatch('facility/addFacility', data);
+      console.log(res);
     }
   }
 }
@@ -63,7 +61,7 @@ export default{
       </tr>
       <tr>
         <td><label>image:</label></td>
-        <td colspan="3"><custom-file-input name="image" class="block" @fileChanged="fileChanged($event)"></custom-file-input></td>
+        <td colspan="3"><custom-file-input name="image" class="block"></custom-file-input></td>
       </tr>
       <tr>
         <td style="vertical-align:top;"><label for="content">content summary:</label></td>
@@ -72,7 +70,7 @@ export default{
     </table>
     <div class="button-group">
       <custom-link v-if="currentRouteName == 'facilityAdd'" to="/facility" @click="scrollToTop">Cancel</custom-link>
-      <custom-button v-if="currentRouteName == 'facilityAdd'" class="inverse block" to="/facility" @click="formSubmit">Add</custom-button>
+      <custom-button type="submit" v-if="currentRouteName == 'facilityAdd'" class="inverse block" to="/facility" @click="formSubmit($event)">Add</custom-button>
     </div>
   </form>
 </template>

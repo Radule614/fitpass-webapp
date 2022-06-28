@@ -1,12 +1,20 @@
 package service;
 
+import dto.FacilityDTO;
+import dto.FileDTO;
 import model.facility.Facility;
 import model.facility.FacilityType;
 import repository.FacilityRepository;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import dto.AvgGradeRangeDTO;
+import webproj.Main;
 
 public class FacilityService {
     public static final FacilityRepository facilityRepository = FacilityRepository.getInstance();
@@ -15,7 +23,6 @@ public class FacilityService {
     public ArrayList<Facility> getAllFacilities(){
         return facilityRepository.getAll();
     }
-    
     public ArrayList<Facility> getRequestedFacilites(String searchText, String facType, String avgGradeRange) {
     	List<Facility> requestedFacilities = null;
     	if(facType.equalsIgnoreCase("all")) {
@@ -54,7 +61,6 @@ public class FacilityService {
     	
     	return (ArrayList<Facility>) requestedFacilities;
     }
-    
     public FacilityType getFacilityTypeFromText(String text) {
     	FacilityType facilityType = null;
     	text = text.toUpperCase().trim();
@@ -84,5 +90,37 @@ public class FacilityService {
     	return facilityType;
     }
 
+	public Facility addFacility(FacilityDTO facilityDTO, FileDTO fileDTO){
+		if(!(fileDTO.extension.equals("jpg") || fileDTO.extension.equals("jpeg") || fileDTO.extension.equals("png"))) return null;
+		String image = saveFile(fileDTO);
+
+		String logoUrl = "img/facilities/" + image;
+		Facility f = new Facility(facilityDTO.name, facilityDTO.facilityType, facilityDTO.available, facilityDTO.location, logoUrl, 0, facilityDTO.workingHours, facilityDTO.content);
+
+		facilityRepository.add(f);
+		
+		return f;
+	}
+
+	private String saveFile(FileDTO fileDTO) {
+		File uploadDir = new File(Main.uploadDirPath + "facilities");
+		uploadDir.mkdir();
+		String extension = fileDTO.extension;
+		if(extension.trim().isEmpty()) return null;
+
+		Path tempFile = null;
+		try{
+			tempFile = Files.createTempFile(uploadDir.toPath(), "", "." + extension);
+			Files.copy(fileDTO.inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+			logInfo(fileDTO.filename, tempFile);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return tempFile != null ? String.valueOf(tempFile.getFileName()) : null;
+	}
+
+	private void logInfo(String filename, Path tempFile) {
+		System.out.println("Uploaded file '" + filename + "' saved as '" + tempFile.toAbsolutePath() + "'");
+	}
    
 }
