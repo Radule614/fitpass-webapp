@@ -1,7 +1,7 @@
 package model.facility;
 
 public final class WorkingHours {
-    private static final String pattern = "";
+    private static final String pattern = "^\\d{2}:\\d{2}$";
 
     private final int startHour;
     private final int startMinute;

@@ -1,19 +1,17 @@
 package service;
 
-import dto.LoginDTO;
-import dto.LoginResponseDTO;
-import dto.RegisterDTO;
+import dto.auth.LoginDTO;
+import dto.auth.LoginResponseDTO;
+import dto.auth.RegisterDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import model.User;
 import model.customer.Customer;
-import model.customer.CustomerType;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import java.awt.Cursor;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

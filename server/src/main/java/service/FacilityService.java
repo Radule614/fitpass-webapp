@@ -1,6 +1,7 @@
 package service;
 
-import dto.FacilityDTO;
+import dto.facility.DeleteFacilityDTO;
+import dto.facility.FacilityDTO;
 import dto.FileDTO;
 import model.facility.Facility;
 import model.facility.FacilityType;
@@ -91,15 +92,34 @@ public class FacilityService {
     }
 
 	public Facility addFacility(FacilityDTO facilityDTO, FileDTO fileDTO){
-		if(!(fileDTO.extension.equals("jpg") || fileDTO.extension.equals("jpeg") || fileDTO.extension.equals("png"))) return null;
+		if(!checkIfImageValid(fileDTO.extension)) return null;
 		String image = saveFile(fileDTO);
-
 		String logoUrl = "img/facilities/" + image;
 		Facility f = new Facility(facilityDTO.name, facilityDTO.facilityType, facilityDTO.available, facilityDTO.location, logoUrl, 0, facilityDTO.workingHours, facilityDTO.content);
-
 		facilityRepository.add(f);
-		
 		return f;
+	}
+
+	public boolean deleteFacility(DeleteFacilityDTO dto){
+		Facility f = getByName(dto.name);
+		if(f != null && facilityRepository.delete(f)){
+			facilityRepository.saveAll();
+			return true;
+		}
+		return false;
+	}
+
+	public boolean checkIfImageValid(String extension){
+		return extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png");
+	}
+
+	public Facility getByName(String facilityName){
+		for (Facility facility: facilityRepository.getAll()) {
+			if(facilityName.equals(facility.name)){
+				return facility;
+			}
+		}
+		return null;
 	}
 
 	private String saveFile(FileDTO fileDTO) {

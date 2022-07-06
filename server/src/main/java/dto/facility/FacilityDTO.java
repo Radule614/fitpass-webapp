@@ -1,4 +1,4 @@
-package dto;
+package dto.facility;
 
 import model.facility.FacilityType;
 import model.facility.Location;

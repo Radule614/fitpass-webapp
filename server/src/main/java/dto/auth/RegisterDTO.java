@@ -1,4 +1,4 @@
-package dto;
+package dto.auth;
 
 import java.time.LocalDate;
 

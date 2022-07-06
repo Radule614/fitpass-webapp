@@ -18,9 +18,14 @@ public abstract class GenericRepository<T> implements IRepository<T> {
     }
 
     @Override
-    public void add(T item){
+    public void add(T item) {
         this.data.add(item);
         this.saveAll();
+    }
+
+    @Override
+    public boolean delete(T item){
+        return data.remove(item);
     }
     
     protected abstract void createFileHandlerAndReadData();

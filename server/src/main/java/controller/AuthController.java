@@ -1,10 +1,10 @@
 package controller;
 
 import com.google.gson.Gson;
-import dto.LoginDTO;
-import dto.LoginResponseDTO;
-import dto.RegisterDTO;
-import dto.RegisterResponseDTO;
+import dto.auth.LoginDTO;
+import dto.auth.LoginResponseDTO;
+import dto.auth.RegisterDTO;
+import dto.auth.RegisterResponseDTO;
 import model.customer.Customer;
 import service.AuthService;
 import spark.Request;

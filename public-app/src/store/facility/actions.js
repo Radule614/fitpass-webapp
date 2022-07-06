@@ -30,8 +30,6 @@ export default {
     });
   },
   async addFacility(context, payload){
-    //for (var x of payload) console.log(x);
-    //console.log(payload.get('file'));
     const response = await fetch(`${Settings.serverUrl}/api/facilities/add`, {
       method: 'POST',
       headers: {
@@ -39,14 +37,27 @@ export default {
       },
       body: payload
     });
-    //console.log(response);
     const responseData = await response.json();
-    if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to add new facility.');
+    if (!response.ok || responseData.messages || responseData.message) {
+      const error = new Error(responseData.messages || responseData.message || 'Failed to add new facility.');
       throw error;
     }
     console.log(responseData);
-    if(responseData && !responseData.message) context.commit('addFacility', responseData);
-    return responseData && !responseData.message;
+    if(responseData) context.commit('addFacility', responseData);
+  },
+  async removeFacility(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/facilities/delete`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: JSON.stringify(payload)
+    });
+    const responseData = await response.json();
+    if (!response.ok || responseData.message) {
+      const error = new Error(responseData.message || 'Failed to remove facility.');
+      throw error;
+    }
+    context.commit('removeFacility', payload.name)
   }
 }

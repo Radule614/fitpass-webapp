@@ -39,7 +39,9 @@ public class Main {
                 get("/search/", FacilityController::searchFacilities);
 
                 before("/add", AuthController::authenticate);
+                before("/delete", AuthController::authenticate);
                 post("/add", FacilityController::addFacility);
+                post("/delete", FacilityController::deleteFacility);
             });
         });
     }

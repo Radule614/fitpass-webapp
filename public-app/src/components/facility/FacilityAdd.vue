@@ -8,6 +8,11 @@ export default{
     CustomFileInput,
     CustomButton
   },
+  data(){
+    return {
+      messages: []
+    }
+  },
   computed:{
     loggedUserType(){
       return this.$store.getters['auth/userType'];
@@ -23,8 +28,13 @@ export default{
     async formSubmit(event){
       event.preventDefault();
       const data = new FormData(this.$refs.submitForm);
-      let res = await this.$store.dispatch('facility/addFacility', data);
-      console.log(res);
+      try{
+        await this.$store.dispatch('facility/addFacility', data);
+        this.$router.replace('facility');
+      }catch(error){
+        this.messages = error.message.split(",");
+        console.log(this.messages);
+      }
     }
   }
 }
@@ -68,6 +78,9 @@ export default{
         <td colspan="3"><textarea class="textarea-primary" name="content" id="" cols="30" rows="10"></textarea></td>
       </tr>
     </table>
+    <div class="error-block">
+      <div v-for="(message, index) in messages" :key="index">{{message}}</div>
+    </div>
     <div class="button-group">
       <custom-link v-if="currentRouteName == 'facilityAdd'" to="/facility" @click="scrollToTop">Cancel</custom-link>
       <custom-button type="submit" v-if="currentRouteName == 'facilityAdd'" class="inverse block" to="/facility" @click="formSubmit($event)">Add</custom-button>
@@ -77,6 +90,10 @@ export default{
 
 <style scoped lang="scss">
 .add-form{
+  .error-block{
+    font-style: italic;
+    color: red;
+  }
   .button-group{
     display: flex;
     justify-content: right;

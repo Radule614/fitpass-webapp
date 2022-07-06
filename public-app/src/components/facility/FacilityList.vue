@@ -8,7 +8,7 @@ export default {
     FacilityBlock,
     CustomButton,
     CustomLink
-},
+  },
   props:{
     shallowShowcase: Boolean
   },
@@ -28,12 +28,12 @@ export default {
     facilities() {
       let facilities = this.$store.getters['facility/facilities'];
       if(!facilities) return facilities;
-      facilities.sort((a, b) => a.available ? -1 : 0);      
+      facilities.sort((a, b) => a.available && !b.available ? -1 : 0);
       return this.shallowShowcase && facilities.length > 6 ? facilities.splice(0, 6) : facilities;
     },
     filteredFacilities() {
       let facilities = this.getFilteredFacilities();
-      return facilities ? facilities.sort((a, b) => a.available ? -1 : 0) : facilities;
+      return facilities ? facilities.sort((a, b) => a.available && !b.available ? -1 : 0) : facilities;
     },
     loggedUserType(){
       return this.$store.getters['auth/userType'];
