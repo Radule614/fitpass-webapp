@@ -2,15 +2,19 @@
 import CustomLink from '../utility/CustomLink.vue';
 import CustomButton from '../utility/CustomButton.vue';
 import CustomFileInput from '../utility/CustomFileInput.vue';
+import ChooseLocationModal from '../utility/ChooseLocationModal.vue';
 export default{
   components:{
     CustomLink,
     CustomFileInput,
-    CustomButton
-  },
+    CustomButton,
+    ChooseLocationModal
+},
   data(){
     return {
-      messages: []
+      messages: [],
+      locationModalActive: false,
+      location: { lat: 44, lng: 20 }
     }
   },
   computed:{
@@ -25,15 +29,22 @@ export default{
     scrollToTop(){
       window.scrollTo(0, 0);
     },
+    newLocationSelected(event){
+      this.location.lat = event.lat;
+      this.location.lng = event.lng;
+      console.log(this.location);
+      this.locationModalActive = false;
+    },
     async formSubmit(event){
       event.preventDefault();
       const data = new FormData(this.$refs.submitForm);
+      data.append('location', JSON.stringify(this.location));
+      console.log(data);
       try{
         await this.$store.dispatch('facility/addFacility', data);
         this.$router.replace('facility');
       }catch(error){
         this.messages = error.message.split(",");
-        console.log(this.messages);
       }
     }
   }
@@ -74,6 +85,15 @@ export default{
         <td colspan="3"><custom-file-input name="image" class="block"></custom-file-input></td>
       </tr>
       <tr>
+        <td><label>location:</label></td>
+        <td colspan="3">
+          <div class="location-block">
+            <custom-button class="block" @click="locationModalActive = true">Location</custom-button>
+            <div class="info">No location selected</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
         <td style="vertical-align:top;"><label for="content">content summary:</label></td>
         <td colspan="3"><textarea class="textarea-primary" name="content" id="" cols="30" rows="10"></textarea></td>
       </tr>
@@ -86,6 +106,8 @@ export default{
       <custom-button type="submit" v-if="currentRouteName == 'facilityAdd'" class="inverse block" to="/facility" @click="formSubmit($event)">Add</custom-button>
     </div>
   </form>
+
+  <choose-location-modal :show="locationModalActive" :locationProp="location" @close="locationModalActive=false" @confirm="newLocationSelected($event)"></choose-location-modal>
 </template>
 
 <style scoped lang="scss">
@@ -122,6 +144,19 @@ export default{
       width:100%;
       margin-bottom: 0px;
       border-radius: 0px;
+    }
+    .location-block{
+      display: flex;
+      flex-direction: row;
+      & > button{
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+      .info{
+        line-height: 36px;
+        padding-left: 14px;
+        font-style: italic;
+      }
     }
   }
 }

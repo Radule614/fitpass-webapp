@@ -1,10 +1,12 @@
 <script>
 import Settings from '../../settings.js';
 import FacilityInfo from './FacilityInfo.vue';
+import ConfirmModal from '../utility/ConfirmModal.vue';
 
 export default {
   components:{
-    FacilityInfo
+    FacilityInfo,
+    ConfirmModal
   },
   props: {
     selected:Boolean,
@@ -27,7 +29,8 @@ export default {
   data(){
     return {
       facilityAppeared: false,
-      detailsActive: false
+      detailsActive: false,
+      confirmModalActive: false
     }
   },
   created(){
@@ -67,8 +70,10 @@ export default {
     async removeFacility(){
       try{
         await this.$store.dispatch('facility/removeFacility', {name: this.facility.name});
+        this.confirmModalActive = false
       }catch(error){
         console.error(error);
+        this.confirmModalActive = false
       }
     }
   }
@@ -88,7 +93,7 @@ export default {
           </div>
         </div>
         <div class="image" ref="imageContainer" :style="{'background-image':`url(${this.imagePath})`}"></div>
-        <button v-if="loggedUserType == 'ADMIN'" type="button" class="btn-delete" @click="removeFacility">
+        <button v-if="loggedUserType == 'ADMIN'" type="button" class="btn-delete" @click="confirmModalActive = true">
           <span>
             <fa-icon :icon="['fas', 'xmark']"></fa-icon>
           </span>
@@ -105,6 +110,8 @@ export default {
         <facility-info :facility="facility"></facility-info>
       </div>
     </div>
+
+    <confirm-modal :show="confirmModalActive" @close="confirmModalActive = false" @confirm="removeFacility"></confirm-modal>
   </div>
 </template>
 
@@ -182,7 +189,7 @@ export default {
         padding:0px;
         opacity: 0.4;
         color: $dark-primary;
-        transition: opacity 0.2s ease-in-out, color 0.3s ease-in-out;
+        transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out;
         span{
           position: absolute;
           right: -50px;
@@ -200,7 +207,7 @@ export default {
           position: absolute;
           transition:border 0.3s ease-in-out, transform 0.3s ease-in-out, border-radius 0.6s ease-in-out;
           border-width: 0px;
-          border-radius: 50px;
+          border-radius: 50%;
           transform: translateX(60px) translateY(0px);
           border-color: transparent $active-primary transparent transparent;
         }

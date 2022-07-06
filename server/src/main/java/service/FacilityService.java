@@ -8,10 +8,12 @@ import model.facility.FacilityType;
 import repository.FacilityRepository;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import dto.AvgGradeRangeDTO;
@@ -103,6 +105,7 @@ public class FacilityService {
 	public boolean deleteFacility(DeleteFacilityDTO dto){
 		Facility f = getByName(dto.name);
 		if(f != null && facilityRepository.delete(f)){
+			deleteFile(f.logoUrl);
 			facilityRepository.saveAll();
 			return true;
 		}
@@ -137,6 +140,16 @@ public class FacilityService {
 			e.printStackTrace();
 		}
 		return tempFile != null ? String.valueOf(tempFile.getFileName()) : null;
+	}
+
+	private void deleteFile(String uri){
+		String[] parts = uri.split("/");
+		String filename = parts[parts.length-1];
+
+		File uploadDir = new File(Main.uploadDirPath + "facilities");
+		File[] matchingFiles = uploadDir.listFiles((dir, name) -> name.equals(filename));
+
+		for (File file: matchingFiles) file.delete();
 	}
 
 	private void logInfo(String filename, Path tempFile) {

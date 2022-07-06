@@ -1,5 +1,9 @@
 <script>
+import LeafletMap from '../utility/LeafletMap.vue';
 export default{
+  components:{
+    LeafletMap
+  },
   props:{
     facility: {
       available: Boolean,
@@ -48,7 +52,9 @@ export default{
       </table>
     </div>
     <div class="right">
-      <div class="location"><i>location</i></div>
+      <div class="location">
+        <leaflet-map class="map" :showOnly="true" :markerTooltip="facility.name"></leaflet-map>
+      </div>
     </div>
   </div>
 </template>
@@ -56,6 +62,7 @@ export default{
 <style scoped lang="scss">
 .info{
   display: flex;
+  position: relative;
   .left{
     flex: 1;
     table{
@@ -71,14 +78,22 @@ export default{
     }
   }
   .right{
+    position: relative;
     .location{
       width: 500px;
       height: 295px;
-
       display: flex;
       justify-content: center;
       align-items: center;
       border:1px solid gray;
+      position: relative;
+      .map{
+        width: 100%!important;
+        height: 100%!important;
+        position: absolute;
+        top:0px;
+        left:0px;
+      }
     }
   }
 }

@@ -2,6 +2,7 @@ package controller;
 
 import com.google.gson.Gson;
 
+import dto.LocationDTO;
 import dto.facility.DeleteFacilityDTO;
 import dto.facility.FacilityDTO;
 import dto.FileDTO;
@@ -48,6 +49,7 @@ public class FacilityController {
 	public static String addFacility(Request request, Response response) throws ServletException, IOException {
 		request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 		response.type("application/json");
+		Gson g = new Gson();
 		Part filePart = request.raw().getPart("file");
 
 		FacilityService service = new FacilityService();
@@ -59,6 +61,8 @@ public class FacilityController {
 		String content = parseStringInput(request.raw().getPart("content"));
 		String available = parseStringInput(request.raw().getPart("available"));
 		FileDTO fileDTO = new FileDTO(filePart.getInputStream(), getFileName(filePart), getExtension(filePart));
+
+		LocationDTO locationDTO = g.fromJson(parseStringInput(request.raw().getPart("location")), LocationDTO.class);
 
 		MessageResponse messageObject = new MessageResponse();
 		if(name == null || name.isEmpty()) messageObject.addMessage("Facility name can't be empty");

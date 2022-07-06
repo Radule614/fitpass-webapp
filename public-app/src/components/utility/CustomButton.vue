@@ -15,7 +15,7 @@ button {
   display: block;
   font-size:16px;
   border: 0px;
-  line-height: 40px;
+  line-height: 36px;
   padding: 0 32px;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
   background-color: $light-primary;
