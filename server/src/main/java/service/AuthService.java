@@ -1,19 +1,17 @@
 package service;
 
-import dto.LoginDTO;
-import dto.LoginResponseDTO;
-import dto.RegisterDTO;
+import dto.auth.LoginDTO;
+import dto.auth.LoginResponseDTO;
+import dto.auth.RegisterDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import model.User;
 import model.customer.Customer;
-import model.customer.CustomerType;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import java.awt.Cursor;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -23,7 +21,7 @@ import java.util.UUID;
 
 public class AuthService {
     private static final String secret = "asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4";
-    private static final long expirationLength = 60L;
+    private static final long expirationLength = 60L * 72L;
 
     public AuthService() {}
 

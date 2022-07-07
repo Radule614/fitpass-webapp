@@ -15,7 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import repository.util.LocalDateAdapter;
 
 public class FileHandler<T> implements IFileHandler<T> {
-	private static String filePath;
+	private String filePath;
 	// Da bi se hard bound-ovalo i T tokom compile time-a
 	private TypeToken<ArrayList<T>> listType;
 	private Gson deserializeGson;

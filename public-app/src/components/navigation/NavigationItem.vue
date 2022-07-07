@@ -1,20 +1,18 @@
 <script>
   export default {
     props: {
-      routeName: String,
+      path: String,
       text: String
     }
   }
 </script>
 
 <template>
-  <div class="menu-item">
-    <router-link :to="routeName">{{text}}</router-link>
-  </div>
+  <router-link class="menu-item" :to="path">{{text}}</router-link>
 </template>
 
 <style scoped lang="scss">
-  .menu-item a{
+  .menu-item{
     display: block;
     padding: 0px 35px;
     position: relative;

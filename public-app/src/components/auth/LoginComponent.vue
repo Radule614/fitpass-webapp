@@ -4,6 +4,7 @@ export default {
   props: {
     show: Boolean
   },
+  emits:['close', 'confirm'],
   components: {
     ModalComponent
   },

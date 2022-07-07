@@ -1,12 +1,16 @@
 <script>
 import FacilityBlock from './FacilityBlock.vue';
 import CustomButton from "../utility/CustomButton.vue"
+import CustomLink from '../utility/CustomLink.vue';
 import { mapActions, mapMutations, mapGetters } from 'vuex';
+import ConfirmModal from '../utility/ConfirmModal.vue';
 export default {
   components:{
     FacilityBlock,
-    CustomButton
-},
+    CustomButton,
+    CustomLink,
+    ConfirmModal
+  },
   props:{
     shallowShowcase: Boolean
   },
@@ -19,19 +23,27 @@ export default {
         facilityPageFacilities: []
       },
       selectedType: "ALL",
-      selectedAvgGrade: "ALL"
+      selectedAvgGrade: "ALL",
+      confirmModalActive: false,
+      facilityToRemove: null
     }
   },
   computed: {
     facilities() {
       let facilities = this.$store.getters['facility/facilities'];
       if(!facilities) return facilities;
-      facilities.sort((a, b) => a.available ? -1 : 0);      
+      facilities.sort((a, b) => a.available && !b.available ? -1 : 0);
       return this.shallowShowcase && facilities.length > 6 ? facilities.splice(0, 6) : facilities;
     },
     filteredFacilities() {
       let facilities = this.getFilteredFacilities();
-      return facilities ? facilities.sort((a, b) => a.available ? -1 : 0) : facilities;
+      return facilities ? facilities.sort((a, b) => a.available && !b.available ? -1 : 0) : facilities;
+    },
+    loggedUserType(){
+      return this.$store.getters['auth/userType'];
+    },
+    currentRouteName(){
+      return this.$router.currentRoute.value.name;
     }
   },
   methods:{
@@ -98,6 +110,20 @@ export default {
          .replace(/"/g, "")
         .replace(/\//g, "")
          .replace(/'/g, "");
+    },
+    scrollToTop(){
+        window.scrollTo(0, 0);
+    },
+    async removeFacility(){
+      try{
+        await this.$store.dispatch('facility/removeFacility', {name: this.facilityToRemove});
+        this.confirmModalActive = false
+        this.facilityToRemove = null;
+      }catch(error){
+        console.error(error);
+        this.confirmModalActive = false
+        this.facilityToRemove = null;
+      }
     }
   },
   unmounted() {
@@ -108,33 +134,38 @@ export default {
 
 <template>
 <div class="facility-list">
-  <div v-if="!shallowShowcase" class="search-block">
-    <div class="search-wrapper">
-      <input id="search" placeholder="Search facility..." v-model="this.searchText" @keyup="search"/>
-      <fa-icon class="search-icon" :icon="['fas','magnifying-glass']"></fa-icon>
-      <fa-icon class="x-icon" :icon="['fas', 'circle-xmark']" @click="xPressed"></fa-icon>
+  <div v-if="!shallowShowcase" class="control-block">
+    <div class="search-block" v-if="currentRouteName == 'facility'">
+      <div class="search-wrapper">
+        <input id="search" placeholder="Search facility..." v-model="this.searchText" @keyup="search"/>
+        <fa-icon class="search-icon" :icon="['fas','magnifying-glass']"></fa-icon>
+        <fa-icon class="x-icon" :icon="['fas', 'circle-xmark']" @click="xPressed"></fa-icon>
+      </div>
+      <div class="select-type-wrapper">
+        Select type: 
+        <select class="select-type" @change="searchByTypeOrAvgGrade" v-model="selectedType">
+          <option value="ALL">ALL</option>
+          <option value="GYM">GYM</option>
+          <option value="POOL">POOL</option>
+          <option value="SPORTS CENTER">SPORTS CENTER</option>
+          <option value="DANCE STUDIO">DANCE STUDIO</option>
+          <option value="OTHER">OTHER</option>
+        </select>
+      </div>
+      <div class="select-avg-grade-wrapper">
+        Select average grade: 
+        <select class="select-avg-grade" @change="searchByTypeOrAvgGrade" v-model="selectedAvgGrade">
+          <option value="ALL">ALL</option>
+          <option value="0.0 - 1.0">0.0 - 1.0</option>
+          <option value="1.0 - 2.0">1.0 - 2.0</option>
+          <option value="2.0 - 3.0">2.0 - 3.0</option>
+          <option value="3.0 - 4.0">3.0 - 4.0</option>
+          <option value="4.0 - 5.0">4.0 - 5.0</option>
+        </select>
+      </div>
     </div>
-    <div class="select-type-wrapper">
-      Select type: 
-      <select class="select-type" @change="searchByTypeOrAvgGrade" v-model="selectedType">
-        <option value="ALL">ALL</option>
-        <option value="GYM">GYM</option>
-        <option value="POOL">POOL</option>
-        <option value="SPORTS CENTER">SPORTS CENTER</option>
-        <option value="DANCE STUDIO">DANCE STUDIO</option>
-        <option value="OTHER">OTHER</option>
-      </select>
-    </div>
-    <div class="select-avg-grade-wrapper">
-      Select average grade: 
-      <select class="select-avg-grade" @change="searchByTypeOrAvgGrade" v-model="selectedAvgGrade">
-        <option value="ALL">ALL</option>
-        <option value="0.0 - 1.0">0.0 - 1.0</option>
-        <option value="1.0 - 2.0">1.0 - 2.0</option>
-        <option value="2.0 - 3.0">2.0 - 3.0</option>
-        <option value="3.0 - 4.0">3.0 - 4.0</option>
-        <option value="4.0 - 5.0">4.0 - 5.0</option>
-      </select>
+    <div class="button-group">
+      <custom-link v-if="loggedUserType == 'ADMIN' && currentRouteName == 'facility'" class="inverse" to="/facility/add" @click="scrollToTop">Add Facility</custom-link>
     </div>
   </div>
   <div ref="facilities">
@@ -144,20 +175,29 @@ export default {
                     :facility="facility" 
                     :selected="determineSelected(index)"
                     :shallowShowcase="shallowShowcase"
-                    @selectedEvent="facilitySelected(index)">
+                    @selectedEvent="facilitySelected(index)"
+                    @remove="confirmModalActive = true; facilityToRemove = $event">
     </facility-block>
   </div>
+
+  <confirm-modal :show="confirmModalActive" @close="confirmModalActive = false; facilityToRemove = null" @confirm="removeFacility"></confirm-modal>
 </div>
 </template>
 
 <style scoped lang="scss">
 .facility-list{
-  .search-block{
+  .control-block{
     box-shadow:  0 3px 3px -3px rgba(0,0,0,0.3); 
     margin-bottom: 30px;
     padding-bottom: 10px;
+    .button-group{
+      display: flex;
+      justify-content: right;
+      & > *{
+        margin-left: 15px;
+      }
+    }
   }
-
   .search-wrapper {
     text-align: center;
     position: relative;

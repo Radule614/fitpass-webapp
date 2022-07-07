@@ -13,6 +13,7 @@ export default {
       content: String,
       facilityType: String,
       name: String,
+      location: Object,
       grade: Number,
       logoUrl: String,
       workingHours: {
@@ -30,6 +31,7 @@ export default {
       detailsActive: false
     }
   },
+  emits:['selectedEvent', 'remove'],
   created(){
     window.addEventListener('scroll', this.handleScroll);
   },
@@ -42,6 +44,9 @@ export default {
   computed:{
     imagePath(){
       return `${Settings.serverUrl}/${this.facility.logoUrl}`;
+    },
+    loggedUserType(){
+      return this.$store.getters['auth/userType'];
     }
   },
   methods: {
@@ -50,16 +55,14 @@ export default {
     },
     checkAnimations(){
       const element = this.$el;
-
       let windowHeight = window.innerHeight;
-      
       let distanceFromTop = element.getBoundingClientRect().top;
       if(distanceFromTop - windowHeight <= 0){
         this.facilityAppeared = true;
       }
     },
-    selectedHandler(){
-      if(this.facility.available){
+    selectedHandler(event){
+      if(this.facility.available && !event.target.closest('.btn-delete')){
         this.$emit('selectedEvent');
       }
     }
@@ -70,7 +73,7 @@ export default {
 <template>
   <div class="facility" :class="{'appear': facilityAppeared,'details-active': detailsActive && !shallowShowcase, 'selected': selected && !shallowShowcase && facility.available, 'facility-available': facility.available, 'shallow-showcase': shallowShowcase}">
     <div class="header">
-      <div class="left" @click="selectedHandler">
+      <div class="left" @click="selectedHandler($event)">
         <div class="text-group">
           <div class="text">{{facility.name}}</div>
           <div class="text">{{facility.facilityType}}</div>
@@ -80,6 +83,11 @@ export default {
           </div>
         </div>
         <div class="image" ref="imageContainer" :style="{'background-image':`url(${this.imagePath})`}"></div>
+        <button v-if="loggedUserType == 'ADMIN'" type="button" class="btn-delete" @click="$emit('remove', facility.name)">
+          <span>
+            <fa-icon :icon="['fas', 'xmark']"></fa-icon>
+          </span>
+        </button>
       </div>
       <div v-if="!shallowShowcase" class="right btn-wrap">
         <custom-button class="btn-details block no-shadow" @click="detailsActive=!detailsActive">
@@ -103,9 +111,7 @@ export default {
   &:first-child{
     margin-top: 0px;
   }
-  &.appear{
-    animation: appearance-from-right 0.4s ease-in-out forwards;
-  }
+  
   .header{
     height: 100px;
     display: flex;
@@ -155,6 +161,54 @@ export default {
           bottom:0px;
         }
       }
+      .btn-delete{
+        position: absolute;
+        right:0px;
+        top:0px;
+        border: none;
+        outline: none;
+        background: transparent;
+        display: block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 50px 60px 50px 0;
+        border-color: transparent $light-primary transparent transparent;
+        padding:0px;
+        opacity: 0.4;
+        color: $dark-primary;
+        transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out;
+        span{
+          position: absolute;
+          right: -50px;
+          top: -17px;
+          font-size: 24px;
+        }
+        &::before{
+          content: "";
+          display: block;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          right: 0px;
+          top: 0px;
+          position: absolute;
+          transition:border 0.3s ease-in-out, transform 0.3s ease-in-out, border-radius 0.6s ease-in-out;
+          border-width: 0px;
+          border-radius: 50%;
+          transform: translateX(60px) translateY(0px);
+          border-color: transparent $active-primary transparent transparent;
+        }
+        &:hover{
+          opacity: 1;
+          color: $light-primary;
+          &::before{
+            border-width: 50px 60px 50px 0;
+            border-radius: 0px;
+            transform: translateX(60px) translateY(-50px);
+          }
+        }
+      }
     }
     .right{
       position: relative;
@@ -197,9 +251,11 @@ export default {
     overflow: hidden;
     transform: translateY(-3px);
     .details-inner{
-        padding:30px;
-      }
+      padding:30px;
+    }
   }
+
+  
 
   &.facility-available{
     .header .left {
@@ -235,12 +291,27 @@ export default {
     }    
   }
 
+  &.appear{
+    animation: appearance-from-bottom 0.4s ease-in-out forwards;
+  }
+
   &.shallow-showcase{
     .header .left{
       cursor: default;
-      &:hover .image::after{
-        border-color: transparent transparent transparent #fff;
+      .btn-delete{
+        display: none;
       }
+      &:hover {
+        .image::after{
+          border-color: transparent transparent transparent #fff;
+        }
+        .btn-delete{
+          display: none;
+        }
+      }
+    }
+    &.appear{
+      animation: appearance-from-right 0.4s ease-in-out forwards;
     }
   }
   &.selected{

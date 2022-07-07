@@ -4,8 +4,11 @@ export default {
     show: Boolean,
     buttonText: String,
     width: Number,
-    disabled: Boolean
+    disabled: Boolean,
+    simple: Boolean,
+    responsive: Boolean
   },
+  emits:['close', 'confirm'],
   computed: {
     isDisabled(){
       return this.disabled
@@ -26,9 +29,9 @@ export default {
 <template>
   <transition name="modal">
     <div v-if="show" class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container" v-bind:style="{ 'width': width + 'px'}">
-          <div class="modal-header">
+      <div class="modal-wrapper" :class="{'simple': simple}">
+        <div class="modal-container" :class="{'container': responsive}" v-bind:style="{ 'width': width + 'px'}">
+          <div v-if="!simple" class="modal-header">
             <slot name="header">
               default heading
             </slot>
@@ -71,12 +74,15 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
   margin: 0px auto;
   background-color: $light-primary;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
+  padding: 0px;
+  &:not(.container){
+    width: 300px;
+  }
 }
 
 .modal-content{
@@ -91,6 +97,16 @@ export default {
   background-color: $dark-primary;
   border-radius: 2px 2px 0px 0px;
   border-bottom: 0px;
+}
+
+.simple .modal-body{
+  text-align: center;
+  font-size: 17px;
+  padding-bottom: 30px;
+}
+
+.modal-footer{
+  padding-bottom: 0px;
 }
 
 

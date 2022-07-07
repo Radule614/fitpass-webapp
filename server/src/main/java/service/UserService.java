@@ -2,7 +2,7 @@ package service;
 
 import java.util.ArrayList;
 
-import dto.RegisterDTO;
+import dto.auth.RegisterDTO;
 import model.User;
 import model.customer.Customer;
 import repository.UserRepository;
