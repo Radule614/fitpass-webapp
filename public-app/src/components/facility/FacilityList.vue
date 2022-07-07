@@ -3,11 +3,13 @@ import FacilityBlock from './FacilityBlock.vue';
 import CustomButton from "../utility/CustomButton.vue"
 import CustomLink from '../utility/CustomLink.vue';
 import { mapActions, mapMutations, mapGetters } from 'vuex';
+import ConfirmModal from '../utility/ConfirmModal.vue';
 export default {
   components:{
     FacilityBlock,
     CustomButton,
-    CustomLink
+    CustomLink,
+    ConfirmModal
   },
   props:{
     shallowShowcase: Boolean
@@ -21,7 +23,9 @@ export default {
         facilityPageFacilities: []
       },
       selectedType: "ALL",
-      selectedAvgGrade: "ALL"
+      selectedAvgGrade: "ALL",
+      confirmModalActive: false,
+      facilityToRemove: null
     }
   },
   computed: {
@@ -109,6 +113,17 @@ export default {
     },
     scrollToTop(){
         window.scrollTo(0, 0);
+    },
+    async removeFacility(){
+      try{
+        await this.$store.dispatch('facility/removeFacility', {name: this.facilityToRemove});
+        this.confirmModalActive = false
+        this.facilityToRemove = null;
+      }catch(error){
+        console.error(error);
+        this.confirmModalActive = false
+        this.facilityToRemove = null;
+      }
     }
   },
   unmounted() {
@@ -160,9 +175,12 @@ export default {
                     :facility="facility" 
                     :selected="determineSelected(index)"
                     :shallowShowcase="shallowShowcase"
-                    @selectedEvent="facilitySelected(index)">
+                    @selectedEvent="facilitySelected(index)"
+                    @remove="confirmModalActive = true; facilityToRemove = $event">
     </facility-block>
   </div>
+
+  <confirm-modal :show="confirmModalActive" @close="confirmModalActive = false; facilityToRemove = null" @confirm="removeFacility"></confirm-modal>
 </div>
 </template>
 

@@ -14,7 +14,9 @@ export default{
     return {
       messages: [],
       locationModalActive: false,
-      location: { lat: 44, lng: 20 }
+      location: { lat: 0, lng: 0 },
+      address: null,
+      loading: false
     }
   },
   computed:{
@@ -23,6 +25,12 @@ export default{
     },
     currentRouteName(){
       return this.$router.currentRoute.value.name;
+    },
+    locationFeedback(){
+      if(!this.address) return "No location selected"
+      else{
+        return `${this.address.country||""}, ${this.address.city||this.address.town||""}, ${this.address.road||""} ${this.address.number||""}`
+      }
     }
   },
   methods:{
@@ -32,19 +40,23 @@ export default{
     newLocationSelected(event){
       this.location.lat = event.lat;
       this.location.lng = event.lng;
-      console.log(this.location);
+      this.address = event;
       this.locationModalActive = false;
     },
     async formSubmit(event){
+      this.loading = true;
       event.preventDefault();
       const data = new FormData(this.$refs.submitForm);
-      data.append('location', JSON.stringify(this.location));
-      console.log(data);
+      data.append('location', JSON.stringify(this.address));
+
       try{
         await this.$store.dispatch('facility/addFacility', data);
+        this.loading = false;
+        this.$store.dispatch('facility/searchFacilities', "");
         this.$router.replace('facility');
       }catch(error){
         this.messages = error.message.split(",");
+        this.loading = false;
       }
     }
   }
@@ -89,7 +101,7 @@ export default{
         <td colspan="3">
           <div class="location-block">
             <custom-button class="block" @click="locationModalActive = true">Location</custom-button>
-            <div class="info">No location selected</div>
+            <div class="info">{{locationFeedback}}</div>
           </div>
         </td>
       </tr>
@@ -103,7 +115,7 @@ export default{
     </div>
     <div class="button-group">
       <custom-link v-if="currentRouteName == 'facilityAdd'" to="/facility" @click="scrollToTop">Cancel</custom-link>
-      <custom-button type="submit" v-if="currentRouteName == 'facilityAdd'" class="inverse block" to="/facility" @click="formSubmit($event)">Add</custom-button>
+      <custom-button type="submit" v-if="currentRouteName == 'facilityAdd'" class="inverse block" to="/facility" @click="formSubmit($event)" :disabled="loading">Add</custom-button>
     </div>
   </form>
 

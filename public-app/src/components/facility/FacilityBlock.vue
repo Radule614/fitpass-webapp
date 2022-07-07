@@ -1,12 +1,10 @@
 <script>
 import Settings from '../../settings.js';
 import FacilityInfo from './FacilityInfo.vue';
-import ConfirmModal from '../utility/ConfirmModal.vue';
 
 export default {
   components:{
-    FacilityInfo,
-    ConfirmModal
+    FacilityInfo
   },
   props: {
     selected:Boolean,
@@ -15,6 +13,7 @@ export default {
       content: String,
       facilityType: String,
       name: String,
+      location: Object,
       grade: Number,
       logoUrl: String,
       workingHours: {
@@ -29,10 +28,10 @@ export default {
   data(){
     return {
       facilityAppeared: false,
-      detailsActive: false,
-      confirmModalActive: false
+      detailsActive: false
     }
   },
+  emits:['selectedEvent', 'remove'],
   created(){
     window.addEventListener('scroll', this.handleScroll);
   },
@@ -66,15 +65,6 @@ export default {
       if(this.facility.available && !event.target.closest('.btn-delete')){
         this.$emit('selectedEvent');
       }
-    },
-    async removeFacility(){
-      try{
-        await this.$store.dispatch('facility/removeFacility', {name: this.facility.name});
-        this.confirmModalActive = false
-      }catch(error){
-        console.error(error);
-        this.confirmModalActive = false
-      }
     }
   }
 }
@@ -93,7 +83,7 @@ export default {
           </div>
         </div>
         <div class="image" ref="imageContainer" :style="{'background-image':`url(${this.imagePath})`}"></div>
-        <button v-if="loggedUserType == 'ADMIN'" type="button" class="btn-delete" @click="confirmModalActive = true">
+        <button v-if="loggedUserType == 'ADMIN'" type="button" class="btn-delete" @click="$emit('remove', facility.name)">
           <span>
             <fa-icon :icon="['fas', 'xmark']"></fa-icon>
           </span>
@@ -110,8 +100,6 @@ export default {
         <facility-info :facility="facility"></facility-info>
       </div>
     </div>
-
-    <confirm-modal :show="confirmModalActive" @close="confirmModalActive = false" @confirm="removeFacility"></confirm-modal>
   </div>
 </template>
 

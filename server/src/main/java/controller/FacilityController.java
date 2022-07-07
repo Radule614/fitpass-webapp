@@ -2,12 +2,12 @@ package controller;
 
 import com.google.gson.Gson;
 
-import dto.LocationDTO;
 import dto.facility.DeleteFacilityDTO;
 import dto.facility.FacilityDTO;
 import dto.FileDTO;
 import model.facility.Facility;
 import model.facility.FacilityType;
+import model.facility.Location;
 import model.facility.WorkingHours;
 import service.FacilityService;
 import spark.Request;
@@ -53,30 +53,20 @@ public class FacilityController {
 		Part filePart = request.raw().getPart("file");
 
 		FacilityService service = new FacilityService();
-
-		String name = parseStringInput(request.raw().getPart("name"));
-		String startTime = parseStringInput(request.raw().getPart("startTime"));
-		String endTime = parseStringInput(request.raw().getPart("endTime"));
-		String type = parseStringInput(request.raw().getPart("type"));
-		String content = parseStringInput(request.raw().getPart("content"));
-		String available = parseStringInput(request.raw().getPart("available"));
+		FacilityDTO facilityDTO = null;
+		try{
+			facilityDTO = extractFacilityData(request);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		FileDTO fileDTO = new FileDTO(filePart.getInputStream(), getFileName(filePart), getExtension(filePart));
 
-		LocationDTO locationDTO = g.fromJson(parseStringInput(request.raw().getPart("location")), LocationDTO.class);
+		MessageResponse messageObject = validateData(facilityDTO, fileDTO);
 
-		MessageResponse messageObject = new MessageResponse();
-		if(name == null || name.isEmpty()) messageObject.addMessage("Facility name can't be empty");
-		if(service.getByName(name) != null) messageObject.addMessage("Facility with the same name already exists");
-		if(!service.checkIfImageValid(fileDTO.extension)) messageObject.addMessage("No image selected");
 		Facility facility = null;
-		if(messageObject.isEmpty()){
-			FacilityDTO facilityDTO = new FacilityDTO(name, FacilityType.valueOf(type), available != null && available.equals("on"), null, new WorkingHours(startTime, endTime), content);
-			facility = service.addFacility(facilityDTO, fileDTO);
-		}
+		if(messageObject.isEmpty()) facility = service.addFacility(facilityDTO, fileDTO);
 
-		if(!messageObject.isEmpty() || facility == null){
-			return messageObject.toJSON();
-		}
+		if(!messageObject.isEmpty() || facility == null) return messageObject.toJSON();
 		return new Gson().toJson(facility);
 	}
 
@@ -116,5 +106,30 @@ public class FacilityController {
 			}
 		}
 		return null;
+	}
+	private static MessageResponse validateData(FacilityDTO facilityDTO, FileDTO fileDTO){
+		FacilityService service = new FacilityService();
+		MessageResponse messageObject = new MessageResponse();
+
+		if(facilityDTO == null || fileDTO == null){
+			messageObject.addMessage("Error while parsing data");
+			return messageObject;
+		}
+
+		if(facilityDTO.name == null || facilityDTO.name.isEmpty()) messageObject.addMessage("Facility name can't be empty");
+		if(service.getByName(facilityDTO.name) != null) messageObject.addMessage("Facility with the same name already exists");
+		if(!service.checkIfImageValid(fileDTO.extension)) messageObject.addMessage("No image selected");
+		return messageObject;
+	}
+	private static FacilityDTO extractFacilityData(Request request) throws ServletException, IOException {
+		String name = parseStringInput(request.raw().getPart("name"));
+		String startTime = parseStringInput(request.raw().getPart("startTime"));
+		String endTime = parseStringInput(request.raw().getPart("endTime"));
+		String type = parseStringInput(request.raw().getPart("type"));
+		String content = parseStringInput(request.raw().getPart("content"));
+		String available = parseStringInput(request.raw().getPart("available"));
+		Location location = new Gson().fromJson(parseStringInput(request.raw().getPart("location")), Location.class);
+
+		return new FacilityDTO(name, FacilityType.valueOf(type), available != null && available.equals("on"), location, new WorkingHours(startTime, endTime), content);
 	}
 }

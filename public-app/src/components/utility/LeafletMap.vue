@@ -37,18 +37,30 @@ export default {
   data() {
     return {
       zoom: 2,
+      center: [0, 0],
       location: {lat:0, lng:0}
     };
   },
+  computed:{
+    getLocation(){
+      return this.showOnly ? this.locationProp : this.location;
+    }
+  },
   beforeMount(){
+    if(this.showOnly){
+      this.zoom = 12;
+    }
     if(this.locationProp){
       this.location = this.locationProp;
     }
+    if(this.location && this.location.lat && this.location.lng) this.center = [this.location.lat, this.location.lng];
   },
   methods: {
     setNewLocation(event){
-      this.location = event.target._latlng;
-      this.$emit('locationChanged', this.location)
+      if(!this.showOnly&&event.latlng){
+        this.location = event.latlng;
+        this.$emit('locationChanged', this.location);
+      }
     }
   },
 };
@@ -59,24 +71,21 @@ export default {
     <l-map
       v-model="zoom"
       v-model:zoom="zoom"
-      :center="[44, 20]"
+      :maxZoom="19"
+      :minZoom="1"
+      :center="getLocation"
+      @click="setNewLocation($event)"
     >
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
 
-      <l-marker v-if="!showOnly" :lat-lng="this.location" draggable @moveend="setNewLocation($event)">
+      <l-marker :lat-lng="getLocation">
         <l-tooltip>
-          Choose location
+          <div v-if="showOnly">{{markerTooltip}}</div>
+          <div v-else>Choose location</div>
         </l-tooltip>
       </l-marker>
-
-      <l-marker v-if="showOnly" :lat-lng="this.location">
-        <l-tooltip>
-          {{markerTooltip}}
-        </l-tooltip>
-      </l-marker>
-
     </l-map>
   </div>
 </template>
