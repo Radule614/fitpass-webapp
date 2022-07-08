@@ -50,17 +50,6 @@ export default {
     ...mapActions("facility", ["searchFacilities"]),
     ...mapMutations("facility", ["setFilteredFacilities"]),
     ...mapGetters("facility", ["getFilteredFacilities"]),
-    facilitySelected(index){
-      this.selectedIndex = index;
-      for(let facility of this.$refs.facilities.children){ 
-        if(index != facility.getAttribute('data-id')){
-          facility.classList.remove('selected');
-        }
-      }
-    },
-    determineSelected(index){
-      return this.selectedIndex==index;
-    },
     search(e) {
       let safeSearchText = this.escapeInput(this.searchText);
       let searchText = safeSearchText + "&" + this.selectedType + "&" + this.selectedAvgGrade;
@@ -170,12 +159,11 @@ export default {
   </div>
   <div ref="facilities">
     <facility-block v-for="(facility, index) in this.items()" 
-                    :data-id="index" 
                     v-bind:key="index" 
                     :facility="facility" 
-                    :selected="determineSelected(index)"
+                    :selected="selectedIndex==index"
                     :shallowShowcase="shallowShowcase"
-                    @selectedEvent="facilitySelected(index)"
+                    @selectedEvent="selectedIndex=index"
                     @remove="confirmModalActive = true; facilityToRemove = $event">
     </facility-block>
   </div>

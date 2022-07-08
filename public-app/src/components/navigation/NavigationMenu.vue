@@ -8,7 +8,12 @@ import { routes } from '../../router.js';
     },
     computed:{
       activeRoutes(){
-        return routes.filter(route => route.meta && route.meta.nav && (!route.meta.userType || route.meta.userType == this.$store.getters['auth/userType']));
+        return routes.filter(route => route.meta && 
+                                      route.meta.nav && 
+                                        (!route.meta.userTypes ||
+                                        this.$store.getters['auth/isLogged'] && 
+                                          (route.meta.userTypes.includes('ANY') || 
+                                          route.meta.userTypes.includes(this.$store.getters['auth/userType']))));
       }
     }
   }

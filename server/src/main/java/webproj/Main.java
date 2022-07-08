@@ -32,6 +32,7 @@ public class Main {
             path("/users", () -> {
                 before("/*", AuthController::authenticate);
                 get("/get", UserController::getUser);
+                get("/all", UserController::getUsers);
             });
             path("/facilities", () -> {
                 get("/all", FacilityController::getAllFacilities);
@@ -40,6 +41,7 @@ public class Main {
 
                 before("/add", AuthController::authenticate);
                 before("/delete", AuthController::authenticate);
+
                 post("/add", FacilityController::addFacility);
                 post("/delete", FacilityController::deleteFacility);
             });

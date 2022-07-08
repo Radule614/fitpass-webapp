@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <h1>STAFF</h1>
+  <h1>Profile</h1>
 </template>
 
 <style scoped lang="scss">

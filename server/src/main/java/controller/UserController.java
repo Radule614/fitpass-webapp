@@ -35,4 +35,10 @@ public class UserController {
 
         return null;
     }
+
+    public static String getUsers(Request request, Response response){
+        response.type("application/json");
+        
+        return "";
+    }
 }
