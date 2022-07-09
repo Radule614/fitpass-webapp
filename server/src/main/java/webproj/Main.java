@@ -31,8 +31,12 @@ public class Main {
             });
             path("/users", () -> {
                 before("/*", AuthController::authenticate);
-                get("/get", UserController::getUser);
-                get("/all", UserController::getUsers);
+
+                path("/get", () -> {
+                    get("", UserController::getUser);
+                    post("/filtered", UserController::getFilteredUsers);
+                });
+
             });
             path("/facilities", () -> {
                 get("/all", FacilityController::getAllFacilities);

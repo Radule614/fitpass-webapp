@@ -1,5 +1,5 @@
 <script>
-import BaseItem from '../BaseItem.vue';
+import BaseItem from './BaseItem.vue';
 import { debounce } from 'lodash';
 export default{
   components: { BaseItem },

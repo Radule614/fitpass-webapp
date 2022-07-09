@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import dto.user.UserDTO;
+import model.customer.Customer;
 import model.utility.Gender;
 
 public abstract class User {
@@ -31,29 +33,41 @@ public abstract class User {
 				+ firstname + ", lastname=" + lastname + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + "]";
 	}
 
+	public abstract UserDTO getDTO();
+
 	private static HashMap<String, Comparator<User>> initComparators(){
 		return new HashMap<String, Comparator<User>>(){{
 			put("username", new ByUsername());
 			put("firstname", new ByFirstname());
 			put("lastname", new ByLastname());
+			put("points", new ByPoints());
 		}};
 	}
 
 	private static class ByUsername implements Comparator<User>{
 		public int compare(User user1, User user2){
-			return user1.username.compareTo(user2.username);
+			return user1.username.toLowerCase().compareTo(user2.username.toLowerCase());
 		}
 	}
 
 	private static class ByFirstname implements Comparator<User>{
 		public int compare(User user1, User user2){
-			return user1.firstname.compareTo(user2.firstname);
+			return user1.firstname.toLowerCase().compareTo(user2.firstname.toLowerCase());
 		}
 	}
 
 	private static class ByLastname implements Comparator<User>{
 		public int compare(User user1, User user2){
-			return user1.lastname.compareTo(user2.lastname);
+			return user1.lastname.toLowerCase().compareTo(user2.lastname.toLowerCase());
+		}
+	}
+
+	private static class ByPoints implements Comparator<User>{
+		public int compare(User user1, User user2){
+			if		(user1 instanceof Customer && user2 instanceof Customer) 	return ((Customer) user2).points - ((Customer) user1).points;
+			else 	if(user1 instanceof Customer) 								return -1;
+			else 	if(user2 instanceof Customer) 								return 1;
+			else 																return 0;
 		}
 	}
 }

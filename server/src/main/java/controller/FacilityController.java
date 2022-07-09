@@ -66,7 +66,10 @@ public class FacilityController {
 		Facility facility = null;
 		if(messageObject.isEmpty()) facility = service.addFacility(facilityDTO, fileDTO);
 
-		if(!messageObject.isEmpty() || facility == null) return messageObject.toJSON();
+		if(!messageObject.isEmpty() || facility == null) {
+			response.status(400);
+			return messageObject.toJSON();
+		}
 		return new Gson().toJson(facility);
 	}
 
@@ -74,12 +77,13 @@ public class FacilityController {
 		response.type("application/json");
 		try{
 			DeleteFacilityDTO dto = new Gson().fromJson(request.body(), DeleteFacilityDTO.class);
-			if(new FacilityService().deleteFacility(dto)) return "[]";
+			if(new FacilityService().deleteFacility(dto)) return Utility.convertMessageToJSON("Facility deleted");
 		}catch (Exception e){
 			e.printStackTrace();
+			response.status(400);
 			return Utility.convertMessageToJSON("Invalid or no name given");
 		}
-		return "[]";
+		return Utility.convertMessageToJSON("Facility not found");
 	}
 
 	private static String parseStringInput(Part part){

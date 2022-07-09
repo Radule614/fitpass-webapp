@@ -7,20 +7,15 @@ export default {
       method: 'GET'
     })
     const responseData = await response.json();
-    if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to fetch user data.');
-      throw error;
-    }
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch user data.');
+
     console.log(responseData);
-    
     context.commit('setFacilities', {
       facilities: responseData
     });
-
     context.commit('setFilteredFacilities', {
       filteredFacilities: responseData
     });
-
   },
   async searchFacilities({ commit }, searchText) {
     const response = await axios.get(`${Settings.serverUrl}/api/facilities/search/${searchText}`);
@@ -38,10 +33,8 @@ export default {
       body: payload
     });
     const responseData = await response.json();
-    if (!response.ok || responseData.messages || responseData.message) {
-      const error = new Error(responseData.messages || responseData.message || 'Failed to add new facility.');
-      throw error;
-    }
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add new facility.');
+
     console.log(responseData);
     if(responseData) context.commit('addFacility', responseData);
   },
@@ -54,10 +47,8 @@ export default {
       body: JSON.stringify(payload)
     });
     const responseData = await response.json();
-    if (!response.ok || responseData.message) {
-      const error = new Error(responseData.message || 'Failed to remove facility.');
-      throw error;
-    }
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to remove facility.');
+
     context.commit('removeFacility', payload.name)
   }
 }

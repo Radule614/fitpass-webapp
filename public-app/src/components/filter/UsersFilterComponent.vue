@@ -1,0 +1,77 @@
+<script>
+import SearchBlock from './blocks/SearchBlock.vue';
+import CustomBlock from './blocks/CustomBlock.vue';
+import { debounce } from 'lodash';
+export default{
+  components:{
+    SearchBlock,
+    CustomBlock
+},
+  data(){
+    return {
+      userFilters: [
+        { key: 'customer',      value: 'customers' },
+        { key: 'trainer',       value: 'trainers' },
+        { key: 'admin',         value: 'admins' },
+        { key: 'manager',       value: 'managers' }
+      ],
+      customerFilters: [
+        { key: 'bronze',        value: 'bronze' },
+        { key: 'silver',        value: 'silver' },
+        { key: 'gold',          value: 'gold' }
+      ],
+      sortTypes:[
+        { key: 'username',      value: 'username' },
+        { key: 'lastname',      value: 'lastname' },
+        { key: 'firstname',     value: 'firstname'},
+        { key: 'points',        value: 'point number'},
+      ],
+      sortReverse: [ 
+        { key: 'reverse',       value: 'reverse order' } 
+      ],
+      searchTypes: [
+        { key: 'username',      value: 'username' },
+        { key: 'lastname',      value: 'lastname' },
+        { key: 'firstname',     value: 'firstname' }
+      ],
+      parameterStatus: {}
+    }
+  },
+  created(){
+    this.parameterHandler = debounce( () => { this.$emit('parametersChanged', this.parameterStatus) }, 600);
+  },
+  beforeUnmount() {
+    this.parameterHandler.cancel();
+  },
+  methods:{
+    paramsHandler(event, objectKey){
+      let payload = {};
+      if(event.radio || event.checkbox) payload = { ...event.radio, ...event.checkbox };
+      else payload = { ...event };
+      this.parameterStatus[objectKey] = payload;
+      this.parameterHandler();
+    }
+  }
+}
+</script>
+
+<template>
+  <div class="filter-block">
+    <custom-block caption="filter by user type"     @selection="paramsHandler($event, 'userFilter')"      :checkboxItems="userFilters"></custom-block>
+    <custom-block caption="filter by customer type" @selection="paramsHandler($event, 'customerFilter')"  :checkboxItems="customerFilters"></custom-block>
+    <custom-block caption="sort by"                 @selection="paramsHandler($event, 'sort')"            :radioItems="sortTypes" :radioKey="'type'" :checkboxItems="sortReverse"></custom-block>
+    <search-block caption="search by"               @search="paramsHandler($event, 'search')"             :items="searchTypes"></search-block>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.filter-block {
+  display: flex;
+  > * {
+    margin-left:30px;
+    &:first-child{
+      margin-left: 0px;
+    }
+  }
+}
+</style>

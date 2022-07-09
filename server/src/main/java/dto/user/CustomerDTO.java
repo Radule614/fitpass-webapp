@@ -9,4 +9,6 @@ public class CustomerDTO extends UserDTO {
         super(customer);
         this.points = customer.points;
     }
+
+
 }

@@ -1,18 +1,31 @@
 <script>
 import UsersGridItem from './UsersGridItem.vue'
-import FilterComponent from '../filter/FilterComponent.vue'
+import FilterComponent from '../filter/UsersFilterComponent.vue'
 export default{
   components:{
     UsersGridItem,
     FilterComponent
-},
+  },
   props:{
     selectable: Boolean
   },
   data(){
     return{
-      users: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       selectedUser: -1
+    }
+  },
+  computed:{
+    users(){
+      return this.$store.getters['users/users'];
+    }
+  },
+  methods:{
+    async parametersHandler(event){
+      try{
+        await this.$store.dispatch('users/fetchUsers', event);
+      }catch(error){
+        console.error(error);
+      }
     }
   }
 }
@@ -21,7 +34,7 @@ export default{
 <template>
   <div class="grid-wrapper">
     <div class="parameter-block">
-      <filter-component></filter-component>
+      <filter-component @parametersChanged="parametersHandler($event)"></filter-component>
     </div>
     <div class="grid">
       <users-grid-item  v-for="(user, index) in users" 

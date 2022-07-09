@@ -1,10 +1,10 @@
 <script>
-import BaseItem from '../BaseItem.vue';
+import BaseItem from './BaseItem.vue';
 export default{
   components: { BaseItem },
   props: {
-      item: Object,
-      selected: Boolean
+    item: Object,
+    selected: Boolean
   }
 }
 </script>

@@ -1,6 +1,7 @@
 <script>
-import BaseItem from '../BaseItem.vue';
+import BaseItem from './BaseItem.vue';
 export default{
+  components: { BaseItem },
   props: {
     item: Object
   },
@@ -17,12 +18,11 @@ export default{
       set(val) {
         this.value = val;
         let ret = {};
-        ret[this.item.name] = val;
+        ret[this.item.key] = val;
         this.$emit("selection", ret);
       }
     }
-  },
-  components: { BaseItem }
+  }
 }
 </script>
 

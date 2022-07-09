@@ -1,6 +1,6 @@
 <script>
-import BaseBlock from '../BaseBlock.vue';
-import CustomSearch from './CustomSearch.vue';
+import BaseBlock from './BaseBlock.vue';
+import CustomSearch from '../items/CustomSearch.vue';
 export default{
   components: { BaseBlock, CustomSearch },
   props: {
@@ -14,13 +14,13 @@ export default{
   },
   created(){
     for(let item of this.items){
-      this.itemStatus[item.name] = "";
+      this.itemStatus[item.key] = "";
     }
     this.$emit('search', this.itemStatus);
   },
   methods:{
-    inputHandler(text, itemName){
-      this.itemStatus[itemName] = text;
+    inputHandler(text, key){
+      this.itemStatus[key] = text;
       this.$emit('search', this.itemStatus);
     }
   }
@@ -29,7 +29,7 @@ export default{
 
 <template>
   <base-block :caption="caption">
-    <custom-search v-for="(item, index) in items" :key="index" :item="item" @inputChanged="inputHandler($event, item.name)"></custom-search>
+    <custom-search v-for="(item, index) in items" :key="index" :item="item" @inputChanged="inputHandler($event, item.key)"></custom-search>
   </base-block>
 </template>
 

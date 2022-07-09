@@ -14,22 +14,15 @@ export default {
         password: payload.password
       })
     })
-
     const responseData = await response.json();
-    
-    if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to authenticate.');
-      throw error;
-    }
+    if (!response.ok) throw new Error(responseData.message || 'Failed to authenticate.');
 
     const expiresIn = +responseData.expirationTime - new Date().getTime();
 
     localStorage.setItem('token', responseData.token);
     localStorage.setItem('tokenExpiration', responseData.expirationTime);
 
-    timer = setTimeout(() => {
-      context.dispatch('logout');
-    }, expiresIn)
+    timer = setTimeout(() => { context.dispatch('logout') }, expiresIn)
 
     context.commit('setToken', {
       token: responseData.token
@@ -60,11 +53,7 @@ export default {
       }
     })
     const responseData = await response.json();
-    if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to fetch user data.');
-      throw error;
-    }
-    //console.log(responseData);
+    if (!response.ok) throw new Error(responseData.message || 'Failed to fetch user data.');
 
     context.commit('setUserData', {
       user: responseData
@@ -85,16 +74,11 @@ export default {
   async checkAuthentication(context, payload){
     const token = localStorage.getItem('token');
     const tokenExpiration = localStorage.getItem('tokenExpiration');
-
     const expiresIn = +tokenExpiration - new Date().getTime();
 
-    if(expiresIn < 0){
-      return
-    }
+    if(expiresIn < 0) return
 
-    timer = setTimeout(() => {
-      context.dispatch('logout');
-    }, expiresIn);
+    timer = setTimeout(() => { context.dispatch('logout') }, expiresIn);
 
     if(token){
       context.commit('setToken', {

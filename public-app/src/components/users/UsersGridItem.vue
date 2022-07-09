@@ -1,7 +1,7 @@
 <script>
 export default{
   props:{
-    user: Number,
+    user: Object,
     selectable: Boolean,
     selected: Boolean
   },
@@ -12,7 +12,13 @@ export default{
 <template>
   <div class="grid-item-wrap" @click="$emit('selectedEvent')" :class="{'selectable': selectable,'selected': selected}">
     <div class="background"></div>
-    <div class="grid-item">{{user}}</div>
+    <div class="grid-item">
+      <div>{{user.username}}</div>
+      <div>{{user.firstname}} {{user.lastname}}</div>
+      <div>{{user.dateOfBirth}}</div>
+      <div>{{user.gender}}</div>
+      <div>{{user.points}}</div>
+    </div>
   </div>
 </template>
 
