@@ -7,6 +7,7 @@ export default{
   props:{
     radioItems: Array,
     radioKey: String,
+    checkboxKey: String,
     checkboxItems: Array,
     caption: String
   },
@@ -27,24 +28,37 @@ export default{
   },
   created(){
     if(this.radioKey) this.radioItemStatus[this.radioKey] = null;
-    
-    for(let item of this.checkboxItemsProxy){
-      this.checkboxItemStatus[item.key] = false;
-    }
-    this.$emit('selection', { radio: this.radioItemStatus, checkbox: this.checkboxItemStatus });
+    for(let item of this.checkboxItemsProxy) this.checkboxItemStatus[item.key] = false;
+    this.$emit('selection', { radio: this.radioItemStatus, checkbox: this.getCheckboxOutput() });
   },
   methods:{
     checkboxItemHandler(event){
-      for(let item in event){
-        this.checkboxItemStatus[item] = event[item];
-      }
-      this.$emit('selection', { radio: this.radioItemStatus, checkbox: this.checkboxItemStatus });
+      for(let item in event) this.checkboxItemStatus[item] = event[item];
+      this.$emit('selection', { radio: this.radioItemStatus, checkbox: this.getCheckboxOutput() });
     },
     radioItemHandler(index){
       if(this.selectedRadioIndex == index) return;
       this.selectedRadioIndex = index;
       this.radioItemStatus[this.radioKey] = this.radioItems[index].key;
-      this.$emit('selection', { radio: this.radioItemStatus, checkbox: this.checkboxItemStatus });
+      this.$emit('selection', { radio: this.radioItemStatus, checkbox: this.getCheckboxOutput() });
+    },
+    getCheckboxOutput(){
+      if(this.checkboxKey){
+        let output = {};
+        output[this.checkboxKey] = null;
+        let i = 0;
+        for(let item in this.checkboxItemStatus){
+          if(this.checkboxItemStatus[item]){
+            if(i==0) output[this.checkboxKey] = "";
+            if(i!=0) output[this.checkboxKey] += ",";
+            output[this.checkboxKey] += item;
+            i += 1;
+          }
+        }
+        return output;
+      }else{
+        return this.checkboxItemStatus;
+      }
     }
   }
 }

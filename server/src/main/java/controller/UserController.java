@@ -23,37 +23,33 @@ import utility.Utility;
 
 public class UserController {
     public static String getUser(Request request, Response response){
-        Gson g = new GsonBuilder()
-        		.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-        		.create();
-        String username = request.attribute("username");
-        User user = new UserService().getUser(username);
         response.type("application/json");
+        Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
 
-        return g.toJson(user.getDTO());
+        try{
+            String username = request.attribute("username");
+            User user = new UserService().getUser(username);
+            return g.toJson(user.getDTO());
+        }catch (Exception e){
+            e.printStackTrace();
+            response.status(400);
+            return Utility.convertMessageToJSON("Error while parsing input data");
+        }
     }
 
     public static String getFilteredUsers(Request request, Response response){
         response.type("application/json");
-        Gson g = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                .create();
+        Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
 
-        UsersFilterDTO dto = new Gson().fromJson(request.body(), UsersFilterDTO.class);
-
-        ArrayList<UserDTO> userDTOs = new ArrayList<>();
-        String json = "";
+        ArrayList<UserDTO> temp = new ArrayList<>();
         try{
-            ArrayList<User> users = new UserService().getAll();
-            if(dto.sort.type != null){
-                if (dto.sort.reverse)   users.sort(User.COMPARATORS.get(dto.sort.type).reversed());
-                else                    users.sort(User.COMPARATORS.get(dto.sort.type));
-            }
-            for (User user: users) userDTOs.add(user.getDTO());
-            json = g.toJson(userDTOs);
+            UsersFilterDTO dto = new Gson().fromJson(request.body(), UsersFilterDTO.class);
+            for (User user: new UserService().getFilteredUsers(dto)) temp.add(user.getDTO());
+            return g.toJson(temp);
         }catch (Exception e){
             e.printStackTrace();
+            response.status(400);
+            return Utility.convertMessageToJSON("Error while parsing filter parameters");
         }
-        return json;
     }
 }

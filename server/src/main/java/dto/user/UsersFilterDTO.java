@@ -7,23 +7,18 @@ public class UsersFilterDTO {
     public SearchDTO search;
 
     public static class UserFilterDTO {
-        public boolean customer;
-        public boolean trainer;
-        public boolean admin;
-        public boolean manager;
+        public String type;
     }
     public static class CustomerFilterDTO {
-        public boolean bronze;
-        public boolean silver;
-        public boolean gold;
+        public String type;
     }
     public static class SortDTO {
         public String type;
         public boolean reverse;
     }
     public static class SearchDTO {
-        public boolean username;
-        public boolean firstname;
-        public boolean lastname;
+        public String username;
+        public String firstname;
+        public String lastname;
     }
 }

@@ -13,7 +13,7 @@ public class Customer extends User {
 	public Membership membership;
 	public HashMap<Facility, Integer> visitedFacilities;
 	public int points;
-	public CustomerType type;
+	public CustomerType customerType;
 
 	public Customer() {
 		super(UserType.CUSTOMER);

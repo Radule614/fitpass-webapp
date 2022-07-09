@@ -31,14 +31,14 @@ export default{
       ],
       searchTypes: [
         { key: 'username',      value: 'username' },
-        { key: 'lastname',      value: 'lastname' },
-        { key: 'firstname',     value: 'firstname' }
+        { key: 'firstname',     value: 'firstname' },
+        { key: 'lastname',      value: 'lastname' }
       ],
       parameterStatus: {}
     }
   },
   created(){
-    this.parameterHandler = debounce( () => { this.$emit('parametersChanged', this.parameterStatus) }, 600);
+    this.parameterHandler = debounce(() => { this.$emit('parametersChanged', this.parameterStatus) }, 600);
   },
   beforeUnmount() {
     this.parameterHandler.cancel();
@@ -57,10 +57,10 @@ export default{
 
 <template>
   <div class="filter-block">
-    <custom-block caption="filter by user type"     @selection="paramsHandler($event, 'userFilter')"      :checkboxItems="userFilters"></custom-block>
-    <custom-block caption="filter by customer type" @selection="paramsHandler($event, 'customerFilter')"  :checkboxItems="customerFilters"></custom-block>
-    <custom-block caption="sort by"                 @selection="paramsHandler($event, 'sort')"            :radioItems="sortTypes" :radioKey="'type'" :checkboxItems="sortReverse"></custom-block>
-    <search-block caption="search by"               @search="paramsHandler($event, 'search')"             :items="searchTypes"></search-block>
+    <custom-block caption="filter by user type"     @selection="paramsHandler($event, 'userFilter')"      :checkboxItems="userFilters"      checkboxKey="type"></custom-block>
+    <custom-block caption="filter by customer type" @selection="paramsHandler($event, 'customerFilter')"  :checkboxItems="customerFilters"  checkboxKey="type"></custom-block>
+    <custom-block caption="sort by"                 @selection="paramsHandler($event, 'sort')"            :radioItems="sortTypes"           radioKey="type" :checkboxItems="sortReverse"></custom-block>
+    <search-block caption="search by"               @search="paramsHandler($event,    'search')"          :items="searchTypes"></search-block>
   </div>
 </template>
 

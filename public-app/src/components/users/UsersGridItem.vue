@@ -25,7 +25,7 @@ export default{
 <style scoped lang="scss">
 .grid-item-wrap{
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
-  height: 400px;
+  height: 350px;
   background-color: $light-primary;
   position: relative;
   transition: box-shadow 0.2s;
@@ -80,9 +80,11 @@ export default{
   }
   .grid-item{
     background-color: #fff;
-    height: 400px;
+    position: absolute;
     transition: transform 0.2s;
-    position: relative;
+    padding:30px;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>
