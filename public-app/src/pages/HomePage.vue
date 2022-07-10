@@ -21,14 +21,12 @@
       this.checkAnimations();
     },
     methods: {
-      handleScroll(event){
+      handleScroll(){
         this.checkAnimations();
       },
       checkAnimations(){
         const elements = this.scrollAnimated;
-
         let windowHeight = window.innerHeight;
-        
         for(let element of elements){
           let distanceFromTop = element.getBoundingClientRect().top;
           if(distanceFromTop - windowHeight + element.offsetHeight <= 0){
@@ -119,7 +117,6 @@
 			will-change: transform;
     }
     .animated-1 {
-			
 			animation-delay: 0.5s;
 		}
 		.animated-2 {

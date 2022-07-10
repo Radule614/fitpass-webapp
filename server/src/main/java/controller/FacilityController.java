@@ -20,7 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.*;
 
-import java.util.stream.Collectors;
+import static utility.Utility.parseStringInput;
 
 public class FacilityController {
     public static String getAllFacilities(Request request, Response response) {
@@ -49,7 +49,6 @@ public class FacilityController {
 	public static String addFacility(Request request, Response response) throws ServletException, IOException {
 		request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 		response.type("application/json");
-		Gson g = new Gson();
 		Part filePart = request.raw().getPart("file");
 
 		FacilityService service = new FacilityService();
@@ -86,14 +85,6 @@ public class FacilityController {
 		return Utility.convertMessageToJSON("Facility not found");
 	}
 
-	private static String parseStringInput(Part part){
-		try(InputStream input = part.getInputStream()){
-			return new BufferedReader(new InputStreamReader(input)).lines().collect(Collectors.joining("\n"));
-		}catch (Exception e){
-			//e.printStackTrace();
-		}
-		return null;
-	}
 	private static String getFileName(Part part) {
 		for (String cd : part.getHeader("content-disposition").split(";")) {
 			if (cd.trim().startsWith("filename")) {

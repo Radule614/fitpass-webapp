@@ -1,11 +1,13 @@
 <script>
+import UserDetails from './UserDetails.vue';
 export default{
-  props:{
+  components: { UserDetails },
+  props: {
     user: Object,
     selectable: Boolean,
     selected: Boolean
   },
-  emits:['selectedEvent']
+  emits: ["selectedEvent"]
 }
 </script>
 
@@ -13,11 +15,7 @@ export default{
   <div class="grid-item-wrap" @click="$emit('selectedEvent')" :class="{'selectable': selectable,'selected': selected}">
     <div class="background"></div>
     <div class="grid-item">
-      <div>{{user.username}}</div>
-      <div>{{user.firstname}} {{user.lastname}}</div>
-      <div>{{user.dateOfBirth}}</div>
-      <div>{{user.gender}}</div>
-      <div>{{user.points}}</div>
+      <user-details :user="user"></user-details>
     </div>
   </div>
 </template>
@@ -25,7 +23,7 @@ export default{
 <style scoped lang="scss">
 .grid-item-wrap{
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
-  height: 350px;
+  height: 420px;
   background-color: $light-primary;
   position: relative;
   transition: box-shadow 0.2s;
@@ -80,9 +78,8 @@ export default{
   }
   .grid-item{
     background-color: #fff;
-    position: absolute;
     transition: transform 0.2s;
-    padding:30px;
+    position: absolute;
     width: 100%;
     height: 100%;
   }

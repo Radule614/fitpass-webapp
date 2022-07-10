@@ -154,7 +154,7 @@ export default {
       </div>
     </div>
     <div class="button-group">
-      <custom-link v-if="loggedUserType == 'ADMIN' && currentRouteName == 'facility'" class="inverse" to="/facility/add" @click="scrollToTop">Add Facility</custom-link>
+      <custom-link v-if="loggedUserType == 'ADMIN' && currentRouteName == 'facility'" class="inverse" to="/facility/add" @click="scrollToTop">Create Facility</custom-link>
     </div>
   </div>
   <div ref="facilities">

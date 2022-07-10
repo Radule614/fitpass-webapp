@@ -32,11 +32,12 @@ public class Main {
             path("/users", () -> {
                 before("/*", AuthController::authenticate);
 
+                post("/create", UserController::createUser);
+
                 path("/get", () -> {
                     get("", UserController::getUser);
                     post("/filtered", UserController::getFilteredUsers);
                 });
-
             });
             path("/facilities", () -> {
                 get("/all", FacilityController::getAllFacilities);

@@ -17,6 +17,11 @@ export default{}
   &:first-child{
     margin-top: 0px;
   }
+  &.thick{
+    .item-wrapper{
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    }
+  }
   .item-wrapper{
     position: relative;
     display: flex;

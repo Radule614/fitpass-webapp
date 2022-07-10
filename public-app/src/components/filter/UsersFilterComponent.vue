@@ -22,8 +22,8 @@ export default{
       ],
       sortTypes:[
         { key: 'username',      value: 'username' },
-        { key: 'lastname',      value: 'lastname' },
         { key: 'firstname',     value: 'firstname'},
+        { key: 'lastname',      value: 'lastname' },
         { key: 'points',        value: 'point number'},
       ],
       sortReverse: [ 
@@ -38,7 +38,7 @@ export default{
     }
   },
   created(){
-    this.parameterHandler = debounce(() => { this.$emit('parametersChanged', this.parameterStatus) }, 600);
+    this.parameterHandler = debounce(() => { this.$emit('parametersChanged', this.parameterStatus) }, 500);
   },
   beforeUnmount() {
     this.parameterHandler.cancel();

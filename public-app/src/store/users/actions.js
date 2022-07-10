@@ -7,13 +7,26 @@ export default{
       headers: {
         'Authorization': 'Bearer ' + context.rootState.auth.token
       },
-      body: JSON.stringify(payload)
+      body: payload ? JSON.stringify(payload) : JSON.stringify(null)
     });
     const responseData = await response.json();
-    if (!response.ok) {
-      const error = new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
-      throw error;
-    }
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
+    
+    console.log(responseData);
     context.commit('setUsers', responseData);
+  },
+  async createUser(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/users/create`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: payload
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
+    
+    console.log(responseData);
+    context.commit('addUser', responseData);
   }
 }

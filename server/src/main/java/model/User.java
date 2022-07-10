@@ -7,7 +7,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import dto.user.UserDTO;
+import model.admin.Admin;
 import model.customer.Customer;
+import model.manager.Manager;
+import model.trainer.Trainer;
 import model.utility.Gender;
 
 public abstract class User {
@@ -26,6 +29,14 @@ public abstract class User {
 	}
 	
 	protected User() {}
+
+	public static User createInstance(UserType userType){
+		if		(userType == UserType.CUSTOMER) return new Customer();
+		else if	(userType == UserType.ADMIN) 	return new Admin();
+		else if	(userType == UserType.MANAGER) 	return new Manager();
+		else if (userType == UserType.TRAINER) 	return new Trainer();
+		return null;
+	}
 
 	@Override
 	public String toString() {
@@ -68,6 +79,12 @@ public abstract class User {
 			else 	if(user1 instanceof Customer) 								return -1;
 			else 	if(user2 instanceof Customer) 								return 1;
 			else 																return 0;
+		}
+	}
+
+	public static class CreateUserException extends Exception{
+		public CreateUserException(String message){
+			super(message);
 		}
 	}
 }

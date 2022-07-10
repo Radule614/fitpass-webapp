@@ -1,15 +1,13 @@
 <script>
 import CustomLink from '../utility/CustomLink.vue';
-import CustomButton from '../utility/CustomButton.vue';
 import CustomFileInput from '../utility/CustomFileInput.vue';
 import ChooseLocationModal from '../utility/ChooseLocationModal.vue';
 export default{
   components:{
     CustomLink,
     CustomFileInput,
-    CustomButton,
     ChooseLocationModal
-},
+  },
   data(){
     return {
       messages: [],
@@ -20,17 +18,9 @@ export default{
     }
   },
   computed:{
-    loggedUserType(){
-      return this.$store.getters['auth/userType'];
-    },
-    currentRouteName(){
-      return this.$router.currentRoute.value.name;
-    },
     locationFeedback(){
       if(!this.address) return "No location selected"
-      else{
-        return `${this.address.country||""}, ${this.address.city||this.address.town||""}, ${this.address.road||""} ${this.address.number||""}`
-      }
+      else return `${this.address.country||""}, ${this.address.city||this.address.town||""}, ${this.address.road||""} ${this.address.number||""}`
     }
   },
   methods:{
@@ -51,8 +41,9 @@ export default{
 
       try{
         await this.$store.dispatch('facility/addFacility', data);
+        await this.$store.dispatch('facility/searchFacilities', "");
         this.loading = false;
-        this.$store.dispatch('facility/searchFacilities', "");
+        this.scrollToTop();
         this.$router.replace('facility');
       }catch(error){
         this.messages = error.message.split(",");
@@ -114,8 +105,8 @@ export default{
       <div v-for="(message, index) in messages" :key="index">{{message}}</div>
     </div>
     <div class="button-group">
-      <custom-link v-if="currentRouteName == 'facilityAdd'" to="/facility" @click="scrollToTop">Cancel</custom-link>
-      <custom-button type="submit" v-if="currentRouteName == 'facilityAdd'" class="inverse block" to="/facility" @click="formSubmit($event)" :disabled="loading">Add</custom-button>
+      <custom-link to="/facility" @click="scrollToTop">Cancel</custom-link>
+      <custom-button type="submit" class="inverse block" @click="formSubmit($event)" :disabled="loading">Create</custom-button>
     </div>
   </form>
 
