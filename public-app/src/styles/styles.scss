@@ -6,6 +6,7 @@ $active-primary: #F05454;
 
 html{
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 a{
@@ -20,10 +21,6 @@ button a{
   &:hover{
     color: inherit;
   }
-}
-
-body{
-  overflow-x: hidden;
 }
 
 button.button-primary{

@@ -6,7 +6,7 @@ export default{
   components:{
     SearchBlock,
     CustomBlock
-},
+  },
   data(){
     return {
       userFilters: [

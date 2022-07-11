@@ -13,7 +13,8 @@ export default{
   },
   data(){
     return{
-      selectedUser: -1
+      selectedUser: -1,
+      filterVisible: false
     }
   },
   computed:{
@@ -31,25 +32,24 @@ export default{
       }catch(error){
         console.error(error);
       }
-    },
-    scrollToTop(){
-      window.scrollTo(0, 0);
     }
   }
 }
 </script>
 
 <template>
-  <div class="grid-wrapper">
+  <div class="grid-wrapper" :class="{ 'users-page': currentRouteName == 'users' }">
     <div class="parameter-block">
       <router-view></router-view>
       <div v-if="currentRouteName == 'users'">
-        <filter-component @parametersChanged="parametersHandler($event)"></filter-component>
+        <filter-component class="filter-block" @parametersChanged="parametersHandler($event)" :class="{'filter-visible': filterVisible}"></filter-component>
         <div class="control-block">
-          <custom-link v-if="currentRouteName == 'users'" class="inverse" to="/users/add" @click="scrollToTop">Create Account</custom-link>
+          <custom-button class="block" @click="filterVisible=!filterVisible">Toggle Filters</custom-button>
+          <custom-link class="inverse" to="/users/add">Create Account</custom-link>
         </div>
       </div>
     </div>
+    
     <div class="grid">
       <users-grid-item  v-for="(user, index) in users" 
                         :key="index" 
@@ -65,21 +65,50 @@ export default{
 
 <style scoped lang="scss">
 .grid-wrapper{
-  .parameter-block{
+  background-color: #fff;
+  position: relative;
+  &:not(.users-page) .parameter-block{
     padding:30px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    padding-bottom: 10px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+  }
+  .parameter-block{
+    background-color: #fff;
+    z-index: 30;
+    position:sticky;
+    padding: 10px 0px;
+    top:-2px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+    .filter-block{
+      padding:30px;
+      padding: 5px 30px 10px 30px;
+      transition: max-height 0.25s ease-in-out, padding 0.25s ease-in-out;
+      max-height: 400px;
+      overflow: hidden;
+      &:not(.filter-visible){
+        max-height: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      }
+    }
     .control-block{
-      padding-top: 20px;
       display: flex;
       justify-content: right;
+      padding:0px 30px;
+      position: relative;
+      & > * {
+        margin-left: 15px;
+      }
     }
   }
   .grid{
     padding:30px;
-    margin-top: 30px;
+    padding-top: 60px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 30px;
+    background-color: #fff;
+    position: relative;
   }
   .message{
     padding-left: 30px;

@@ -209,5 +209,15 @@
     "lastname": "12321",
     "dateOfBirth": null,
     "gender": "MALE"
+  },
+  {
+    "facility": null,
+    "username": "12345",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "1",
+    "lastname": "2",
+    "dateOfBirth": null,
+    "gender": "FEMALE"
   }
 ]

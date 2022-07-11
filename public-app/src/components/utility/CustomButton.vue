@@ -45,12 +45,13 @@ button {
   }
   span{
     position: relative;
-    transition:color 0.3s ease-in-out 0.1s;
+    color:$dark-primary;
+    transition:color 0.3s ease-in-out;
   }
   &:hover{ 
     span{
       color:$light-primary;
-      transition:color 0.3s ease-in-out;
+      transition:color 0.4s ease-in-out;
     }
     &::before{
       border-radius: 25px;
@@ -63,7 +64,9 @@ button {
   }
   &.inverse{
     background-color: $dark-primary;
-    color:$active-primary;
+    span{
+      color:$active-primary;
+    }
     &:hover{
       span{
         color:$light-primary;

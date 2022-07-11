@@ -59,7 +59,8 @@ label.input-file-label{
   }
   span{
     position: relative;
-    transition:color 0.1s ease-in-out 0.1s;
+    color:$dark-primary;
+    transition:color 0.25s ease-in-out;
   }
   &:hover{ 
     span{

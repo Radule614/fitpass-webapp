@@ -15,9 +15,6 @@ export default {
     this.$store.dispatch('users/fetchUsers');
   },
   methods:{
-    scrollToTop(){
-      window.scrollTo(0, 0);
-    },
     async formSubmit(event) {
       this.loading = true;
       event.preventDefault();
@@ -26,7 +23,6 @@ export default {
       try{
         await this.$store.dispatch('users/createUser', data);
         this.loading = false;
-        this.scrollToTop();
         this.$router.replace('users');
       }catch(error){
         this.messages = error.message.split(",");
@@ -38,7 +34,7 @@ export default {
 </script>
 
 <template>
-  <form class="container add-form" ref="submitForm">
+  <form class="add-form" ref="submitForm">
     <table>
       <tr>
         <td><label for="username">username:</label></td>
@@ -78,7 +74,7 @@ export default {
       <div v-for="(message, index) in messages" :key="index">{{message}}</div>
     </div>
     <div class="button-group">
-      <custom-link to="/users" @click="scrollToTop">Cancel</custom-link>
+      <custom-link to="/users">Cancel</custom-link>
       <custom-button type="submit" class="inverse block" @click="formSubmit($event)" :disabled="loading">Create</custom-button>
     </div>
   </form>

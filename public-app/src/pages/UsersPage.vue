@@ -14,7 +14,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-.users{
-  padding-top: 10px;
-}
+  .users{
+    padding-top: 10px;
+  }
 </style>

@@ -75,10 +75,12 @@ export default{
     padding-top: 45px;
     .main{
       text-align: center;
+      .fullname{
+        font-size: 18px;
+      }
       .username{
         font-style: italic;
         color: $active-primary;
-        font-size: 15px;
       }
     }
     .details{
