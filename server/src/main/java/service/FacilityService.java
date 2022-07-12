@@ -8,12 +8,10 @@ import model.facility.FacilityType;
 import repository.FacilityRepository;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import dto.AvgGradeRangeDTO;
@@ -26,6 +24,9 @@ public class FacilityService {
     public ArrayList<Facility> getAllFacilities(){
         return facilityRepository.getAll();
     }
+	public Facility getByName(String facilityName){
+		return facilityRepository.getByName(facilityName);
+	}
     public ArrayList<Facility> getRequestedFacilites(String searchText, String facType, String avgGradeRange) {
     	List<Facility> requestedFacilities = null;
     	if(facType.equalsIgnoreCase("all")) {
@@ -103,7 +104,7 @@ public class FacilityService {
 	}
 
 	public boolean deleteFacility(DeleteFacilityDTO dto){
-		Facility f = getByName(dto.name);
+		Facility f = facilityRepository.getByName(dto.name);
 		if(f != null && facilityRepository.delete(f)){
 			deleteFile(f.logoUrl);
 			facilityRepository.saveAll();
@@ -116,14 +117,9 @@ public class FacilityService {
 		return extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png");
 	}
 
-	public Facility getByName(String facilityName){
-		for (Facility facility: facilityRepository.getAll()) {
-			if(facilityName.equals(facility.name)){
-				return facility;
-			}
-		}
-		return null;
-	}
+
+
+	//PRIVATE
 
 	private String saveFile(FileDTO fileDTO) {
 		File uploadDir = new File(Main.uploadDirPath + "facilities");
@@ -141,17 +137,15 @@ public class FacilityService {
 		}
 		return tempFile != null ? String.valueOf(tempFile.getFileName()) : null;
 	}
-
 	private void deleteFile(String uri){
 		String[] parts = uri.split("/");
 		String filename = parts[parts.length-1];
 
 		File uploadDir = new File(Main.uploadDirPath + "facilities");
 		File[] matchingFiles = uploadDir.listFiles((dir, name) -> name.equals(filename));
-
+		if(matchingFiles == null) return;
 		for (File file: matchingFiles) file.delete();
 	}
-
 	private void logInfo(String filename, Path tempFile) {
 		System.out.println("Uploaded file '" + filename + "' saved as '" + tempFile.toAbsolutePath() + "'");
 	}

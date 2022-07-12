@@ -50,17 +50,6 @@ export default {
     ...mapActions("facility", ["searchFacilities"]),
     ...mapMutations("facility", ["setFilteredFacilities"]),
     ...mapGetters("facility", ["getFilteredFacilities"]),
-    facilitySelected(index){
-      this.selectedIndex = index;
-      for(let facility of this.$refs.facilities.children){ 
-        if(index != facility.getAttribute('data-id')){
-          facility.classList.remove('selected');
-        }
-      }
-    },
-    determineSelected(index){
-      return this.selectedIndex==index;
-    },
     search(e) {
       let safeSearchText = this.escapeInput(this.searchText);
       let searchText = safeSearchText + "&" + this.selectedType + "&" + this.selectedAvgGrade;
@@ -124,6 +113,10 @@ export default {
         this.confirmModalActive = false
         this.facilityToRemove = null;
       }
+    },
+    cancelRemoval(){
+      this.confirmModalActive = false;
+      this.facilityToRemove = null
     }
   },
   unmounted() {
@@ -165,22 +158,21 @@ export default {
       </div>
     </div>
     <div class="button-group">
-      <custom-link v-if="loggedUserType == 'ADMIN' && currentRouteName == 'facility'" class="inverse" to="/facility/add" @click="scrollToTop">Add Facility</custom-link>
+      <custom-link v-if="loggedUserType == 'ADMIN' && currentRouteName == 'facility'" class="inverse" to="/facility/add" @click="scrollToTop">Create Facility</custom-link>
     </div>
   </div>
   <div ref="facilities">
     <facility-block v-for="(facility, index) in this.items()" 
-                    :data-id="index" 
                     v-bind:key="index" 
                     :facility="facility" 
-                    :selected="determineSelected(index)"
+                    :selected="selectedIndex==index"
                     :shallowShowcase="shallowShowcase"
-                    @selectedEvent="facilitySelected(index)"
+                    @selectedEvent="selectedIndex=index"
                     @remove="confirmModalActive = true; facilityToRemove = $event">
     </facility-block>
   </div>
 
-  <confirm-modal :show="confirmModalActive" @close="confirmModalActive = false; facilityToRemove = null" @confirm="removeFacility"></confirm-modal>
+  <confirm-modal :show="confirmModalActive" @close="cancelRemoval" @confirm="removeFacility"></confirm-modal>
 </div>
 </template>
 

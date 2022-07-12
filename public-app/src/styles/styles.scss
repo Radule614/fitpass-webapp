@@ -8,6 +8,10 @@ html{
   scroll-behavior: smooth;
 }
 
+body{
+  overflow-x: hidden;  
+}
+
 a{
   color:$dark-primary;
   text-decoration: none;
@@ -20,10 +24,6 @@ button a{
   &:hover{
     color: inherit;
   }
-}
-
-body{
-  overflow-x: hidden;
 }
 
 button.button-primary{

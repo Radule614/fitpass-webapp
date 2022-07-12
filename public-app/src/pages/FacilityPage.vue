@@ -9,9 +9,6 @@ export default {
 
 <template>
   <div>
-    <div class="page-header">
-      <h1>Facilities</h1>
-    </div>
     <div class="facilities container">
       <router-view></router-view>
       <facility-list></facility-list>
@@ -20,15 +17,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-  .page-header{
-    h1{
-      margin: 0px;
-      padding:50px 0px 70px 0px;
-      text-align: center;
-      color: $dark-primary;
-    }
-  }
   .facilities{
     padding-bottom: 150px;
+    padding-top: 40px;
   }
 </style>

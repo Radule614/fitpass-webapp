@@ -11,4 +11,9 @@ public class Membership {
 	public Customer customer;
 	public boolean Active;
 	public int AppointmentNumber;
+
+	public enum MembershipType {
+		MONTHLY,
+		YEARLY
+	}
 }

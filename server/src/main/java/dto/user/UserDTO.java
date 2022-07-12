@@ -4,6 +4,10 @@ import java.time.LocalDate;
 
 import model.User;
 import model.UserType;
+import model.admin.Admin;
+import model.customer.Customer;
+import model.manager.Manager;
+import model.trainer.Trainer;
 import model.utility.Gender;
 import repository.util.LocalDateAdapter;
 

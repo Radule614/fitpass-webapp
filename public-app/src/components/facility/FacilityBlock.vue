@@ -1,6 +1,7 @@
 <script>
 import Settings from '../../settings.js';
 import FacilityInfo from './FacilityInfo.vue';
+import { throttle } from 'lodash';
 
 export default {
   components:{
@@ -33,6 +34,14 @@ export default {
   },
   emits:['selectedEvent', 'remove'],
   created(){
+    this.checkAnimations = throttle(() => {
+      const element = this.$el;
+      let windowHeight = window.innerHeight;
+      let distanceFromTop = element.getBoundingClientRect().top;
+      if(distanceFromTop - windowHeight <= 0){
+        this.facilityAppeared = true;
+      }
+    }, 200);
     window.addEventListener('scroll', this.handleScroll);
   },
   mounted(){
@@ -50,16 +59,8 @@ export default {
     }
   },
   methods: {
-    handleScroll(event){
+    handleScroll(){
       this.checkAnimations();
-    },
-    checkAnimations(){
-      const element = this.$el;
-      let windowHeight = window.innerHeight;
-      let distanceFromTop = element.getBoundingClientRect().top;
-      if(distanceFromTop - windowHeight <= 0){
-        this.facilityAppeared = true;
-      }
     },
     selectedHandler(event){
       if(this.facility.available && !event.target.closest('.btn-delete')){

@@ -64,7 +64,7 @@ export default{
     position: absolute;
     width: 100%;
     background-color: $light-primary;
-    z-index: 10;
+    z-index: 50;
     .header-inner{
       display: flex;
       flex-direction: row;
