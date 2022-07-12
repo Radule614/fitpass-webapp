@@ -13,9 +13,12 @@ export default{
   },
   data(){
     return{
-      selectedUser: -1,
+      selectedUser: null,
       filterVisible: false
     }
+  },
+  created(){
+    this.$store.dispatch('users/fetchUsers');
   },
   computed:{
     users(){
@@ -32,6 +35,11 @@ export default{
       }catch(error){
         console.error(error);
       }
+    },
+    toggleFilters(event){
+      if(!this.filterVisible) this.$router.push('/users/filter');
+      else this.$router.push('/users');
+      this.filterVisible = !this.filterVisible;
     }
   }
 }
@@ -40,14 +48,11 @@ export default{
 <template>
   <div class="grid-wrapper" :class="{ 'users-page': currentRouteName == 'users' }">
     <div class="parameter-block">
-      <router-view></router-view>
-      <div v-if="currentRouteName == 'users'">
-        <filter-component class="filter-block" @parametersChanged="parametersHandler($event)" :class="{'filter-visible': filterVisible}"></filter-component>
-        <div class="control-block">
-          <custom-button class="block" @click="filterVisible=!filterVisible">Toggle Filters</custom-button>
-          <custom-link class="inverse" to="/users/add">Create Account</custom-link>
-        </div>
-      </div>
+      <router-view v-slot="{ Component }">
+        <transition name="slide-bottom">
+          <component :is="Component" class="child" :selectedUser="selectedUser" @parametersChanged="parametersHandler($event)"/>
+        </transition>
+      </router-view>
     </div>
     
     <div class="grid">
@@ -55,8 +60,8 @@ export default{
                         :key="index" 
                         :user="user" 
                         :selectable="selectable" 
-                        :selected="selectable && selectedUser==index" 
-                        @selectedEvent="selectedUser=index">
+                        :selected="selectable && selectedUser==user.username" 
+                        @selectedEvent="selectedUser=user.username">
       </users-grid-item>
       <div v-if="!users || users.length == 0" class="message">No users found</div>
     </div>
@@ -67,38 +72,34 @@ export default{
 .grid-wrapper{
   background-color: #fff;
   position: relative;
-  &:not(.users-page) .parameter-block{
-    padding:30px;
-    padding-bottom: 10px;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-  }
   .parameter-block{
     background-color: #fff;
     z-index: 30;
     position:sticky;
-    padding: 10px 0px;
     top:-2px;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-    .filter-block{
-      padding:30px;
-      padding: 5px 30px 10px 30px;
-      transition: max-height 0.25s ease-in-out, padding 0.25s ease-in-out;
-      max-height: 400px;
+    .child{
+      transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out, opacity 0.4s ease-in-out;
       overflow: hidden;
-      &:not(.filter-visible){
-        max-height: 0px;
-        padding-top: 0px;
-        padding-bottom: 0px;
+      max-height: 420px;
+      
+    }
+    .slide-bottom-enter-from {
+      max-height: 0px;
+      padding-top:0px;
+      padding-bottom:0px;
+      opacity:0;
+    }
+    .slide-bottom-leave-active{
+      &.control-block{
+        transition: max-height 0.1s ease-in-out, padding 0.1s ease-in-out, opacity 0.1s ease-in-out;
       }
     }
-    .control-block{
-      display: flex;
-      justify-content: right;
-      padding:0px 30px;
-      position: relative;
-      & > * {
-        margin-left: 15px;
-      }
+    .slide-bottom-leave-to {
+      max-height: 0px;
+      padding-top:0px;
+      padding-bottom:0px;
+      opacity: 0;
     }
   }
   .grid{

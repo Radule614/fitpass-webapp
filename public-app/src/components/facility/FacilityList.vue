@@ -113,6 +113,10 @@ export default {
         this.confirmModalActive = false
         this.facilityToRemove = null;
       }
+    },
+    cancelRemoval(){
+      this.confirmModalActive = false;
+      this.facilityToRemove = null
     }
   },
   unmounted() {
@@ -168,7 +172,7 @@ export default {
     </facility-block>
   </div>
 
-  <confirm-modal :show="confirmModalActive" @close="confirmModalActive = false; facilityToRemove = null" @confirm="removeFacility"></confirm-modal>
+  <confirm-modal :show="confirmModalActive" @close="cancelRemoval" @confirm="removeFacility"></confirm-modal>
 </div>
 </template>
 

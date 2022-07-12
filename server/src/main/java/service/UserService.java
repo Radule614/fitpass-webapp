@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import dto.auth.RegisterDTO;
 import dto.user.CreateUserDTO;
+import dto.user.DeleteUserDTO;
 import dto.user.UserDTO;
 import dto.user.UsersFilterDTO;
 import model.User;
@@ -73,6 +74,15 @@ public class UserService {
 		userRepository.addNewUser(user);
 
 		return user;
+	}
+
+	public boolean deleteUser(DeleteUserDTO dto){
+		User user = userRepository.getByUsername(dto.username);
+		if(user != null && userRepository.delete(user)){
+			userRepository.saveAll();
+			return true;
+		}
+		return false;
 	}
 
 	public ArrayList<User> getFilteredUsers(UsersFilterDTO dto){

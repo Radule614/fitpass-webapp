@@ -80,10 +80,14 @@ public class FacilityController {
 		}catch (Exception e){
 			e.printStackTrace();
 			response.status(400);
-			return Utility.convertMessageToJSON("Invalid or no name given");
+			return Utility.convertMessageToJSON("Error while parsing data");
 		}
 		return Utility.convertMessageToJSON("Facility not found");
 	}
+
+
+
+	//PRIVATE
 
 	private static String getFileName(Part part) {
 		for (String cd : part.getHeader("content-disposition").split(";")) {

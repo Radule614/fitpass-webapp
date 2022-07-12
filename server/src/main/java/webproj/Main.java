@@ -17,9 +17,9 @@ public class Main {
 
         path("/api", () -> {
             before("/*", (req, res) -> {
-                res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-                res.header("Access-Control-Allow-Origin", "*");
-                res.header("Access-Control-Allow-Headers","*");
+                res.header("Access-Control-Allow-Methods",  "GET,PUT,POST,DELETE,OPTIONS");
+                res.header("Access-Control-Allow-Origin",   "*");
+                res.header("Access-Control-Allow-Headers",  "*");
             });
             options("/*", (req, res) -> {
                 res.status(200);
@@ -33,6 +33,7 @@ public class Main {
                 before("/*", AuthController::authenticate);
 
                 post("/create", UserController::createUser);
+                post("/delete", UserController::deleteUser);
 
                 path("/get", () -> {
                     get("", UserController::getUser);

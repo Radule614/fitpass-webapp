@@ -8,13 +8,15 @@ export const routes = [
   { path: '/home',      name:     'home',       component: () => import('./pages/HomePage.vue'),      meta: { nav: 'Home'                            } },
   { path: '/facility',  name:     'facility',   component: () => import('./pages/FacilityPage.vue'),  meta: { nav: 'Facilities'                      }, children: 
     [
-      { path: 'add', name: 'facilityAdd', component: () => import('./components/facility/FacilityAdd.vue'), meta: { userTypes: ['ADMIN'] } },
+      { path: 'add', name: 'facilityAdd',     component: () => import('./components/facility/FacilityAdd.vue'),         meta: { userTypes: ['ADMIN'] } },
       { path: ':all(.*)', redirect: '/facility' }
     ]
   },
   { path: '/users',     name:     'users',      component: () => import('./pages/UsersPage.vue'),     meta: { nav: 'Users',     userTypes: ['ADMIN'] }, children:
     [
-      { path: 'add', name: 'usersAdd',    component: () => import('./components/users/UsersAdd.vue'),       meta: { userTypes: ['ADMIN'] } },
+      { path: '', name: 'usersDefault', component: () => import('./components/users/ControlBlock.vue'), meta: { userTypes: ['ADMIN'] } },
+      { path: 'filter', name: 'usersFilter',  component: () => import('./components/filter/UsersFilterComponent.vue'),  meta: { userTypes: ['ADMIN'] } },
+      { path: 'add',    name: 'usersAdd',     component: () => import('./components/users/UsersAdd.vue'),               meta: { userTypes: ['ADMIN'] } },
       { path: ':all(.*)', redirect: '/users'    }
     ]
   },

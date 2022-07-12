@@ -73,7 +73,7 @@ export default {
     <div class="error-block">
       <div v-for="(message, index) in messages" :key="index">{{message}}</div>
     </div>
-    <div class="button-group">
+    <div class="button-block">
       <custom-link to="/users">Cancel</custom-link>
       <custom-button type="submit" class="inverse block" @click="formSubmit($event)" :disabled="loading">Create</custom-button>
     </div>
@@ -82,13 +82,17 @@ export default {
 
 <style scoped lang="scss">
 .add-form{
+  padding: 30px;
+  padding-bottom: 10px;
   .error-block{
     font-style: italic;
     color: red;
   }
-  .button-group{
+  .button-block{
     display: flex;
     justify-content: right;
+    position: relative;
+    margin-top: 12px;
     & > * {
       margin-left: 15px;
     }

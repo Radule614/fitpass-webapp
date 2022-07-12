@@ -1,5 +1,14 @@
 [
   {
+    "username": "admin",
+    "userType": "ADMIN",
+    "password": "123",
+    "firstname": "ime",
+    "lastname": "prezime",
+    "dateOfBirth": "12/05/1995",
+    "gender": "MALE"
+  },
+  {
     "membership": null,
     "visitedFacilities": null,
     "points": 25,
@@ -13,16 +22,6 @@
     "gender": "MALE"
   },
   {
-    "workoutHistory": null,
-    "username": "trainer",
-    "userType": "TRAINER",
-    "password": "123",
-    "firstname": "ime",
-    "lastname": "prezime",
-    "dateOfBirth": "12/05/1995",
-    "gender": "FEMALE"
-  },
-  {
     "facility": null,
     "username": "manager",
     "userType": "MANAGER",
@@ -30,15 +29,6 @@
     "firstname": "ime",
     "lastname": "prezime",
     "dateOfBirth": "25/02/1990",
-    "gender": "FEMALE"
-  },
-  {
-    "username": "admin",
-    "userType": "ADMIN",
-    "password": "123",
-    "firstname": "ime",
-    "lastname": "prezime",
-    "dateOfBirth": "2/03/1988",
     "gender": "FEMALE"
   },
   {
@@ -137,23 +127,6 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
-    "points": 0,
-    "customerType": {
-      "type": "BRONZE",
-      "discount": 0.0,
-      "requiredPoints": 0
-    },
-    "username": "1",
-    "userType": "CUSTOMER",
-    "password": "12345678",
-    "firstname": "2",
-    "lastname": "4",
-    "dateOfBirth": "30/06/2022",
-    "gender": "MALE"
-  },
-  {
     "facility": null,
     "username": "admin2",
     "userType": "MANAGER",
@@ -172,52 +145,5 @@
     "lastname": "prezime3",
     "dateOfBirth": "14/07/2022",
     "gender": null
-  },
-  {
-    "membership": null,
-    "visitedFacilities": null,
-    "points": 0,
-    "customerType": {
-      "type": "BRONZE",
-      "discount": 0.0,
-      "requiredPoints": 0
-    },
-    "username": "123",
-    "userType": "CUSTOMER",
-    "password": "12345678",
-    "firstname": "1",
-    "lastname": "2",
-    "dateOfBirth": "30/06/2022",
-    "gender": "MALE"
-  },
-  {
-    "workoutHistory": null,
-    "username": "admin3",
-    "userType": "TRAINER",
-    "password": "12345678",
-    "firstname": "",
-    "lastname": "",
-    "dateOfBirth": "9/07/2022",
-    "gender": "MALE"
-  },
-  {
-    "facility": null,
-    "username": "admin234",
-    "userType": "MANAGER",
-    "password": "12345678",
-    "firstname": "i",
-    "lastname": "12321",
-    "dateOfBirth": null,
-    "gender": "MALE"
-  },
-  {
-    "facility": null,
-    "username": "12345",
-    "userType": "MANAGER",
-    "password": "12345678",
-    "firstname": "1",
-    "lastname": "2",
-    "dateOfBirth": null,
-    "gender": "FEMALE"
   }
 ]

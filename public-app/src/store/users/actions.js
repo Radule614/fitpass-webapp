@@ -12,7 +12,6 @@ export default{
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
     
-    console.log(responseData);
     context.commit('setUsers', responseData);
   },
   async createUser(context, payload){
@@ -26,7 +25,20 @@ export default{
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
     
-    console.log(responseData);
     context.commit('addUser', responseData);
+  },
+  async deleteUser(context, payload){
+    if(payload.username == context.rootState.auth.user.username) return;
+    const response = await fetch(`${Settings.serverUrl}/api/users/delete`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: JSON.stringify(payload)
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to delete user.');
+
+    context.commit('removeUser', payload.username);
   }
 }

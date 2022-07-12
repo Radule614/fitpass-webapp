@@ -9,16 +9,10 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import dto.FileDTO;
-import dto.facility.FacilityDTO;
 import dto.user.*;
 import model.User;
 import model.UserType;
-import model.facility.FacilityType;
-import model.facility.Location;
-import model.facility.WorkingHours;
 import repository.util.LocalDateAdapter;
-import service.FacilityService;
 import service.UserService;
 import spark.Request;
 import spark.Response;
@@ -85,6 +79,24 @@ public class UserController {
             return Utility.convertMessageToJSON("Error while parsing input data");
         }
     }
+
+    public static String deleteUser(Request request, Response response){
+        response.type("application/json");
+        try{
+            DeleteUserDTO dto = new Gson().fromJson(request.body(), DeleteUserDTO.class);
+            if(request.attribute("username").equals(dto.username)) return Utility.convertMessageToJSON("Can't delete this user");
+            if(new UserService().deleteUser(dto)) return Utility.convertMessageToJSON("User deleted");
+        }catch(Exception e){
+            e.printStackTrace();
+            response.status(400);
+            return Utility.convertMessageToJSON("Error while parsing filter parameters");
+        }
+        return Utility.convertMessageToJSON("User not found");
+    }
+
+
+
+    //PRIVATE
 
     private static MessageResponse validateData(CreateUserDTO dto){
         UserService service = new UserService();
