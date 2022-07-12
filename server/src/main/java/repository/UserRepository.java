@@ -12,6 +12,7 @@ import model.User;
 import model.UserType;
 import model.admin.Admin;
 import model.customer.Customer;
+import model.facility.Facility;
 import model.manager.Manager;
 import model.trainer.Trainer;
 import model.utility.Gender;
@@ -42,6 +43,13 @@ public class UserRepository extends GenericRepository<User> {
 	public void addNewUser(User newUser) {
 		this.data.add(newUser);
 		this.fileHandler.saveAll(data);
+	}
+
+	public User getByUsername(String username){
+		for (User user: getAll())
+			if(user.username.equals(username))
+				return user;
+		return null;
 	}
 	
 	// Private/Protected Helpers

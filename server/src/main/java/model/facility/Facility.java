@@ -11,6 +11,18 @@ public class Facility {
     public String content;
 
     public Facility(){}
+
+    public Facility(String name, FacilityType facilityType, boolean available, Location location, String logoUrl, double grade, WorkingHours workingHours, String content) {
+        this.name = name;
+        this.facilityType = facilityType;
+        this.available = available;
+        this.location = location;
+        this.logoUrl = logoUrl;
+        this.grade = grade;
+        this.workingHours = workingHours;
+        this.content = content;
+    }
+
     public Facility(Facility f){
         name = f.name;
         facilityType = f.facilityType;

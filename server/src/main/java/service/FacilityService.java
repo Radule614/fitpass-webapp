@@ -1,12 +1,21 @@
 package service;
 
+import dto.facility.DeleteFacilityDTO;
+import dto.facility.FacilityDTO;
+import dto.FileDTO;
 import model.facility.Facility;
 import model.facility.FacilityType;
 import repository.FacilityRepository;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import dto.AvgGradeRangeDTO;
+import webproj.Main;
 
 public class FacilityService {
     public static final FacilityRepository facilityRepository = FacilityRepository.getInstance();
@@ -15,7 +24,9 @@ public class FacilityService {
     public ArrayList<Facility> getAllFacilities(){
         return facilityRepository.getAll();
     }
-    
+	public Facility getByName(String facilityName){
+		return facilityRepository.getByName(facilityName);
+	}
     public ArrayList<Facility> getRequestedFacilites(String searchText, String facType, String avgGradeRange) {
     	List<Facility> requestedFacilities = null;
     	if(facType.equalsIgnoreCase("all")) {
@@ -54,7 +65,6 @@ public class FacilityService {
     	
     	return (ArrayList<Facility>) requestedFacilities;
     }
-    
     public FacilityType getFacilityTypeFromText(String text) {
     	FacilityType facilityType = null;
     	text = text.toUpperCase().trim();
@@ -84,5 +94,60 @@ public class FacilityService {
     	return facilityType;
     }
 
+	public Facility addFacility(FacilityDTO facilityDTO, FileDTO fileDTO){
+		if(!checkIfImageValid(fileDTO.extension)) return null;
+		String image = saveFile(fileDTO);
+		String logoUrl = "img/facilities/" + image;
+		Facility f = new Facility(facilityDTO.name, facilityDTO.facilityType, facilityDTO.available, facilityDTO.location, logoUrl, 0, facilityDTO.workingHours, facilityDTO.content);
+		facilityRepository.add(f);
+		return f;
+	}
+
+	public boolean deleteFacility(DeleteFacilityDTO dto){
+		Facility f = facilityRepository.getByName(dto.name);
+		if(f != null && facilityRepository.delete(f)){
+			deleteFile(f.logoUrl);
+			facilityRepository.saveAll();
+			return true;
+		}
+		return false;
+	}
+
+	public boolean checkIfImageValid(String extension){
+		return extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png");
+	}
+
+
+
+	//PRIVATE
+
+	private String saveFile(FileDTO fileDTO) {
+		File uploadDir = new File(Main.uploadDirPath + "facilities");
+		uploadDir.mkdir();
+		String extension = fileDTO.extension;
+		if(extension.trim().isEmpty()) return null;
+
+		Path tempFile = null;
+		try{
+			tempFile = Files.createTempFile(uploadDir.toPath(), "", "." + extension);
+			Files.copy(fileDTO.inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+			logInfo(fileDTO.filename, tempFile);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return tempFile != null ? String.valueOf(tempFile.getFileName()) : null;
+	}
+	private void deleteFile(String uri){
+		String[] parts = uri.split("/");
+		String filename = parts[parts.length-1];
+
+		File uploadDir = new File(Main.uploadDirPath + "facilities");
+		File[] matchingFiles = uploadDir.listFiles((dir, name) -> name.equals(filename));
+		if(matchingFiles == null) return;
+		for (File file: matchingFiles) file.delete();
+	}
+	private void logInfo(String filename, Path tempFile) {
+		System.out.println("Uploaded file '" + filename + "' saved as '" + tempFile.toAbsolutePath() + "'");
+	}
    
 }

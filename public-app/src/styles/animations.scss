@@ -20,6 +20,17 @@
   }
 }
 
+@keyframes appearance-from-bottom {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
 @keyframes magnify {
   0% {
     transform: scale(0.4);

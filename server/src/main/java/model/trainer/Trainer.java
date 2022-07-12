@@ -1,5 +1,7 @@
 package model.trainer;
 
+import dto.user.TrainerDTO;
+import dto.user.UserDTO;
 import model.User;
 import model.UserType;
 import model.Workout;
@@ -11,5 +13,10 @@ public class Trainer extends User {
 
     public Trainer() {
         super(UserType.TRAINER);
+    }
+
+    @Override
+    public UserDTO getDTO() {
+        return new TrainerDTO(this);
     }
 }

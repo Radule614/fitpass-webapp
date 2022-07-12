@@ -1,197 +1,177 @@
 [
   {
-    "name": "teretana",
+    "name": "djim",
     "facilityType": "GYM",
     "available": true,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
-    "grade": 2.4,
-    "workingHours": {
-      "startHour": 7,
-      "startMinute": 0,
-      "endHour": 22,
-      "endMinute": 0
+    "location": {
+      "lat": 44.956052325409814,
+      "lng": 18.301409482955936,
+      "country": "Bosnia and Herzegovina",
+      "state": "Republika Srpska",
+      "city": null,
+      "town": "Modriča",
+      "road": "Svetosavska",
+      "number": null,
+      "postcode": "74480"
     },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 2.8,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "teretana",
-    "facilityType": "GYM",
-    "available": false,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
-    "grade": 3.6,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 4.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
+    "logoUrl": "img/facilities/14046566051026876688.jpg",
     "grade": 0.0,
     "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
+      "startHour": 2,
+      "startMinute": 20,
       "endHour": 20,
-      "endMinute": 0
+      "endMinute": 20
     },
     "content": "123"
+  },
+  {
+    "name": "teretana",
+    "facilityType": "GYM",
+    "available": true,
+    "location": {
+      "lat": 45.24514695197981,
+      "lng": 19.84966635704041,
+      "country": "Serbia",
+      "state": "Vojvodina",
+      "city": "Novi Sad City",
+      "town": "Petrovaradin",
+      "road": "Булевар Цара Лазара",
+      "number": null,
+      "postcode": "21101"
+    },
+    "logoUrl": "img/facilities/14983941934732575698.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 2,
+      "startMinute": 23,
+      "endHour": 19,
+      "endMinute": 23
+    },
+    "content": "542"
   },
   {
     "name": "teretana2",
     "facilityType": "GYM",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
+    "available": false,
+    "location": {
+      "lat": 38.89511620017961,
+      "lng": -77.02742099761964,
+      "country": "United States",
+      "state": "District of Columbia",
+      "city": "Washington",
+      "town": null,
+      "road": "Pennsylvania Avenue Northwest",
+      "number": null,
+      "postcode": "20004"
+    },
+    "logoUrl": "img/facilities/1764528360973299643.jpg",
     "grade": 0.0,
     "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
+      "startHour": 11,
+      "startMinute": 28,
+      "endHour": 24,
       "endMinute": 0
     },
-    "content": "123"
+    "content": ""
   },
   {
     "name": "bazen",
     "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
+    "available": false,
+    "location": {
+      "lat": 48.82373070843948,
+      "lng": 2.3432394862174992,
+      "country": "France",
+      "state": "Ile-de-France",
+      "city": null,
+      "town": null,
+      "road": "Rue Brillat-Savarin",
+      "number": "82",
+      "postcode": "75013"
+    },
+    "logoUrl": "img/facilities/6928831554156222474.jpeg",
     "grade": 0.0,
     "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
+      "startHour": 16,
+      "startMinute": 28,
+      "endHour": 24,
       "endMinute": 0
     },
-    "content": "123"
+    "content": ""
+  },
+  {
+    "name": "zenba",
+    "facilityType": "POOL",
+    "available": true,
+    "location": {
+      "lat": 44.953892615818916,
+      "lng": 18.308198466567976,
+      "country": "Bosnia and Herzegovina",
+      "state": "Republika Srpska",
+      "city": null,
+      "town": "Modriča",
+      "road": "Berlinska",
+      "number": null,
+      "postcode": "74480"
+    },
+    "logoUrl": "img/facilities/30293591714018319.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 0,
+      "startMinute": 0,
+      "endHour": 24,
+      "endMinute": 0
+    },
+    "content": ""
   },
   {
     "name": "teretana3",
     "facilityType": "GYM",
     "available": false,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
+    "location": {
+      "lat": 40.72336411065387,
+      "lng": 8.566294312477114,
+      "country": "Italy",
+      "state": "Sardinia",
+      "city": "Sassari",
+      "town": null,
+      "road": "Via Stintino",
+      "number": "2",
+      "postcode": "07100"
+    },
+    "logoUrl": "img/facilities/3307605990498938950.jpg",
     "grade": 0.0,
     "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
+      "startHour": 2,
+      "startMinute": 27,
+      "endHour": 24,
       "endMinute": 0
     },
-    "content": "123"
+    "content": ""
   },
   {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": false,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": false,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
+    "name": "bazen2",
     "facilityType": "POOL",
     "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
+    "location": {
+      "lat": 31.94157447527847,
+      "lng": 35.926607251167304,
+      "country": "Jordan",
+      "state": "Amman",
+      "city": "Amman",
+      "town": null,
+      "road": "Najeeb Ash Shraydeh Street",
+      "number": null,
+      "postcode": "11110"
+    },
+    "logoUrl": "img/facilities/725571544536254966.jpg",
     "grade": 0.0,
     "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
+      "startHour": 2,
+      "startMinute": 29,
+      "endHour": 24,
       "endMinute": 0
     },
-    "content": "123"
-  },
-  {
-    "name": "bazen",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/pool_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
-  },
-  {
-    "name": "djim",
-    "facilityType": "GYM",
-    "available": true,
-    "location": {},
-    "logoUrl": "facilities/gym_00.jpg",
-    "grade": 0.0,
-    "workingHours": {
-      "startHour": 10,
-      "startMinute": 0,
-      "endHour": 20,
-      "endMinute": 0
-    },
-    "content": "123"
+    "content": ""
   }
 ]

@@ -1,10 +1,10 @@
 package controller;
 
 import com.google.gson.Gson;
-import dto.LoginDTO;
-import dto.LoginResponseDTO;
-import dto.RegisterDTO;
-import dto.RegisterResponseDTO;
+import dto.auth.LoginDTO;
+import dto.auth.LoginResponseDTO;
+import dto.auth.RegisterDTO;
+import dto.auth.RegisterResponseDTO;
 import model.customer.Customer;
 import service.AuthService;
 import spark.Request;
@@ -44,7 +44,12 @@ public class AuthController {
 
     public static void authenticate(Request request, Response response){
         if(request.requestMethod().equals("OPTIONS")) return;
-        String token = request.headers("Authorization").split(" ")[1];
+        String token = null;
+        try{
+            token = request.headers("Authorization").split(" ")[1];
+        }catch (Exception e){
+            halt(401, "{\"message\": \"no token present\"}");
+        }
         String username = new AuthService().isTokenValid(token);
         if(username == null){
             halt(401, "{\"message\": \"authentication error\"}");

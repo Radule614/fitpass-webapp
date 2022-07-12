@@ -16,10 +16,16 @@ public class FacilityRepository extends GenericRepository<Facility> {
     private static FacilityRepository instance;
     
     public static FacilityRepository getInstance(){
-        if(instance == null){
+        if (instance == null)
             instance = new FacilityRepository();
-        }
         return instance;
+    }
+
+    public Facility getByName(String facilityName){
+        for (Facility facility: getAll())
+            if(facility.name.equals(facilityName))
+                return facility;
+        return null;
     }
 
     private FacilityRepository() {

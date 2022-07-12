@@ -2,7 +2,7 @@
 </script>
 
 <template>
- <button>
+  <button type="button">
     <span>
       <slot></slot>
     </span>
@@ -15,13 +15,16 @@ button {
   display: block;
   font-size:16px;
   border: 0px;
-  line-height: 40px;
+  line-height: 36px;
   padding: 0 32px;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
   background-color: $light-primary;
   color:$dark-primary;
   border-radius: 25px;
   outline: 0px;
+  &.flat{
+    padding: 0px;
+  }
   &::before{
     content: "";
     position:absolute;
@@ -42,25 +45,28 @@ button {
   }
   span{
     position: relative;
-    transition:color 0.3s ease-in-out 0.1s;
+    color:$dark-primary;
+    transition:color 0.3s ease-in-out;
   }
   &:hover{ 
     span{
       color:$light-primary;
-      transition:color 0.3s ease-in-out;
+      transition:color 0.4s ease-in-out;
     }
     &::before{
-      transition: transform 0.3s ease-in-out, border-radius 0.7s ease-in-out;
       border-radius: 25px;
       transform: scale(1);
     }
     &.block::before{
+      transition: transform 0.3s ease-in-out, border-radius 0.7s ease-in-out;
       border-radius: 0px;
     }
   }
   &.inverse{
     background-color: $dark-primary;
-    color:$active-primary;
+    span{
+      color:$active-primary;
+    }
     &:hover{
       span{
         color:$light-primary;

@@ -1,29 +1,27 @@
-
-
 <script>
-  import NavigationItem from './NavigationItem.vue'
+import NavigationItem from './NavigationItem.vue'
+import { routes } from '../../router.js';
 
   export default{
-    data() {
-      return {
-        routes: [
-          {name: "home", text: "Home"},
-          {name: "facility", text: "Facilities"},
-          {name: "staff", text: "Staff"},
-          {name: "about", text: "About"},
-          {name: "contact", text: "Contact"}
-        ]
-      }
-    },
     components: {
       NavigationItem
+    },
+    computed:{
+      activeRoutes(){
+        return routes.filter(route => route.meta && 
+                                      route.meta.nav && 
+                                        (!route.meta.userTypes ||
+                                        this.$store.getters['auth/isLogged'] && 
+                                          (route.meta.userTypes.includes('ANY') || 
+                                          route.meta.userTypes.includes(this.$store.getters['auth/userType']))));
+      }
     }
   }
 </script>
 
 <template>
   <nav class="menu">
-    <navigation-item v-for="route in routes" v-bind:key="route.id" :routeName="route.name" :text="route.text"></navigation-item>
+    <navigation-item v-for="route in activeRoutes" v-bind:key="route.id" :path="route.path" :text="route.meta.nav"></navigation-item>
   </nav>
 </template>
 
