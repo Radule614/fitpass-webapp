@@ -1,22 +1,21 @@
 <script>
 import NavigationItem from './NavigationItem.vue'
 import { routes } from '../../router.js';
-
-  export default{
-    components: {
-      NavigationItem
-    },
-    computed:{
-      activeRoutes(){
-        return routes.filter(route => route.meta && 
-                                      route.meta.nav && 
-                                        (!route.meta.userTypes ||
-                                        this.$store.getters['auth/isLogged'] && 
-                                          (route.meta.userTypes.includes('ANY') || 
-                                          route.meta.userTypes.includes(this.$store.getters['auth/userType']))));
-      }
+export default{
+  components: {
+    NavigationItem
+  },
+  computed:{
+    activeRoutes(){
+      return routes.filter(route => route.meta && 
+                                    route.meta.nav && 
+                                      (!route.meta.userTypes ||
+                                      this.$store.getters['auth/isLogged'] && 
+                                        (route.meta.userTypes.includes('ANY') || 
+                                        route.meta.userTypes.includes(this.$store.getters['auth/userType']))));
     }
   }
+}
 </script>
 
 <template>
@@ -29,5 +28,6 @@ import { routes } from '../../router.js';
   .menu{
     display: flex;
     flex-direction:row;
+    font-size: 18px;
   }
 </style>

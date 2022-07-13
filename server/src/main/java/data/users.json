@@ -9,12 +9,9 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
-    "points": 25,
-    "customerType": null,
-    "username": "Radule614",
-    "userType": "CUSTOMER",
+    "facility_id": "djim",
+    "username": "radule614",
+    "userType": "MANAGER",
     "password": "123",
     "firstname": "Rade",
     "lastname": "Stojanovic",
@@ -137,7 +134,7 @@
     "gender": null
   },
   {
-    "facility_id": "djim",
+    "facility_id": null,
     "username": "manager_2",
     "userType": "MANAGER",
     "password": "12345678",

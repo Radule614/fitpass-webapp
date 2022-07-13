@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import dto.user.*;
 import model.User;
 import model.UserType;
+import model.facility.Facility;
 import model.manager.Manager;
 import repository.util.LocalDateAdapter;
 import service.FacilityService;
@@ -34,7 +35,7 @@ public class UserController {
         try{
             String username = request.attribute("username");
             User user = new UserService().getUser(username);
-            return g.toJson(user.getDTO());
+            return g.toJson(userToDTO(user));
         }catch (Exception e){
             e.printStackTrace();
             response.status(400);
@@ -97,6 +98,12 @@ public class UserController {
 
 
     //PRIVATE
+
+    private static UserDTO userToDTO(User user){
+        UserDTO temp = user.getDTO();
+        if(temp instanceof ManagerDTO && user instanceof Manager) temp.facility = new FacilityService().getByName(((Manager) user).facility_id);
+        return temp;
+    }
 
     private static ArrayList<UserDTO> usersToDTOs(ArrayList<User> users){
         ArrayList<UserDTO> DTOs = new ArrayList<>();

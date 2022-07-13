@@ -4,7 +4,6 @@ import axios from 'axios';
 
 let timer;
 
-
 export default {
   async login(context, payload) {
     const response = await fetch(`${Settings.serverUrl}/api/auth/login`, {
@@ -24,9 +23,7 @@ export default {
 
     timer = setTimeout(() => { context.dispatch('logout') }, expiresIn)
 
-    context.commit('setToken', {
-      token: responseData.token
-    });
+    context.commit('setToken', { token: responseData.token });
     context.dispatch('getUserData', {token: responseData.token});
     
   },
@@ -54,10 +51,8 @@ export default {
     })
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.message || 'Failed to fetch user data.');
-
-    context.commit('setUserData', {
-      user: responseData
-    });
+    console.log(responseData);
+    context.commit('setUserData', { user: responseData });
   },
   logout(context, payload){
     localStorage.removeItem('token');
@@ -65,11 +60,8 @@ export default {
     
     clearTimeout(timer);
     
-    context.commit('setUser', {
-      token: null,
-      user: null
-    });
-    if(router) router.push('home');
+    context.commit('setUser', { token: null, user: null });
+    if(router) router.push('/home');
   },
   async checkAuthentication(context, payload){
     const token = localStorage.getItem('token');
@@ -81,9 +73,7 @@ export default {
     timer = setTimeout(() => { context.dispatch('logout') }, expiresIn);
 
     if(token){
-      context.commit('setToken', {
-        token: token
-      });
+      context.commit('setToken', { token: token });
       await context.dispatch('getUserData', {token: token});
     }
   }

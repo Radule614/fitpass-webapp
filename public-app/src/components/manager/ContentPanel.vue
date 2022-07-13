@@ -1,13 +1,11 @@
 <script>
-  export default {
-    
-  }
+export default {}
 </script>
 
 <template>
-  <h1>CONTACT</h1>
+  <div>content</div>
 </template>
 
 <style scoped lang="scss">
-  
+
 </style>
