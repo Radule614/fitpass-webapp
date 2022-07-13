@@ -12,7 +12,9 @@ import com.google.gson.GsonBuilder;
 import dto.user.*;
 import model.User;
 import model.UserType;
+import model.manager.Manager;
 import repository.util.LocalDateAdapter;
+import service.FacilityService;
 import service.UserService;
 import spark.Request;
 import spark.Response;
@@ -44,11 +46,9 @@ public class UserController {
         response.type("application/json");
         Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
 
-        ArrayList<UserDTO> temp = new ArrayList<>();
         try{
-            UsersFilterDTO dto = new Gson().fromJson(request.body(), UsersFilterDTO.class);
-            for (User user: new UserService().getFilteredUsers(dto)) temp.add(user.getDTO());
-            return g.toJson(temp);
+            UsersFilterDTO dto = g.fromJson(request.body(), UsersFilterDTO.class);
+            return g.toJson(usersToDTOs(new UserService().getFilteredUsers(dto)));
         }catch (Exception e){
             e.printStackTrace();
             response.status(400);
@@ -97,6 +97,16 @@ public class UserController {
 
 
     //PRIVATE
+
+    private static ArrayList<UserDTO> usersToDTOs(ArrayList<User> users){
+        ArrayList<UserDTO> DTOs = new ArrayList<>();
+        for(User u: users){
+            UserDTO temp = u.getDTO();
+            if (temp instanceof ManagerDTO && u instanceof Manager) temp.facility = new FacilityService().getByName(((Manager) u).facility_id);
+            DTOs.add(temp);
+        }
+        return DTOs;
+    }
 
     private static MessageResponse validateData(CreateUserDTO dto){
         UserService service = new UserService();

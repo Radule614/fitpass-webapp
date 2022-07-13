@@ -1,10 +1,14 @@
 package service;
 
+import dto.facility.ClearManagerDTO;
 import dto.facility.DeleteFacilityDTO;
-import dto.facility.FacilityDTO;
+import dto.facility.CreateFacilityDTO;
 import dto.FileDTO;
+import dto.facility.SetManagerDTO;
+import model.User;
 import model.facility.Facility;
 import model.facility.FacilityType;
+import model.manager.Manager;
 import repository.FacilityRepository;
 
 import java.io.File;
@@ -94,7 +98,7 @@ public class FacilityService {
     	return facilityType;
     }
 
-	public Facility addFacility(FacilityDTO facilityDTO, FileDTO fileDTO){
+	public Facility addFacility(CreateFacilityDTO facilityDTO, FileDTO fileDTO){
 		if(!checkIfImageValid(fileDTO.extension)) return null;
 		String image = saveFile(fileDTO);
 		String logoUrl = "img/facilities/" + image;
@@ -108,9 +112,40 @@ public class FacilityService {
 		if(f != null && facilityRepository.delete(f)){
 			deleteFile(f.logoUrl);
 			facilityRepository.saveAll();
+			new UserService().clearFacilityReferences(f.name);
 			return true;
 		}
 		return false;
+	}
+
+	public Manager setManager(SetManagerDTO dto){
+		Facility f = getByName(dto.facilityName);
+		UserService userService = new UserService();
+		if(f != null && userService.setFacility(dto)){
+			clearManagerReferences(dto.managerUsername);
+			f.manager_id = dto.managerUsername;
+			facilityRepository.saveAll();
+			return (Manager)userService.getUser(dto.managerUsername);
+		}
+		return null;
+	}
+
+	public void clearManager(ClearManagerDTO dto){
+		if (dto == null) return;
+		Facility f = getByName(dto.facilityName);
+
+		if(f != null) clearManagerReferences(f.manager_id);
+		new UserService().clearFacilityReferences(dto.facilityName);
+	}
+
+	public void clearManagerReferences(String managerUsername){
+		if(managerUsername == null) return;
+		for(Facility f: facilityRepository.getAll()) {
+			if(managerUsername.equals(f.manager_id)) {
+				f.manager_id = null;
+				facilityRepository.saveAll();
+			}
+		}
 	}
 
 	public boolean checkIfImageValid(String extension){

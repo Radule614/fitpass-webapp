@@ -1,14 +1,10 @@
 <script>
 import FacilityBlock from './FacilityBlock.vue';
-import CustomButton from "../utility/CustomButton.vue"
-import CustomLink from '../utility/CustomLink.vue';
 import { mapActions, mapMutations, mapGetters } from 'vuex';
 import ConfirmModal from '../utility/ConfirmModal.vue';
 export default {
   components:{
     FacilityBlock,
-    CustomButton,
-    CustomLink,
     ConfirmModal
   },
   props:{

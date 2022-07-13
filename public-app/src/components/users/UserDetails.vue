@@ -1,13 +1,14 @@
 <script>
 export default{
   props: {
-    user: Object
+    user: Object,
+    compact: Boolean
   }
 }
 </script>
 
 <template>
-  <div class="user-details">
+  <div class="user-details" :class="{ 'compact': compact }">
     <div class="header">
       <div class="image-wrapper">
         <img class="image" src="../../assets/user-image.png">
@@ -34,6 +35,10 @@ export default{
         <div class="row" v-if="user.points || user.points == 0">
           <div class="col">points</div>
           <div class="col">{{user.points}}</div>
+        </div>
+        <div class="row" v-if="user.facility">
+          <div class="col">facility</div>
+          <div class="col">{{user.facility.name}}</div>
         </div>
       </div>
     </div>
@@ -100,6 +105,14 @@ export default{
             background-color: rgba($active-primary, $alpha: 0.3);
           }
         }
+      }
+    }
+  }
+  &.compact{
+    .info .details{
+      .row .col{
+        font-size: 15px;
+        line-height: 34px;
       }
     }
   }

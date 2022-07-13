@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import dto.auth.RegisterDTO;
+import dto.facility.SetManagerDTO;
 import dto.user.CreateUserDTO;
 import dto.user.DeleteUserDTO;
 import dto.user.UserDTO;
@@ -14,6 +15,7 @@ import model.User;
 import model.UserType;
 import model.customer.Customer;
 import model.customer.CustomerType;
+import model.manager.Manager;
 import model.utility.Gender;
 import repository.UserRepository;
 
@@ -22,12 +24,7 @@ public class UserService {
     public UserService(){}
 
     public User getUser(String username) {
-        for(User u: userRepository.getAll()) {
-            if(u.username.equals(username)) {
-                return u;
-            }
-        }
-        return null;
+        return userRepository.getByUsername(username);
     }
     
     public ArrayList<User> getAll() {
@@ -80,9 +77,31 @@ public class UserService {
 		User user = userRepository.getByUsername(dto.username);
 		if(user != null && userRepository.delete(user)){
 			userRepository.saveAll();
+			new FacilityService().clearManagerReferences(user.username);
 			return true;
 		}
 		return false;
+	}
+
+	public boolean setFacility(SetManagerDTO dto){
+		User user = getUser(dto.managerUsername);
+		if(user instanceof Manager){
+			clearFacilityReferences(dto.facilityName);
+			((Manager)user).facility_id = dto.facilityName;
+			userRepository.saveAll();
+			return true;
+		}
+		return false;
+	}
+
+	public void clearFacilityReferences(String facilityName){
+		if (facilityName == null) return;
+		for (User u: getAll()) {
+			if(u instanceof Manager && facilityName.equals(((Manager) u).facility_id)) {
+				((Manager) u).facility_id = null;
+				userRepository.saveAll();
+			}
+		}
 	}
 
 	public ArrayList<User> getFilteredUsers(UsersFilterDTO dto){

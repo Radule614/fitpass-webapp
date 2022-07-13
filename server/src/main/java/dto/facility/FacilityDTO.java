@@ -1,5 +1,7 @@
 package dto.facility;
 
+import dto.user.UserDTO;
+import model.facility.Facility;
 import model.facility.FacilityType;
 import model.facility.Location;
 import model.facility.WorkingHours;
@@ -9,16 +11,22 @@ public class FacilityDTO {
     public FacilityType facilityType;
     public boolean available;
     public Location location;
+    public String logoUrl;
+    public double grade;
     public WorkingHours workingHours;
     public String content;
+    public UserDTO manager;
+
     public FacilityDTO(){}
 
-    public FacilityDTO(String name, FacilityType facilityType, boolean available, Location location, WorkingHours workingHours, String content) {
-        this.name = name;
-        this.facilityType = facilityType;
-        this.available = available;
-        this.location = location;
-        this.workingHours = workingHours;
-        this.content = content;
+    public FacilityDTO(Facility f){
+        this.name = f.name;
+        this.facilityType = f.facilityType;
+        this.available = f.available;
+        this.logoUrl = f.logoUrl;
+        this.location = f.location;
+        this.grade = f.grade;
+        this.workingHours = f.workingHours;
+        this.content = f.content;
     }
 }

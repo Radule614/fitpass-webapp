@@ -22,7 +22,7 @@
     "gender": "MALE"
   },
   {
-    "facility": null,
+    "facility_id": null,
     "username": "manager",
     "userType": "MANAGER",
     "password": "123",
@@ -127,16 +127,6 @@
     "gender": "MALE"
   },
   {
-    "facility": null,
-    "username": "admin2",
-    "userType": "MANAGER",
-    "password": "12345678",
-    "firstname": "i",
-    "lastname": "p",
-    "dateOfBirth": "28/06/2022",
-    "gender": null
-  },
-  {
     "workoutHistory": null,
     "username": "trener2",
     "userType": "TRAINER",
@@ -145,5 +135,25 @@
     "lastname": "prezime3",
     "dateOfBirth": "14/07/2022",
     "gender": null
+  },
+  {
+    "facility_id": "djim",
+    "username": "manager_2",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "ime2",
+    "lastname": "prezime2",
+    "dateOfBirth": "9/07/2022",
+    "gender": "MALE"
+  },
+  {
+    "facility_id": "teretana",
+    "username": "manager_4",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "ime3",
+    "lastname": "prezime3",
+    "dateOfBirth": null,
+    "gender": "FEMALE"
   }
 ]

@@ -47,9 +47,15 @@ public class Main {
 
                 before("/add", AuthController::authenticate);
                 before("/delete", AuthController::authenticate);
+                before("/manager", AuthController::authenticate);
 
                 post("/add", FacilityController::addFacility);
                 post("/delete", FacilityController::deleteFacility);
+
+                path("/manager", () -> {
+                   post("/set", FacilityController::setManager);
+                   post("/clear", FacilityController::clearManager);
+                });
             });
         });
     }
