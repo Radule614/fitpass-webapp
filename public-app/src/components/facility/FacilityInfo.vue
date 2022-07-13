@@ -1,10 +1,10 @@
 <script>
 import LeafletMap from '../utility/LeafletMap.vue';
+import ManagerModal from './ManagerModal.vue';
+import ConfirmModal from '../utility/ConfirmModal.vue';
 export default{
-  components:{
-    LeafletMap
-  },
-  props:{
+  components: { LeafletMap, ManagerModal, ConfirmModal },
+  props: {
     facility: {
       available: Boolean,
       content: String,
@@ -13,70 +13,113 @@ export default{
       location: Object,
       grade: Number,
       logoUrl: String,
+      manager: Object,
       workingHours: {
         startHour: Number,
         startMinute: Number,
         endHour: Number,
         endMinute: Number
       }
+    },
+    onlyAvailableManagers: Boolean
+  },
+  data() {
+    return {
+      managerModalActive: false,
+      clearModalActive: false,
+      loading: false
     }
   },
   computed: {
-    workHourDisplay(){
+    loggedUserType(){
+      return this.$store.getters['auth/userType'];
+    },
+    workHourDisplay() {
       let temp = this.facility.workingHours;
       return `${temp.startHour}:${temp.startMinute} - ${temp.endHour}:${temp.endMinute}`
     },
-    address(){
+    address() {
       return this.facility.location || {}
     },
-    latLng(){
-      return {lat: this.address.lat || null, lng: this.address.lng || null}
+    latLng() {
+      return { lat: this.address.lat || null, lng: this.address.lng || null}
+    },
+    managerName() {
+      if (this.facility.manager)
+        return this.facility.manager.firstname + " " + this.facility.manager.lastname;
+      return "";
     }
   },
+  methods: {
+    selectManagerHandler(manager){
+      this.loading = true;
+      try{
+        this.$store.dispatch('facility/setManager', { managerUsername: manager.username, facilityName: this.facility.name} );
+        this.managerModalActive = false;
+        this.loading = false;
+      }catch(error){
+        console.error(error);
+        this.managerModalActive = false;
+        this.loading = false;
+      }
+    },
+    clearManagerHandler(){
+      this.loading = true;
+      try{
+        this.$store.dispatch('facility/clearManager', { facilityName: this.facility.name} );
+        this.clearModalActive = false;
+        this.loading = false;
+      }catch(error){
+        console.error(error);
+        this.clearModalActive = false;
+        this.loading = false;
+      }
+    }
+  }
 }
 </script>
 
 <template>
   <div class="info">
     <div class="left">
-      <table>
-        <tr>
-          <td>name: </td>
-          <td>{{facility.name}}</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>type: </td>
-          <td>{{facility.facilityType}}</td>
-        </tr>
-        <tr>
-          <td>average grade: </td>
-          <td>{{facility.grade}}</td>
-        </tr>
-        <tr>
-          <td>working hours: </td>
-          <td>{{workHourDisplay}}</td>
-        </tr>
-        <tr>
-          <td>country: </td>
-          <td>{{address.country}}</td>
-        </tr>
-        <tr>
-          <td>city: </td>
-          <td>{{address.city||address.town}}</td>
-        </tr>
-        <tr>
-          <td>street: </td>
-          <td>{{address.road}} {{address.number}}</td>
-        </tr>
-      </table>
-      <div colspan="2" class="content-summary">"{{facility.content}}"</div>
+      <div class="row">
+        <div class="col">average grade:</div>
+        <div class="col">{{facility.grade}}</div>
+      </div>
+      <div class="row">
+        <div class="col">working hours:</div>
+        <div class="col">{{workHourDisplay}}</div>
+      </div>
+      <div class="row">
+        <div class="col">country:</div>
+        <div class="col">{{address.country}}</div>
+      </div>
+      <div class="row">
+        <div class="col">city:</div>
+        <div class="col">{{address.city || address.town}}</div>
+      </div>
+      <div class="row">
+        <div class="col">street:</div>
+        <div class="col">{{address.road}} {{address.number}}</div>
+      </div>
+      <div class="row">
+        <div class="col">manager:</div>
+        <div class="col">{{managerName}}</div>
+      </div>
+      <div v-if="loggedUserType == 'ADMIN'" class="button-group">
+        <custom-button class="block" @click="clearModalActive = true">Clear Manager</custom-button>
+        <custom-button class="block" @click="managerModalActive = true">Set Manager</custom-button>
+      </div>
+      <!-- <div colspan="2" class="content-summary">"{{facility.content}}"</div> -->
     </div>
     <div class="right">
       <div class="location">
         <leaflet-map class="map" :showOnly="true" :locationProp="latLng" :markerTooltip="facility.name"></leaflet-map>
       </div>
     </div>
+
+    <manager-modal :show="managerModalActive" @close="managerModalActive = false" @confirm="selectManagerHandler($event)"></manager-modal>
+    <confirm-modal :show="clearModalActive" @close="clearModalActive = false" @confirm="clearManagerHandler"></confirm-modal>
   </div>
 </template>
 
@@ -86,20 +129,35 @@ export default{
   position: relative;
   .left{
     flex: 1;
-    table{
-      tr{
-        td{
-          line-height: 30px;
-          font-size: 18px;
-          &:first-child{
-            padding-right: 35px;
-            opacity: 1;
-          }
-          &:nth-child(2){
-            font-style: italic;
-            color: $active-primary;
-            font-size: 19px;
-          }
+    .row {
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+      margin: 5px 0px 0px 0px;
+      margin-right: 30px;
+      &:first-child{
+        margin-top: 0px;
+      }
+      .col{
+        color: $dark-primary;
+        font-style: normal;
+        font-size: 15px;
+        line-height: 36px;
+        &:nth-child(2){
+          font-style: italic;
+          background-color: rgba($active-primary, $alpha: 0.4);
+        }
+      }
+    }
+    .button-group{
+      margin-right: 30px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: right;
+      & > * {
+        margin-left:15px;
+        background-color: #fff;
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+        &:first-child{
+          margin-left: 0px;
         }
       }
     }
@@ -112,8 +170,8 @@ export default{
   .right{
     position: relative;
     .location{
-      width: 500px;
-      height: 295px;
+      width: 600px;
+      height: 355px;
       display: flex;
       justify-content: center;
       align-items: center;

@@ -7,7 +7,7 @@ import model.User;
 import model.UserType;
 
 public class Manager extends User {
-    public Facility facility;
+    public String facility_id;
 
     public Manager() {
         super(UserType.MANAGER);

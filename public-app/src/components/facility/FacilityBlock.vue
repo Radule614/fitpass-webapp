@@ -77,7 +77,7 @@ export default {
       <div class="left" @click="selectedHandler($event)">
         <div class="text-group">
           <div class="text">{{facility.name}}</div>
-          <div class="text">{{facility.facilityType}}</div>
+          <div class="text" style="text-transform:lowercase;">{{facility.facilityType}}</div>
           <div class="text available-text-wrap">
             <span v-if="facility.available">Available</span>
             <span v-else style="color:red;">Not available</span>
@@ -247,7 +247,7 @@ export default {
     max-height: 0;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
     position: relative;
-    background-color: $light-primary;
+    background-color: #fefefe;
     transition: max-height 0.4s ease-in-out;
     overflow: hidden;
     transform: translateY(-3px);
@@ -344,7 +344,7 @@ export default {
       }
     }
     .details{
-      max-height: 350px;
+      max-height: 410px;
       transition: max-height 0.3s ease-in-out;
     }
   }

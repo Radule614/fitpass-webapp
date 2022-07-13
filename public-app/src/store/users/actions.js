@@ -1,4 +1,5 @@
 import Settings from '../../settings.js';
+import store from "../../store/index.js";
 
 export default{
   async fetchUsers(context, payload){
@@ -11,7 +12,7 @@ export default{
     });
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
-    
+    //console.log(responseData);
     context.commit('setUsers', responseData);
   },
   async createUser(context, payload){
@@ -39,6 +40,8 @@ export default{
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to delete user.');
 
+    store.dispatch('facility/fetchFacilities');
+    store.dispatch('facility/searchFacilities', "");
     context.commit('removeUser', payload.username);
   }
 }

@@ -22,7 +22,8 @@
       "endHour": 20,
       "endMinute": 20
     },
-    "content": "123"
+    "content": "123",
+    "manager_id": "manager_2"
   },
   {
     "name": "teretana",
@@ -47,7 +48,8 @@
       "endHour": 19,
       "endMinute": 23
     },
-    "content": "542"
+    "content": "542",
+    "manager_id": "manager_4"
   },
   {
     "name": "teretana2",
@@ -72,7 +74,8 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "content": "",
+    "manager_id": null
   },
   {
     "name": "bazen",
@@ -97,7 +100,8 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "content": "",
+    "manager_id": null
   },
   {
     "name": "zenba",
@@ -122,7 +126,8 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "content": "",
+    "manager_id": null
   },
   {
     "name": "teretana3",
@@ -147,7 +152,8 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "content": "",
+    "manager_id": null
   },
   {
     "name": "bazen2",
@@ -172,6 +178,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "content": "",
+    "manager_id": null
   }
 ]

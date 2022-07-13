@@ -9,6 +9,7 @@ public class Facility {
     public double grade;
     public WorkingHours workingHours;
     public String content;
+    public String manager_id;
 
     public Facility(){}
 

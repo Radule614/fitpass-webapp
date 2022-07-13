@@ -2,14 +2,18 @@ package controller;
 
 import com.google.gson.Gson;
 
-import dto.facility.DeleteFacilityDTO;
-import dto.facility.FacilityDTO;
+import com.google.gson.GsonBuilder;
+import dto.facility.*;
 import dto.FileDTO;
+import model.User;
 import model.facility.Facility;
 import model.facility.FacilityType;
 import model.facility.Location;
 import model.facility.WorkingHours;
+import model.manager.Manager;
+import repository.util.LocalDateAdapter;
 import service.FacilityService;
+import service.UserService;
 import spark.Request;
 import spark.Response;
 import utility.MessageResponse;
@@ -19,31 +23,40 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Set;
 
 import static utility.Utility.parseStringInput;
 
 public class FacilityController {
     public static String getAllFacilities(Request request, Response response) {
-        Gson g = new Gson();
         response.type("application/json");
-        return g.toJson(new FacilityService().getAllFacilities());
+		Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+		try{
+			return g.toJson(facilitiesToDTOs(new FacilityService().getAllFacilities()));
+		}catch (Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Couldn't return facilities");
+		}
     }
     public static String searchFacilities(Request request, Response response) {
     	String searchText = request.params("searchText");
-    	Gson g = new Gson();
+		Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
     	FacilityService facService = new FacilityService();
     	response.type("application/json");
     	if(searchText == null) {
-    		return g.toJson(facService.getAllFacilities());
+    		return g.toJson(facilitiesToDTOs(facService.getAllFacilities()));
     	}
     	if(searchText.contains("&")) {
     		String[] parts = searchText.split("&");
     		String searchName = parts[0];
     		String facilityTypeText = parts[1];
     		String avgGradeRangeText = parts[2];
-    		return g.toJson(facService.getRequestedFacilites(searchName, facilityTypeText, avgGradeRangeText));
+    		return g.toJson(facilitiesToDTOs(facService.getRequestedFacilites(searchName, facilityTypeText, avgGradeRangeText)));
     	}
-    	return g.toJson(facService.getAllFacilities());
+    	return g.toJson(facilitiesToDTOs(facService.getAllFacilities()));
     }
 
 	public static String addFacility(Request request, Response response) throws ServletException, IOException {
@@ -52,7 +65,7 @@ public class FacilityController {
 		Part filePart = request.raw().getPart("file");
 
 		FacilityService service = new FacilityService();
-		FacilityDTO facilityDTO = null;
+		CreateFacilityDTO facilityDTO = null;
 		try{
 			facilityDTO = extractFacilityData(request);
 		}catch(Exception e){
@@ -85,9 +98,46 @@ public class FacilityController {
 		return Utility.convertMessageToJSON("Facility not found");
 	}
 
+	public static String setManager(Request request, Response response){
+		Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+		response.type("application/json");
+		try{
+			SetManagerDTO dto = new Gson().fromJson(request.body(), SetManagerDTO.class);
+			Manager manager = new FacilityService().setManager(dto);
+			return g.toJson(manager.getDTO());
+		}catch (Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Error while parsing data");
+		}
+	}
+
+	public static String clearManager(Request request, Response response){
+		response.type("application/json");
+		try{
+			ClearManagerDTO dto = new Gson().fromJson(request.body(), ClearManagerDTO.class);
+			new FacilityService().clearManager(dto);
+			return Utility.convertMessageToJSON("Facility manager cleared");
+		}catch (Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Error while parsing data");
+		}
+	}
 
 
 	//PRIVATE
+
+	private static ArrayList<FacilityDTO> facilitiesToDTOs(ArrayList<Facility> facilities){
+		ArrayList<FacilityDTO> DTOs = new ArrayList<>();
+		for(Facility f: facilities){
+			FacilityDTO temp = new FacilityDTO(f);
+			User user = new UserService().getUser(f.manager_id);
+			if(user != null) temp.manager = new UserService().getUser(f.manager_id).getDTO();
+			DTOs.add(temp);
+		}
+		return DTOs;
+	}
 
 	private static String getFileName(Part part) {
 		for (String cd : part.getHeader("content-disposition").split(";")) {
@@ -106,7 +156,7 @@ public class FacilityController {
 		}
 		return null;
 	}
-	private static MessageResponse validateData(FacilityDTO facilityDTO, FileDTO fileDTO){
+	private static MessageResponse validateData(CreateFacilityDTO facilityDTO, FileDTO fileDTO){
 		FacilityService service = new FacilityService();
 		MessageResponse messageObject = new MessageResponse();
 
@@ -120,7 +170,7 @@ public class FacilityController {
 		if(!service.checkIfImageValid(fileDTO.extension)) messageObject.addMessage("No image selected");
 		return messageObject;
 	}
-	private static FacilityDTO extractFacilityData(Request request) throws ServletException, IOException {
+	private static CreateFacilityDTO extractFacilityData(Request request) throws ServletException, IOException {
 		String name = parseStringInput(request.raw().getPart("name"));
 		String startTime = parseStringInput(request.raw().getPart("startTime"));
 		String endTime = parseStringInput(request.raw().getPart("endTime"));
@@ -129,6 +179,6 @@ public class FacilityController {
 		String available = parseStringInput(request.raw().getPart("available"));
 		Location location = new Gson().fromJson(parseStringInput(request.raw().getPart("location")), Location.class);
 
-		return new FacilityDTO(name, FacilityType.valueOf(type), available != null && available.equals("on"), location, new WorkingHours(startTime, endTime), content);
+		return new CreateFacilityDTO(name, FacilityType.valueOf(type), available != null && available.equals("on"), location, new WorkingHours(startTime, endTime), content);
 	}
 }
