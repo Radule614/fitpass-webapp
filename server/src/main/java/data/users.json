@@ -9,7 +9,7 @@
     "gender": "MALE"
   },
   {
-    "facility_id": "djim",
+    "facility_id": "bazen54321",
     "username": "radule614",
     "userType": "MANAGER",
     "password": "123",
@@ -134,7 +134,7 @@
     "gender": null
   },
   {
-    "facility_id": null,
+    "facility_id": "djim",
     "username": "manager_2",
     "userType": "MANAGER",
     "password": "12345678",

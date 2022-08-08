@@ -10,5 +10,8 @@ export default {
   },
   userType(state){
     return state.user ? state.user.userType : null; 
+  },
+  managerFacility(state){
+    return state.user && state.user.facility ? state.user.facility : null;
   }
 }

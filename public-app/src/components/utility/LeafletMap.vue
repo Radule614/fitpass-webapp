@@ -46,7 +46,7 @@ export default {
       return this.showOnly ? this.locationProp : this.location;
     }
   },
-  beforeMount(){
+  mounted(){
     if(this.showOnly){
       this.zoom = 12;
     }

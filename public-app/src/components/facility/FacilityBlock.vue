@@ -11,7 +11,7 @@ export default {
     selected:Boolean,
     facility: {
       available: Boolean,
-      content: String,
+      content: Array,
       facilityType: String,
       name: String,
       location: Object,

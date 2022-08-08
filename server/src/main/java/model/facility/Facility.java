@@ -1,5 +1,7 @@
 package model.facility;
 
+import java.util.ArrayList;
+
 public class Facility {
     public String name;
     public FacilityType facilityType;
@@ -8,12 +10,12 @@ public class Facility {
     public String logoUrl;
     public double grade;
     public WorkingHours workingHours;
-    public String content;
     public String manager_id;
+    public ArrayList<Content> content = new ArrayList<>();
 
     public Facility(){}
 
-    public Facility(String name, FacilityType facilityType, boolean available, Location location, String logoUrl, double grade, WorkingHours workingHours, String content) {
+    public Facility(String name, FacilityType facilityType, boolean available, Location location, String logoUrl, double grade, WorkingHours workingHours) {
         this.name = name;
         this.facilityType = facilityType;
         this.available = available;
@@ -21,7 +23,6 @@ public class Facility {
         this.logoUrl = logoUrl;
         this.grade = grade;
         this.workingHours = workingHours;
-        this.content = content;
     }
 
     public Facility(Facility f){
@@ -33,5 +34,6 @@ public class Facility {
         grade = f.grade;
         workingHours = f.workingHours;
         content = f.content;
+        this.manager_id = f.manager_id;
     }
 }

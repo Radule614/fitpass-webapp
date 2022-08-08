@@ -8,7 +8,6 @@ export default {
   },
   created() {
     this.localRoutes = routes.filter(item => item.name == 'manager')[0].children.filter(item => item.meta && item.meta.nav);
-    console.log(this.localRoutes);
   }
 }
 </script>
