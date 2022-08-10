@@ -10,18 +10,15 @@ public class CreateFacilityDTO {
     public FacilityType facilityType;
     public boolean available;
     public Location location;
-    public double grade;
     public WorkingHours workingHours;
-    public String content;
     public UserDTO manager;
     public CreateFacilityDTO(){}
 
-    public CreateFacilityDTO(String name, FacilityType facilityType, boolean available, Location location, WorkingHours workingHours, String content) {
+    public CreateFacilityDTO(String name, FacilityType facilityType, boolean available, Location location, WorkingHours workingHours) {
         this.name = name;
         this.facilityType = facilityType;
         this.available = available;
         this.location = location;
         this.workingHours = workingHours;
-        this.content = content;
     }
 }

@@ -7,7 +7,7 @@ export default{
   props: {
     facility: {
       available: Boolean,
-      content: String,
+      content: Array,
       facilityType: String,
       name: String,
       location: Object,
@@ -110,7 +110,6 @@ export default{
         <custom-button class="block" @click="clearModalActive = true">Clear Manager</custom-button>
         <custom-button class="block" @click="managerModalActive = true">Set Manager</custom-button>
       </div>
-      <!-- <div colspan="2" class="content-summary">"{{facility.content}}"</div> -->
     </div>
     <div class="right">
       <div class="location">
@@ -160,11 +159,6 @@ export default{
           margin-left: 0px;
         }
       }
-    }
-    .content-summary{
-      font-style: italic;
-      font-size: 18px;
-      line-height: 30px;
     }
   }
   .right{

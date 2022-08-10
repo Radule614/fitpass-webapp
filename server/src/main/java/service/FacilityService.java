@@ -1,11 +1,10 @@
 package service;
 
-import dto.facility.ClearManagerDTO;
-import dto.facility.DeleteFacilityDTO;
-import dto.facility.CreateFacilityDTO;
+import dto.facility.*;
 import dto.FileDTO;
-import dto.facility.SetManagerDTO;
 import model.User;
+import model.facility.Content;
+import model.facility.ContentType;
 import model.facility.Facility;
 import model.facility.FacilityType;
 import model.manager.Manager;
@@ -102,7 +101,7 @@ public class FacilityService {
 		if(!checkIfImageValid(fileDTO.extension)) return null;
 		String image = saveFile(fileDTO);
 		String logoUrl = "img/facilities/" + image;
-		Facility f = new Facility(facilityDTO.name, facilityDTO.facilityType, facilityDTO.available, facilityDTO.location, logoUrl, 0, facilityDTO.workingHours, facilityDTO.content);
+		Facility f = new Facility(facilityDTO.name, facilityDTO.facilityType, facilityDTO.available, facilityDTO.location, logoUrl, 0, facilityDTO.workingHours);
 		facilityRepository.add(f);
 		return f;
 	}
@@ -148,8 +147,39 @@ public class FacilityService {
 		}
 	}
 
+	public Facility getByManager(String managerUsername){
+		if(managerUsername == null) return null;
+		for(Facility f: facilityRepository.getAll()) {
+			if(managerUsername.equals(f.manager_id)) {
+				return f;
+			}
+		}
+		return null;
+	}
+
 	public boolean checkIfImageValid(String extension){
 		return extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png");
+	}
+
+	public void addContent(String managerUsername, AddContentDTO dto) throws Content.CreateContentException {
+		if(managerUsername == null || dto == null) throw new Content.CreateContentException("Something went wrong");
+		Facility f = this.getByManager(managerUsername);
+		if(!this.isContentUnique(f.content, dto.name)) throw new Content.CreateContentException("Content already exists");
+		f.content.add(new Content(dto.name, dto.type));
+		facilityRepository.saveAll();
+	}
+
+	private boolean isContentUnique(ArrayList<Content> list, String name){
+		for(Content con: list){
+			if(name.equals(con.name)) return false;
+		}
+		return true;
+	}
+
+	public void deleteContent(String managerUsername, DeleteContentDTO dto) throws Content.DeleteContentException {
+		if(managerUsername == null || dto == null) throw new Content.DeleteContentException("Something went wrong");
+		Facility f = this.getByManager(managerUsername);
+		f.content.removeIf(con -> con.name.equals(dto.name));
 	}
 
 

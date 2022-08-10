@@ -96,10 +96,6 @@ export default{
           </div>
         </td>
       </tr>
-      <tr>
-        <td style="vertical-align:top;"><label for="content">content summary:</label></td>
-        <td colspan="3"><textarea class="textarea-primary" name="content" id="" cols="30" rows="10"></textarea></td>
-      </tr>
     </table>
     <div class="error-block">
       <div v-for="(message, index) in messages" :key="index">{{message}}</div>

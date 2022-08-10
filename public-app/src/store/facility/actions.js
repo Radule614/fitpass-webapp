@@ -10,7 +10,6 @@ export default {
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch user data.');
 
-    //console.log(responseData);
     context.commit('setFacilities', {
       facilities: responseData
     });
@@ -36,7 +35,6 @@ export default {
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add new facility.');
 
-    //console.log(responseData);
     if(responseData) context.commit('addFacility', responseData);
   },
   async removeFacility(context, payload){
@@ -81,5 +79,41 @@ export default {
     context.dispatch('fetchFacilities');
     context.dispatch('searchFacilities', "");
     store.dispatch('users/fetchUsers');
+  },
+  async addContent(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/facilities/manager/content/add`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: payload.formData
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add content.');
+
+    let data = {};
+    for (const pair of payload.formData.entries()) {
+      data[pair[0]] = pair[1];
+    }
+    payload.facility.content.push(data);
+  },
+  async deleteContent(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/facilities/manager/content/delete`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: JSON.stringify({ name: payload.content.name })
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add content.');
+
+    const content = payload.facility.content;
+    for(let key in content){
+      if(content[key].name == payload.content.name){
+        content.splice(key, 1);
+        break;
+      }
+    }
   }
 }

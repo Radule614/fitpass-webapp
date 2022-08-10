@@ -29,6 +29,9 @@ export default {
 <template>
   <teleport to="body">
     <modal-component :responsive="true" :show="show" buttonText="confirm" @close="$emit('close')" @confirm="confirmHandler">
+      <template #header>
+        Select manager
+      </template>
       <template #body>
         <div class="manager-modal-body">
           <users-grid class="grid" :compact="true" :onlyAvailableManagers="true" :selectable="true" @userSelected="selectedUser=$event"></users-grid>

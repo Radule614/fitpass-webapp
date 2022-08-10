@@ -1,0 +1,26 @@
+[
+  {
+    "facility_id": "T E R E T A N A",
+    "user_id": "radule614",
+    "content": "sadrzaj poruke 1",
+    "approved": true
+  },
+  {
+    "facility_id": "T E R E T A N A",
+    "user_id": "Ljubica123",
+    "content": "sadrzaj poruke 2",
+    "approved": true
+  },
+  {
+    "facility_id": "T E R E T A N A",
+    "user_id": "Dragan123",
+    "content": "sadrzaj poruke 3",
+    "approved": false
+  },
+  {
+    "facility_id": "T E R E T A N A",
+    "user_id": "Petar123",
+    "content": "sadrzaj poruke 4",
+    "approved": false
+  }
+]

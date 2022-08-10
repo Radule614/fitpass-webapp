@@ -22,8 +22,8 @@
       "endHour": 20,
       "endMinute": 20
     },
-    "content": "123",
-    "manager_id": "manager_2"
+    "manager_id": "manager_2",
+    "content": []
   },
   {
     "name": "teretana",
@@ -48,8 +48,8 @@
       "endHour": 19,
       "endMinute": 23
     },
-    "content": "542",
-    "manager_id": "manager_4"
+    "manager_id": "manager_4",
+    "content": []
   },
   {
     "name": "teretana2",
@@ -74,8 +74,8 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": "",
-    "manager_id": null
+    "manager_id": null,
+    "content": []
   },
   {
     "name": "bazen",
@@ -100,8 +100,8 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": "",
-    "manager_id": null
+    "manager_id": null,
+    "content": []
   },
   {
     "name": "zenba",
@@ -126,8 +126,8 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": "",
-    "manager_id": null
+    "manager_id": null,
+    "content": []
   },
   {
     "name": "teretana3",
@@ -152,8 +152,8 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": "",
-    "manager_id": null
+    "manager_id": null,
+    "content": []
   },
   {
     "name": "bazen2",
@@ -178,7 +178,80 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": "",
-    "manager_id": null
+    "manager_id": null,
+    "content": []
+  },
+  {
+    "name": "bazen54321",
+    "facilityType": "POOL",
+    "available": true,
+    "location": {
+      "lat": 43.92163712834673,
+      "lng": 12.436523437500002,
+      "country": "San Marino",
+      "state": null,
+      "city": "City of San Marino",
+      "town": null,
+      "road": "Strada di Canepa",
+      "number": null,
+      "postcode": "47890"
+    },
+    "logoUrl": "img/facilities/5095264036414325184.png",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 19,
+      "startMinute": 2,
+      "endHour": 24,
+      "endMinute": 0
+    },
+    "manager_id": "radule614",
+    "content": [
+      {
+        "name": " as sa",
+        "type": "PERSONAL"
+      },
+      {
+        "name": "  sbbbb",
+        "type": "PERSONAL"
+      },
+      {
+        "name": "bbbbbb",
+        "type": "PERSONAL"
+      },
+      {
+        "name": "bbb",
+        "type": "PERSONAL"
+      },
+      {
+        "name": "bbbsb",
+        "type": "PERSONAL"
+      }
+    ]
+  },
+  {
+    "name": "T E R E T A N A",
+    "facilityType": "GYM",
+    "available": true,
+    "location": {
+      "lat": 32.54681317351517,
+      "lng": 94.921875,
+      "country": "China",
+      "state": "Qinghai",
+      "city": null,
+      "town": "Suruk",
+      "road": null,
+      "number": null,
+      "postcode": null
+    },
+    "logoUrl": "img/facilities/8940009800836254371.png",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 15,
+      "startMinute": 4,
+      "endHour": 22,
+      "endMinute": 2
+    },
+    "manager_id": "manager",
+    "content": []
   }
 ]

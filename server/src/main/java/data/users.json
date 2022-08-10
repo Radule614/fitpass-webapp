@@ -9,12 +9,9 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
-    "points": 25,
-    "customerType": null,
-    "username": "Radule614",
-    "userType": "CUSTOMER",
+    "facility_id": "bazen54321",
+    "username": "radule614",
+    "userType": "MANAGER",
     "password": "123",
     "firstname": "Rade",
     "lastname": "Stojanovic",
@@ -22,7 +19,7 @@
     "gender": "MALE"
   },
   {
-    "facility_id": null,
+    "facility_id": "T E R E T A N A",
     "username": "manager",
     "userType": "MANAGER",
     "password": "123",

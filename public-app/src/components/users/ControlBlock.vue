@@ -36,7 +36,7 @@ export default{
 <template>
   <div class="control-block">
     <div class="left">
-      <custom-button v-if="selectedUser&&selectedUser!=loggedUser.username" class="inverse block" @click="confirmModalActive = true">Delete Account</custom-button>
+      <custom-button v-if="selectedUser&&loggedUser&&selectedUser!=loggedUser.username" class="inverse block" @click="confirmModalActive = true">Delete Account</custom-button>
     </div>
     <div class="right">
       <custom-link to="/users/filter">Open Filters</custom-link>

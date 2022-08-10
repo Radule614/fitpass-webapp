@@ -36,6 +36,8 @@ public class Main {
                 post("/delete", UserController::deleteUser);
 
                 path("/get", () -> {
+                    before("/*", AuthController::authenticate);
+
                     get("", UserController::getUser);
                     post("/filtered", UserController::getFilteredUsers);
                 });
@@ -53,9 +55,22 @@ public class Main {
                 post("/delete", FacilityController::deleteFacility);
 
                 path("/manager", () -> {
-                   post("/set", FacilityController::setManager);
-                   post("/clear", FacilityController::clearManager);
+                    before("/*", AuthController::authenticate);
+
+                    post("/set", FacilityController::setManager);
+                    post("/clear", FacilityController::clearManager);
+                    get("", FacilityController::getManagerFacility);
+                    path("/content", () -> {
+                        before("/*", AuthController::authenticate);
+
+                        post("/add", FacilityController::addContent);
+                        post("/delete", FacilityController::deleteContent);
+                   });
                 });
+            });
+
+            path("/comments", () -> {
+                get("/all/:facility_id", CommentController::getAllComments);
             });
         });
     }

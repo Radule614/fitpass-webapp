@@ -6,10 +6,7 @@ import com.google.gson.GsonBuilder;
 import dto.facility.*;
 import dto.FileDTO;
 import model.User;
-import model.facility.Facility;
-import model.facility.FacilityType;
-import model.facility.Location;
-import model.facility.WorkingHours;
+import model.facility.*;
 import model.manager.Manager;
 import repository.util.LocalDateAdapter;
 import service.FacilityService;
@@ -25,7 +22,6 @@ import javax.servlet.http.Part;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Set;
 
 import static utility.Utility.parseStringInput;
 
@@ -38,7 +34,7 @@ public class FacilityController {
 		}catch (Exception e){
 			e.printStackTrace();
 			response.status(400);
-			return Utility.convertMessageToJSON("Couldn't return facilities");
+			return Utility.convertMessageToJSON("Couldn't fetch facilities");
 		}
     }
     public static String searchFacilities(Request request, Response response) {
@@ -125,14 +121,66 @@ public class FacilityController {
 		}
 	}
 
+	public static String getManagerFacility(Request request, Response response) {
+		response.type("application/json");
+		try{
+			String manager = request.attribute("username");
+			Facility f = new FacilityService().getByManager(manager);
+			if(f == null) throw new Exception();
+			return new Gson().toJson(f);
+		}catch(Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Couldn't fetch facility.");
+		}
+	}
+
+	public static String addContent(Request request, Response response){
+		request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+		response.type("application/json");
+		try{
+			String name = parseStringInput(request.raw().getPart("name"));
+			String type = parseStringInput(request.raw().getPart("type"));
+			if(name != null && name.isEmpty()) throw new Content.CreateContentException("Content name can't be empty");
+			new FacilityService().addContent(request.attribute("username"), new AddContentDTO(name, ContentType.valueOf(type)));
+			return Utility.convertMessageToJSON("Facility content added");
+		} catch(Content.CreateContentException e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON(e.getMessage());
+		} catch (Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Failed to add content to facility");
+		}
+	}
+
+	public static String deleteContent(Request request, Response response) {
+		response.type("application/json");
+		try{
+			DeleteContentDTO dto = new Gson().fromJson(request.body(), DeleteContentDTO.class);
+			new FacilityService().deleteContent(request.attribute("username"), dto);
+			return Utility.convertMessageToJSON("Content deleted successfully");
+		} catch(Content.DeleteContentException e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON(e.getMessage());
+		} catch(Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Failed to add content to facility");
+		}
+	}
+
 
 	//PRIVATE
 
 	private static ArrayList<FacilityDTO> facilitiesToDTOs(ArrayList<Facility> facilities){
 		ArrayList<FacilityDTO> DTOs = new ArrayList<>();
+		UserService userService = new UserService();
 		for(Facility f: facilities){
 			FacilityDTO temp = new FacilityDTO(f);
-			User user = new UserService().getUser(f.manager_id);
+			User user = userService.getUser(f.manager_id);
 			if(user != null) temp.manager = new UserService().getUser(f.manager_id).getDTO();
 			DTOs.add(temp);
 		}
@@ -175,10 +223,9 @@ public class FacilityController {
 		String startTime = parseStringInput(request.raw().getPart("startTime"));
 		String endTime = parseStringInput(request.raw().getPart("endTime"));
 		String type = parseStringInput(request.raw().getPart("type"));
-		String content = parseStringInput(request.raw().getPart("content"));
 		String available = parseStringInput(request.raw().getPart("available"));
 		Location location = new Gson().fromJson(parseStringInput(request.raw().getPart("location")), Location.class);
 
-		return new CreateFacilityDTO(name, FacilityType.valueOf(type), available != null && available.equals("on"), location, new WorkingHours(startTime, endTime), content);
+		return new CreateFacilityDTO(name, FacilityType.valueOf(type), available != null && available.equals("on"), location, new WorkingHours(startTime, endTime));
 	}
 }

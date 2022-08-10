@@ -1,10 +1,9 @@
 package dto.facility;
 
 import dto.user.UserDTO;
-import model.facility.Facility;
-import model.facility.FacilityType;
-import model.facility.Location;
-import model.facility.WorkingHours;
+import model.facility.*;
+
+import java.util.ArrayList;
 
 public class FacilityDTO {
     public String name;
@@ -14,8 +13,8 @@ public class FacilityDTO {
     public String logoUrl;
     public double grade;
     public WorkingHours workingHours;
-    public String content;
     public UserDTO manager;
+    public ArrayList<Content> content = new ArrayList<>();
 
     public FacilityDTO(){}
 

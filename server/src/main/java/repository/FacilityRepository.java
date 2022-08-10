@@ -14,7 +14,6 @@ import repository.generic.GenericRepository;
 
 public class FacilityRepository extends GenericRepository<Facility> {
     private static FacilityRepository instance;
-    
     public static FacilityRepository getInstance(){
         if (instance == null)
             instance = new FacilityRepository();
