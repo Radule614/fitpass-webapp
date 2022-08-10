@@ -68,6 +68,10 @@ public class Main {
                    });
                 });
             });
+
+            path("/comments", () -> {
+                get("/all/:facility_id", CommentController::getAllComments);
+            });
         });
     }
 }

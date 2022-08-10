@@ -34,7 +34,7 @@ public class FacilityController {
 		}catch (Exception e){
 			e.printStackTrace();
 			response.status(400);
-			return Utility.convertMessageToJSON("Couldn't return facilities");
+			return Utility.convertMessageToJSON("Couldn't fetch facilities");
 		}
     }
     public static String searchFacilities(Request request, Response response) {
@@ -177,9 +177,10 @@ public class FacilityController {
 
 	private static ArrayList<FacilityDTO> facilitiesToDTOs(ArrayList<Facility> facilities){
 		ArrayList<FacilityDTO> DTOs = new ArrayList<>();
+		UserService userService = new UserService();
 		for(Facility f: facilities){
 			FacilityDTO temp = new FacilityDTO(f);
-			User user = new UserService().getUser(f.manager_id);
+			User user = userService.getUser(f.manager_id);
 			if(user != null) temp.manager = new UserService().getUser(f.manager_id).getDTO();
 			DTOs.add(temp);
 		}

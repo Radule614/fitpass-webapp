@@ -1,6 +1,7 @@
 import Settings from '../../settings.js';
 import { router } from '../../router.js';
 import axios from 'axios';
+import store from "../../store/index.js";
 
 let timer;
 
@@ -61,6 +62,7 @@ export default {
     clearTimeout(timer);
     
     context.commit('setUser', { token: null, user: null });
+    store.commit('comments/setComments', []);
     if(router) router.push('/home');
   },
   async checkAuthentication(context, payload){

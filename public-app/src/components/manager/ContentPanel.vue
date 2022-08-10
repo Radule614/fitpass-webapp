@@ -70,7 +70,7 @@ export default {
     </div>
     <div v-if="contentList.length == 0">No content</div>
     <hr>
-    <form class="add-form" ref="submitForm">
+    <form class="add-form" ref="submitForm" v-if="facility">
       <table>
         <tr>
           <td><label for="name">name:</label></td>

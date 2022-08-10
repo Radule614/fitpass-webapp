@@ -227,5 +227,31 @@
         "type": "PERSONAL"
       }
     ]
+  },
+  {
+    "name": "T E R E T A N A",
+    "facilityType": "GYM",
+    "available": true,
+    "location": {
+      "lat": 32.54681317351517,
+      "lng": 94.921875,
+      "country": "China",
+      "state": "Qinghai",
+      "city": null,
+      "town": "Suruk",
+      "road": null,
+      "number": null,
+      "postcode": null
+    },
+    "logoUrl": "img/facilities/8940009800836254371.png",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 15,
+      "startMinute": 4,
+      "endHour": 22,
+      "endMinute": 2
+    },
+    "manager_id": "manager",
+    "content": []
   }
 ]
