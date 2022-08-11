@@ -1,5 +1,5 @@
 <script>
-import Settings from '../../settings.js';
+import Settings from '../../../settings.js';
 import FacilityInfo from './FacilityInfo.vue';
 import { throttle } from 'lodash';
 

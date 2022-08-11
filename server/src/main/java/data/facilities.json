@@ -23,7 +23,12 @@
       "endMinute": 20
     },
     "manager_id": "manager_2",
-    "content": []
+    "content": [
+      {
+        "name": "sadrzaj123",
+        "type": "GROUP"
+      }
+    ]
   },
   {
     "name": "teretana",
@@ -252,6 +257,23 @@
       "endMinute": 2
     },
     "manager_id": "manager",
-    "content": []
+    "content": [
+      {
+        "name": " 4",
+        "type": "PERSONAL"
+      },
+      {
+        "name": " 4 32 23",
+        "type": "PERSONAL"
+      },
+      {
+        "name": " 2 21",
+        "type": "GROUP"
+      },
+      {
+        "name": "2 21",
+        "type": "GROUP"
+      }
+    ]
   }
 ]

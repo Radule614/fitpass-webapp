@@ -1,7 +1,7 @@
 <script>
-import CustomLink from '../utility/CustomLink.vue';
-import CustomFileInput from '../utility/CustomFileInput.vue';
-import ChooseLocationModal from '../utility/ChooseLocationModal.vue';
+import CustomLink from '../../utility/CustomLink.vue';
+import CustomFileInput from '../../utility/CustomFileInput.vue';
+import ChooseLocationModal from '../../utility/ChooseLocationModal.vue';
 export default{
   components:{
     CustomLink,

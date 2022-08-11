@@ -1,7 +1,7 @@
 <script>
-import LeafletMap from '../utility/LeafletMap.vue';
+import LeafletMap from '../../utility/LeafletMap.vue';
 import ManagerModal from './ManagerModal.vue';
-import ConfirmModal from '../utility/ConfirmModal.vue';
+import ConfirmModal from '../../utility/ConfirmModal.vue';
 export default{
   components: { LeafletMap, ManagerModal, ConfirmModal },
   props: {
@@ -74,6 +74,9 @@ export default{
         this.clearModalActive = false;
         this.loading = false;
       }
+    },
+    scrollToTop(){
+      window.scrollTo(0, 0);
     }
   }
 }
@@ -106,9 +109,10 @@ export default{
         <div class="col">manager:</div>
         <div class="col">{{managerName}}</div>
       </div>
-      <div v-if="loggedUserType == 'ADMIN'" class="button-group">
-        <custom-button class="block" @click="clearModalActive = true">Clear Manager</custom-button>
-        <custom-button class="block" @click="managerModalActive = true">Set Manager</custom-button>
+      <div class="button-group">
+        <custom-button v-if="loggedUserType == 'ADMIN'" class="block" @click="clearModalActive = true">Clear Manager</custom-button>
+        <custom-button v-if="loggedUserType == 'ADMIN'" class="block" @click="managerModalActive = true">Set Manager</custom-button>
+        <custom-link :to="`/facility/${facility.name}`" @click="scrollToTop">Details</custom-link>
       </div>
     </div>
     <div class="right">
@@ -151,10 +155,12 @@ export default{
       margin-top: 10px;
       display: flex;
       justify-content: right;
-      & > * {
-        margin-left:15px;
+      flex-wrap: wrap;
+      & > button {
+        margin-left:10px;
         background-color: #fff;
         box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+        margin-bottom: 10px;
         &:first-child{
           margin-left: 0px;
         }

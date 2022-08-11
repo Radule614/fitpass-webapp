@@ -1,6 +1,6 @@
 <script>
-import ModalComponent from "../ModalComponent.vue";
-import UsersGrid from "../users/UsersGrid.vue";
+import ModalComponent from "../../ModalComponent.vue";
+import UsersGrid from "../../users/UsersGrid.vue";
 export default {
   components: { ModalComponent, UsersGrid },
   props: {

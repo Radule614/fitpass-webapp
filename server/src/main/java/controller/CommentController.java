@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import dto.comment.CommentApprovalDTO;
 import dto.comment.CommentDTO;
 import model.User;
 import model.facility.Comment;
@@ -22,6 +23,19 @@ public class CommentController {
             e.printStackTrace();
             response.status(400);
             return Utility.convertMessageToJSON("Couldn't fetch comments");
+        }
+    }
+
+    public static String commentApproval(Request request, Response response){
+        response.type("application/json");
+        try{
+            CommentApprovalDTO dto = new Gson().fromJson(request.body(), CommentApprovalDTO.class);
+            new CommentService().commentApproval(dto);
+            return Utility.convertMessageToJSON("Approval successful.");
+        }catch (Exception e){
+            e.printStackTrace();
+            response.status(400);
+            return Utility.convertMessageToJSON("Couldn't approve or disapprove comment.");
         }
     }
 

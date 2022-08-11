@@ -1,6 +1,6 @@
 <script>
   import PriceSection from '@/components/home/price/PriceSection.vue';
-  import FacilityList from '@/components/facility/FacilityList.vue';
+  import FacilityList from '@/components/facility/facility-list/FacilityList.vue';
   import { throttle } from 'lodash';
   export default {
     components:{

@@ -117,7 +117,7 @@ export default {
     display: flex;
     justify-content: right;
     margin-top: 40px;
-    & > * {
+    & > button {
       margin-left: 15px;
     }
   }
