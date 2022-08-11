@@ -1,5 +1,5 @@
 <script>
-import FacilityList from '../components/facility/FacilityList.vue';
+import FacilityList from '../components/facility/facility-list/FacilityList.vue';
 export default {
   components:{
     FacilityList

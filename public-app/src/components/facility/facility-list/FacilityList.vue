@@ -1,7 +1,7 @@
 <script>
 import FacilityBlock from './FacilityBlock.vue';
 import { mapActions, mapMutations, mapGetters } from 'vuex';
-import ConfirmModal from '../utility/ConfirmModal.vue';
+import ConfirmModal from '../../utility/ConfirmModal.vue';
 export default {
   components:{
     FacilityBlock,
@@ -102,15 +102,13 @@ export default {
     async removeFacility(){
       try{
         await this.$store.dispatch('facility/removeFacility', {name: this.facilityToRemove});
-        this.confirmModalActive = false
-        this.facilityToRemove = null;
+        this.clearRemoval();
       }catch(error){
         console.error(error);
-        this.confirmModalActive = false
-        this.facilityToRemove = null;
+        this.clearRemoval();
       }
     },
-    cancelRemoval(){
+    clearRemoval(){
       this.confirmModalActive = false;
       this.facilityToRemove = null
     }
@@ -168,7 +166,7 @@ export default {
     </facility-block>
   </div>
 
-  <confirm-modal :show="confirmModalActive" @close="cancelRemoval" @confirm="removeFacility"></confirm-modal>
+  <confirm-modal :show="confirmModalActive" @close="clearRemoval" @confirm="removeFacility"></confirm-modal>
 </div>
 </template>
 
