@@ -36,14 +36,14 @@ public class FacilityService {
     		// Samo po tekstu
     		if(avgGradeRange.equalsIgnoreCase("all")) {
         		requestedFacilities = facilityRepository.getAll().stream()
-    					.filter(facility -> facility.name.toLowerCase().contains(searchText.toLowerCase().trim()))
+    					.filter(facility -> facility.contains(searchText.toLowerCase().trim()))
     					.collect(Collectors.toList());
     		} else {
     			// Po tekstu i po oceni
     			AvgGradeRangeDTO avgGradeRangeDTO = AvgGradeRangeDTO.valueOf(avgGradeRange);
     			requestedFacilities = facilityRepository.getAll().stream()
-    				.filter(facility -> (facility.name.toLowerCase().contains(searchText.toLowerCase().trim()) 
-    					&& (facility.grade >= avgGradeRangeDTO.lowerBound && facility.grade <= avgGradeRangeDTO.upperBound)))
+    				.filter(facility -> facility.contains(searchText.toLowerCase().trim()) 
+    					&& (facility.grade >= avgGradeRangeDTO.lowerBound && facility.grade <= avgGradeRangeDTO.upperBound))
     				.collect(Collectors.toList());
     		}
     	} else {
@@ -51,7 +51,7 @@ public class FacilityService {
     			// Po tekstu i po tipu
     			FacilityType facilityType = getFacilityTypeFromText(facType);
     			requestedFacilities = facilityRepository.getAll().stream()
-    					.filter(facility -> facility.name.toLowerCase().contains(searchText.toLowerCase().trim()) &&
+    					.filter(facility -> facility.contains(searchText.toLowerCase().trim()) &&
     							(facility.facilityType == facilityType))
     					.collect(Collectors.toList());
     		} else {
@@ -59,7 +59,7 @@ public class FacilityService {
     			FacilityType facilityType = getFacilityTypeFromText(facType);
     			AvgGradeRangeDTO avgGradeRangeDTO = AvgGradeRangeDTO.valueOf(avgGradeRange);
     			requestedFacilities = facilityRepository.getAll().stream()
-    					.filter(facility -> facility.name.toLowerCase().contains(searchText.toLowerCase().trim()) &&
+    					.filter(facility -> facility.contains(searchText.toLowerCase().trim()) &&
     						(facility.grade >= avgGradeRangeDTO.lowerBound && facility.grade <= avgGradeRangeDTO.upperBound) &&
     						(facility.facilityType == facilityType))
     					.collect(Collectors.toList());

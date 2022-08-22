@@ -2,11 +2,15 @@
 import FacilityBlock from './FacilityBlock.vue';
 import { mapActions, mapMutations, mapGetters } from 'vuex';
 import ConfirmModal from '../../utility/ConfirmModal.vue';
+import FacilitiesSort from './FacilitiesSort.vue';
+import CustomButton from '../../utility/CustomButton.vue';
 export default {
   components:{
     FacilityBlock,
-    ConfirmModal
-  },
+    ConfirmModal,
+    FacilitiesSort,
+    CustomButton
+},
   props:{
     shallowShowcase: Boolean
   },
@@ -21,7 +25,10 @@ export default {
       selectedType: "ALL",
       selectedAvgGrade: "ALL",
       confirmModalActive: false,
-      facilityToRemove: null
+      facilityToRemove: null,
+			selectedStatus: "ALL",
+			showSort: false,
+			firstTime: true
     }
   },
   computed: {
@@ -33,6 +40,12 @@ export default {
     },
     filteredFacilities() {
       let facilities = this.getFilteredFacilities();
+			if(this.selectedStatus !== "ALL") {
+				const status = (this.selectedStatus === 'true');
+				facilities = facilities.filter(facility => {
+					return facility.available === status;
+				});
+			}
       return facilities ? facilities.sort((a, b) => a.available && !b.available ? -1 : 0) : facilities;
     },
     loggedUserType(){
@@ -111,7 +124,28 @@ export default {
     clearRemoval(){
       this.confirmModalActive = false;
       this.facilityToRemove = null
-    }
+    },
+		sortByName(asc) {
+			if(this.lists.facilityPageFacilities) {
+				asc ? 
+					this.lists.facilityPageFacilities.sort((a, b) => a.name.localeCompare(b.name)) : 
+					this.lists.facilityPageFacilities.sort((a, b) => b.name.localeCompare(a.name));
+			}
+		},
+		sortByLocation(asc) {
+			if(this.lists.facilityPageFacilities) {
+				asc ? 
+					this.lists.facilityPageFacilities.sort((a, b) => a.location.city.localeCompare(b.location.city)) : 
+					this.lists.facilityPageFacilities.sort((a, b) => b.location.city.localeCompare(a.location.city));
+			}
+		},
+		sortByAvgGrade(asc) {
+			if(this.lists.facilityPageFacilities) {
+				asc ? 
+					this.lists.facilityPageFacilities.sort((a, b) => a.grade - b.grade) : 
+					this.lists.facilityPageFacilities.sort((a, b) => b.grade - a.grade);
+			}
+		}
   },
   unmounted() {
     this.setFilteredFacilities({filteredFacilities : this.$store.getters["facility/facilities"]});
@@ -128,29 +162,45 @@ export default {
         <fa-icon class="search-icon" :icon="['fas','magnifying-glass']"></fa-icon>
         <fa-icon class="x-icon" :icon="['fas', 'circle-xmark']" @click="xPressed"></fa-icon>
       </div>
-      <div class="select-type-wrapper">
-        Select type: 
-        <select class="select-type" @change="searchByTypeOrAvgGrade" v-model="selectedType">
-          <option value="ALL">ALL</option>
-          <option value="GYM">GYM</option>
-          <option value="POOL">POOL</option>
-          <option value="SPORTS CENTER">SPORTS CENTER</option>
-          <option value="DANCE STUDIO">DANCE STUDIO</option>
-          <option value="OTHER">OTHER</option>
-        </select>
-      </div>
-      <div class="select-avg-grade-wrapper">
-        Select average grade: 
-        <select class="select-avg-grade" @change="searchByTypeOrAvgGrade" v-model="selectedAvgGrade">
-          <option value="ALL">ALL</option>
-          <option value="0.0 - 1.0">0.0 - 1.0</option>
-          <option value="1.0 - 2.0">1.0 - 2.0</option>
-          <option value="2.0 - 3.0">2.0 - 3.0</option>
-          <option value="3.0 - 4.0">3.0 - 4.0</option>
-          <option value="4.0 - 5.0">4.0 - 5.0</option>
-        </select>
-      </div>
+			<div class="filters">
+				<div class="select-type-wrapper filter">
+					Select type:
+					<select class="select-type" @change="searchByTypeOrAvgGrade" v-model="selectedType">
+						<option value="ALL">ALL</option>
+						<option value="GYM">GYM</option>
+						<option value="POOL">POOL</option>
+						<option value="SPORTS CENTER">SPORTS CENTER</option>
+						<option value="DANCE STUDIO">DANCE STUDIO</option>
+						<option value="OTHER">OTHER</option>
+					</select>
+				</div>
+				<div class="select-avg-grade-wrapper filter">
+					Select average grade:
+					<select class="select-avg-grade" @change="searchByTypeOrAvgGrade" v-model="selectedAvgGrade">
+						<option value="ALL">ALL</option>
+						<option value="0.0 - 1.0">0.0 - 1.0</option>
+						<option value="1.0 - 2.0">1.0 - 2.0</option>
+						<option value="2.0 - 3.0">2.0 - 3.0</option>
+						<option value="3.0 - 4.0">3.0 - 4.0</option>
+						<option value="4.0 - 5.0">4.0 - 5.0</option>
+					</select>
+				</div>
+				<div class="select-status-wrapper filter">
+					Select status:
+					<select class="select-status" v-model="selectedStatus">
+						<option value="ALL">ALL</option>
+						<option value="true">Available</option>
+						<option value="false">Not Available</option>
+					</select>
+				</div>
+			</div>
     </div>
+		<div class="sort-wrapper">
+			<CustomButton @click="showSort = !showSort">Sort</CustomButton>
+			<transition name="facilities-sort">
+				<FacilitiesSort v-if="showSort" @sortName="sortByName" @sortLocation="sortByLocation" @sortAvgGrade="sortByAvgGrade"/>
+			</transition>
+		</div>
     <div class="button-group">
       <custom-link v-if="loggedUserType == 'ADMIN' && currentRouteName == 'facility'" class="inverse" to="/facility/add" @click="scrollToTop">Create Facility</custom-link>
     </div>
@@ -217,20 +267,41 @@ export default {
     }
   }
 
-  .select-type, .select-avg-grade {
+  .select-type, .select-avg-grade, .select-status {
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     padding: 1rem 1.5rem;
     border-radius: 15px;
     background: $dark-primary;
     color: $active-primary;
     margin-top: 15px;
-    margin-left: 25px;
+    margin-left: 15px;
     border: 0;
   }
 
-  .select-type-wrapper, .select-avg-grade-wrapper {
+  .select-type-wrapper, .select-avg-grade-wrapper, .select-status-wrapper {
     font-size: 18px;
   }
 
+	.filters {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		margin-top: 15px;
+		flex-wrap: wrap;
+		.filter select {
+			margin-right: 20px;
+		}
+	}
+
+	.sort-wrapper {
+		margin-top: 30px;
+	}
+	.facilities-sort-enter-from {
+		transform: translateX(-400px);
+		opacity: 0;
+	}
+	.facilities-sort-enter-active {
+		transition: all 0.5s ease;
+	}
 }
 </style>
