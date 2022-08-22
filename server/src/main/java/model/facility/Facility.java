@@ -36,4 +36,10 @@ public class Facility {
         content = f.content;
         this.manager_id = f.manager_id;
     }
+    
+    public boolean contains(String searchText) {
+    	return this.name.toLowerCase().contains(searchText) ||
+    		   this.location.getCity().toLowerCase().contains(searchText) ||
+    		   this.location.getCountry().toLowerCase().contains(searchText);
+    }
 }
