@@ -22,11 +22,11 @@
     "facility_id": "T E R E T A N A",
     "username": "manager",
     "userType": "MANAGER",
-    "password": "123",
-    "firstname": "ime",
-    "lastname": "prezime",
-    "dateOfBirth": "25/02/1990",
-    "gender": "FEMALE"
+    "password": "nesto123",
+    "firstname": "Pavle1",
+    "lastname": "Aleksic",
+    "dateOfBirth": "30/01/1986",
+    "gender": "MALE"
   },
   {
     "membership": null,
@@ -38,7 +38,7 @@
     "password": "ljubi123",
     "firstname": "Ljubica",
     "lastname": "Lukic",
-    "dateOfBirth": "9/06/1999",
+    "dateOfBirth": "09/06/1999",
     "gender": "FEMALE"
   },
   {
@@ -64,7 +64,7 @@
     "password": "perica123",
     "firstname": "Petar",
     "lastname": "Petrovic",
-    "dateOfBirth": "6/05/1996",
+    "dateOfBirth": "06/05/1996",
     "gender": "MALE"
   },
   {
@@ -103,7 +103,7 @@
     "password": "radovan123",
     "firstname": "Luka",
     "lastname": "Lukovic",
-    "dateOfBirth": "7/01/1997",
+    "dateOfBirth": "07/01/1997",
     "gender": "MALE"
   },
   {
@@ -140,7 +140,7 @@
     "password": "12345678",
     "firstname": "ime2",
     "lastname": "prezime2",
-    "dateOfBirth": "9/07/2022",
+    "dateOfBirth": "09/07/2022",
     "gender": "MALE"
   },
   {
@@ -152,5 +152,22 @@
     "lastname": "prezime3",
     "dateOfBirth": null,
     "gender": "FEMALE"
+  },
+  {
+    "membership": null,
+    "visitedFacilities": null,
+    "points": 0,
+    "customerType": {
+      "type": "BRONZE",
+      "discount": 0.0,
+      "requiredPoints": 0
+    },
+    "username": "Branimir123",
+    "userType": "CUSTOMER",
+    "password": "b123123",
+    "firstname": "Branimir",
+    "lastname": "Todorovic",
+    "dateOfBirth": "07/07/1990",
+    "gender": "MALE"
   }
 ]

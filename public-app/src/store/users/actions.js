@@ -43,5 +43,17 @@ export default{
     store.dispatch('facility/fetchFacilities');
     store.dispatch('facility/searchFacilities', "");
     context.commit('removeUser', payload.username);
-  }
+  },
+	async updateUser(context, payload) {
+		const res = await fetch(`${Settings.serverUrl}/api/users/update`, {
+			method: 'PUT',
+			headers: {'Content-Type': 'application/json', 
+								'Data-Type': 'application/json', 
+								'authorization': 'bearer ' + localStorage.getItem('token')},
+			body: JSON.stringify(payload)
+		});
+		const data = await res.json();
+		context.commit('updateUser', data);
+		return data;
+	}
 }

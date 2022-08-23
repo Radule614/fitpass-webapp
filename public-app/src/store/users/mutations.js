@@ -7,5 +7,8 @@ export default{
   },
   removeUser(state, username){
     state.users = state.users.filter(user => user.username != username);
-  }
+  },
+	updateUser(state, user) {
+		state.users = state.users.map(u => u.username === user.username ? user : u);
+	}
 }

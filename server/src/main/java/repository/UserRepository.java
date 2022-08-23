@@ -23,6 +23,8 @@ import repository.util.RuntimeTypeAdapterFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import dto.user.UpdateUserDTO;
 import repository.util.LocalDateAdapter;
 
 public class UserRepository extends GenericRepository<User> {
@@ -52,6 +54,25 @@ public class UserRepository extends GenericRepository<User> {
 		return null;
 	}
 	
+	public User update(UpdateUserDTO updates) {
+		User toUpdate = null;
+		for(User user : getAll()) {
+			if(user.username.equals(updates.username)) {
+				toUpdate = user;
+				break;
+			}
+		}
+		if(toUpdate != null) {
+			toUpdate.password = updates.password;
+			toUpdate.firstname = updates.firstname;
+			toUpdate.lastname = updates.lastname;
+			toUpdate.gender = updates.gender;
+			toUpdate.dateOfBirth = updates.getParsedDateOfBirth();
+		}
+		
+		return toUpdate;
+	}
+	
 	// Private/Protected Helpers
 	
 	@Override
@@ -79,5 +100,6 @@ public class UserRepository extends GenericRepository<User> {
 				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
 				.create();
 	}
+
 
 }

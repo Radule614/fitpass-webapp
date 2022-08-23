@@ -9,6 +9,7 @@ import dto.auth.RegisterDTO;
 import dto.facility.SetManagerDTO;
 import dto.user.CreateUserDTO;
 import dto.user.DeleteUserDTO;
+import dto.user.UpdateUserDTO;
 import dto.user.UserDTO;
 import dto.user.UsersFilterDTO;
 import model.User;
@@ -81,6 +82,15 @@ public class UserService {
 			return true;
 		}
 		return false;
+	}
+	
+	public User updateUser(UpdateUserDTO toUpdate) {
+		User updatedUser = userRepository.update(toUpdate);
+		if(updatedUser != null) {
+			userRepository.saveAll();
+		}
+		
+		return updatedUser;
 	}
 
 	public boolean setFacility(SetManagerDTO dto){

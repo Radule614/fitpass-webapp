@@ -10,7 +10,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 public class LocalDateAdapter extends TypeAdapter<LocalDate> {
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 	
     @Override
     public void write(final JsonWriter jsonWriter, final LocalDate localDate) throws IOException {

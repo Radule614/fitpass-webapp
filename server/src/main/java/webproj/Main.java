@@ -34,6 +34,7 @@ public class Main {
 
                 post("/create", UserController::createUser);
                 post("/delete", UserController::deleteUser);
+                put("/update", UserController::updateUser);
 
                 path("/get", () -> {
                     before("/*", AuthController::authenticate);
