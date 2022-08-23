@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,6 +94,25 @@ public class UserController {
             return Utility.convertMessageToJSON("Error while parsing filter parameters");
         }
         return Utility.convertMessageToJSON("User not found");
+    }
+    
+    public static String updateUser(Request req, Response res) {
+    	res.type("application/json");
+    	
+    	try {
+    		User updatedUser = new UserService().updateUser(new Gson().fromJson(req.body(), UpdateUserDTO.class));
+        	if(updatedUser != null) {
+        		return new GsonBuilder()
+        				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        				.create().toJson(updatedUser);
+        	}
+    	} catch(Exception ex) {
+    		ex.printStackTrace();
+    		res.status(400);
+    		return Utility.convertMessageToJSON("Error while parsing input date");
+    	}
+    	
+    	return Utility.convertMessageToJSON("Failed to updated user.");
     }
 
 
