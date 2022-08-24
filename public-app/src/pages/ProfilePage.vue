@@ -57,7 +57,6 @@ export default {
 				const errorState = ref(false); // true if data is in error state
 
 				const handleSave = async () => {
-					console.log(dateOfBirth.value);
 					errorState.value = false;
 					errors.value = validateProfileData({
 						password: password.value,

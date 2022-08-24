@@ -1,48 +1,147 @@
 <script>
+import ModalComponent from '@/components/ModalComponent.vue';
+import { isIntegerKey } from '@vue/shared';
+import Settings from '@/settings';
+
   export default {
     props: {
-      price : {
-        title: String,
-        color: String,
-        amount: Number,
-        text: String,
-        bold: Boolean
-      }
+        price: {
+            title: String,
+            color: String,
+            amount: Number,
+            duration: Number,
+            text: String,
+            bold: Boolean
+        }
     },
-    created () {
-      window.addEventListener('scroll', this.handleScroll);
+		data() {
+			return {
+				showModal: false,
+				promoCode: ''
+			}
+		},
+    computed: {
+        period() {
+            return this.price.duration === 1 ? "month" : "months";
+        }
     },
-    mounted(){
-      this.checkAnimations();
+    created() {
+        window.addEventListener("scroll", this.handleScroll);
     },
-    unmounted () {
-      window.removeEventListener('scroll', this.handleScroll);
+    mounted() {
+        this.checkAnimations();
+				console.log(this.$store.getters['auth/user']);
+    },
+    unmounted() {
+        window.removeEventListener("scroll", this.handleScroll);
     },
     methods: {
-      handleScroll(event){
-        this.checkAnimations();
-      },
-      checkAnimations(){
-        const element = this.$el;
+        handleScroll(event) {
+            this.checkAnimations();
+        },
+        checkAnimations() {
+            const element = this.$el;
+            let windowHeight = window.innerHeight;
+            let distanceFromTop = element.getBoundingClientRect().top;
+            if (distanceFromTop - windowHeight + element.offsetHeight <= 0) {
+                element.classList.add("appear");
+            }
+        },
+				async handlePayment(price) {
+					// napravi metodu da nadje expirationDate
+					const paymentDate = new Date();
+					const expirationDate = this.getMembershipExpirationDate(paymentDate, price.duration);
+					const username = this.$store.getters['auth/user'].username;
+					const newMembership = {
+						type: price.duration == 12 ? 'YEARLY' : 'MONTHLY',
+						paymentDate: paymentDate.toLocaleDateString('en-GB', { year: "numeric", month: "2-digit", day: "2-digit"}),
+						expirationDate: expirationDate.toLocaleDateString('en-GB', { year: "numeric", month: "2-digit", day: "2-digit"}),
+						cost: parseInt(price.amount),
+						customerUsername: username,
+						active: true,
+						appointmentNumber: price.appointmentNumber * price.duration,
+						usedAppointments: 0
+					};
+					// ako je postojala prethodna clanarina ona prestaje da vazi, izbrisi je
+					await this.removeMembership();
+					// posalji request da dodas novu clanarinu
+					await this.addMembership(newMembership);
 
-        let windowHeight = window.innerHeight;
-        
-        let distanceFromTop = element.getBoundingClientRect().top;
-        if(distanceFromTop - windowHeight + element.offsetHeight <= 0){
-          element.classList.add('appear');
-        }
-      }
-    }
-  }
+					this.showModal = false;
+
+					this.showSuccessMessage();
+					
+					console.log(this.$store.getters['auth/user']);
+				},
+				getMembershipExpirationDate(paymentDate, duration) {
+					let expirationYear = paymentDate.getFullYear();
+					let expirationMonth = paymentDate.getMonth() + duration;
+					if(expirationMonth > 12) {
+						expirationMonth = expirationMonth % 12;
+						expirationYear += 1;
+					}
+					const expirationD = paymentDate.getDate();
+					const expirationDate = new Date(expirationYear, expirationMonth, expirationD, 
+						paymentDate.getHours(), paymentDate.getMinutes(), paymentDate.getSeconds(), paymentDate.getMilliseconds());
+
+					return expirationDate;
+				},
+				async removeMembership() {
+					const user = this.$store.getters['auth/user'];
+					if(user.membership) {
+						const res = await fetch(`${Settings.serverUrl}/api/memberships/remove/${user.username}/${user.membership.id}`, {
+							method: 'DELETE'
+						});
+						const message = await res.json();
+						console.log(message);
+					}
+				},
+				async addMembership(newMembership) {
+					const res = await fetch(`${Settings.serverUrl}/api/memberships/create`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json', 'Data-Type': 'application/json' },
+						body: JSON.stringify(newMembership)
+					});
+					const membership = await res.json();
+					this.updateUser(membership);
+				},
+				updateUser(membership) {
+					const user = this.$store.getters['auth/user'];
+					const newUser = {...user};
+					newUser.membership = membership;
+					this.$store.commit('auth/setUserData', { user: newUser } );
+				},
+				showSuccessMessage() {
+					this.$toast.success(`You have successfully bought ${this.price.title.toLowerCase()} plan.`, {
+            position: "top"
+          });
+          setTimeout(this.$toast.clear, 2000);
+				}
+    },
+    components: { ModalComponent }
+}
 </script>
 
 <template>
   <div class="item nohighlight" v-bind:class="{ 'bold-item': price.bold }">
     <div class="header" v-bind:style="{ backgroundColor: price.color }">{{price.title}}</div>
+		<div class="duration">{{price.duration}} <span class="period">{{period}}</span></div>
     <div class="text">{{price.text}}</div>
     <div class="price">{{price.amount}} <span class="unit">RSD</span></div>
-    <div class="timespan">/monthly</div>
-    <custom-button v-bind:class="{ 'inverse': price.bold }">Learn More</custom-button>
+    <custom-button v-bind:class="{ 'inverse': price.bold }" @click="showModal = !showModal" v-if="this.$store.getters['auth/user']">Buy</custom-button>
+		<teleport to="#app">
+			<ModalComponent buttonText="Buy" :show="showModal" :width="600" @close="showModal = false" @confirm="handlePayment(price)">
+				<template #header>
+					{{price.title}} Membership	<br/>
+					{{ price.duration }} {{ period }} 
+				</template>
+				<template #body>
+					{{price.text}} <br/><br/>
+					Price: {{price.amount}} rsd <br/><br/>
+					<input type="text" v-model="promoCode" placeholder="Promo code(optional)">
+				</template>
+			</ModalComponent>
+		</teleport>
   </div>
 </template>
 
@@ -83,7 +182,7 @@
     }
     .text{
       font-size: 19px;
-      padding: 16px 0px 5px 0px;
+      padding: 16px 8px 5px;
     }
     .price{
       font-size: 34px;
@@ -103,5 +202,15 @@
       margin: 60px auto 30px auto;
       font-size: 18px;
     }
+		.duration {
+			font-size: 48px;
+			font-weight: bold;
+			.period {
+				font-size: 14px;
+				display: block;
+				color: $dark-secondary;
+				font-weight: normal;
+			}
+		}
   }
 </style>

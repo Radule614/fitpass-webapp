@@ -31,7 +31,7 @@ import static utility.Utility.parseStringInput;
 public class UserController {
     public static String getUser(Request request, Response response){
         response.type("application/json");
-        Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Gson g = new GsonBuilder().serializeNulls().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
 
         try{
             String username = request.attribute("username");

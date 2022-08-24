@@ -169,4 +169,21 @@ public class UserService {
     	
     	return unique;
     }
+    
+    public void addMembership(String username, String membershipId) {
+    	((Customer) getUser(username)).membershipId = membershipId;
+    	userRepository.saveAll();
+    }
+    
+    public void removeMembership(String username) {
+    	((Customer) getUser(username)).membershipId = null;
+    	userRepository.saveAll();
+    }
+    
+    public int calculateCustomerPoints(String username) {
+    	Customer customer = (Customer) getUser(username);
+    	customer.updatePoints();
+    	userRepository.saveAll();
+    	return customer.points;
+    }
 }

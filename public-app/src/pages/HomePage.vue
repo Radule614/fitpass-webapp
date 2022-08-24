@@ -30,6 +30,7 @@
     },
     mounted(){
       this.checkAnimations();
+			//this.setIntervalForMemberships();
     },
     methods: {
       handleScroll(){

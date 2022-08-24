@@ -29,8 +29,8 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
+    "membershipId": null,
+    "visitedFacilitiesName": null,
     "points": 0,
     "customerType": null,
     "username": "Ljubica123",
@@ -42,8 +42,8 @@
     "gender": "FEMALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
+    "membershipId": null,
+    "visitedFacilitiesName": null,
     "points": 0,
     "customerType": null,
     "username": "Dragan123",
@@ -55,8 +55,8 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
+    "membershipId": null,
+    "visitedFacilitiesName": null,
     "points": 0,
     "customerType": null,
     "username": "Petar123",
@@ -68,8 +68,8 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
+    "membershipId": "37e7b7756f904074bd5c4c2005b7e7e3",
+    "visitedFacilitiesName": null,
     "points": 0,
     "customerType": null,
     "username": "Luka123",
@@ -81,9 +81,9 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
-    "points": 0,
+    "membershipId": "e2f2be90f41f4412b712960729ec65f0",
+    "visitedFacilitiesName": null,
+    "points": 239,
     "customerType": null,
     "username": "Milutin123",
     "userType": "CUSTOMER",
@@ -94,8 +94,8 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
+    "membershipId": null,
+    "visitedFacilitiesName": null,
     "points": 0,
     "customerType": null,
     "username": "Radovan123",
@@ -107,8 +107,8 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
+    "membershipId": null,
+    "visitedFacilitiesName": null,
     "points": 0,
     "customerType": {
       "type": "BRONZE",
@@ -154,8 +154,8 @@
     "gender": "FEMALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
+    "membershipId": null,
+    "visitedFacilitiesName": null,
     "points": 0,
     "customerType": {
       "type": "BRONZE",

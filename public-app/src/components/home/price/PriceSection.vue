@@ -7,9 +7,9 @@
     data(){
       return {
         prices: [
-          {title: "bronze", color: "#CD7F32", amount:3000, text: "lorem ipsum", bold: false},
-          {title: "silver", color: "#C0C0C0", amount:3000, text: "dolor sit amet", bold: false},
-          {title: "gold", color: "#FFD700", amount:3000, text: "consectetur adipiscing", bold: true}
+          {title: "Small", color: "#CD7F32", amount:5000, duration: 1, appointmentNumber: 20, text: "20 training sessions per month in some of sport facilities that we offer", bold: false},
+          {title: "Medium", color: "#C0C0C0", amount:13500, duration: 3, appointmentNumber: 22, text: "22 training sessions per month in some of sport facilities that we offer", bold: false},
+          {title: "Large", color: "#FFD700", amount:53000, duration: 12, appointmentNumber: 24, text: "24 training sessions per month in some of sport facilities that we offer", bold: true}
         ]
       }
     }
