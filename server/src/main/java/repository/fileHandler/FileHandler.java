@@ -30,7 +30,6 @@ public class FileHandler<T> implements IFileHandler<T> {
 	public ArrayList<T> readAll() {
     	ArrayList<T> readData = null;
     	try {
-    		System.out.println(filePath);
     		File file = new File(filePath);
     		if(!file.exists()) {
     			readData = new ArrayList<T>();

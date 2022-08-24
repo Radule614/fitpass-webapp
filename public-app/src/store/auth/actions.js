@@ -4,6 +4,7 @@ import axios from 'axios';
 import store from "../../store/index.js";
 
 let timer;
+let membershipInterval;
 
 export default {
   async login(context, payload) {
@@ -26,7 +27,8 @@ export default {
 
     context.commit('setToken', { token: responseData.token });
     context.dispatch('getUserData', {token: responseData.token});
-    
+
+		context.dispatch('setIntervalForMembership', context);
   },
   async signup(context, payload) {
     const response = await axios.post(`${Settings.serverUrl}/api/auth/register`, payload);
@@ -60,7 +62,8 @@ export default {
     localStorage.removeItem('tokenExpiration');
     
     clearTimeout(timer);
-    
+		clearInterval(membershipInterval);
+
     context.commit('setUser', { token: null, user: null });
     store.commit('comments/setComments', []);
     if(router) router.push('/home');
@@ -78,5 +81,32 @@ export default {
       context.commit('setToken', { token: token });
       await context.dispatch('getUserData', {token: token});
     }
-  }
+  },
+	setIntervalForMembership(context) {
+		// Set interval to check did membership expired
+		membershipInterval = setInterval(async () => {
+			const user = context.getters.user;
+			if(user != null && user.membership != null && user.membership.active) {
+				const parts = user.membership.expirationDate.split('/');
+				const date = parts[0];
+				const month = parts[1];
+				const year = parts[2];
+				const expirationTime = new Date(year, month, date);
+				if(expirationTime < new Date()) {
+					const res = await fetch(`${Settings.serverUrl}/api/memberships/deactivate/${user.username}/${user.membership.id}`, {
+						method: 'PATCH',
+					});
+					if(res.ok) {
+						// get updated user(with membership and points)
+						context.dispatch('getUserData', { token: localStorage.getItem('token')} );
+					}
+					const message = await res.json();
+					console.log(message);
+					console.log(context.getters.user);
+				}
+			} else {
+				clearInterval();
+			}
+		}, 5000);
+	}
 }

@@ -31,7 +31,8 @@ export const routes = [
   },
   { path: '/about',         name:     'about',        component: () => import('./pages/AboutPage.vue'),           meta: { nav: 'About',                                 } },
   { path: '/profile',       name:     'profile',      component: () => import('./pages/ProfilePage.vue'),         meta: { nav: 'Profile',       userTypes: ['ANY']      } },
-  { path: '/:all(.*)',      redirect: '/home' }
+  { path: '/membership',		name:			'membership',		component: () => import('./pages/MembershipPage.vue'),			meta: { userTypes: ['ANY'] }},
+	{ path: '/:all(.*)',      redirect: '/home' }
 ];
 
 export const router = createRouter({ history: createWebHistory(process.env.BASE_URL), routes });

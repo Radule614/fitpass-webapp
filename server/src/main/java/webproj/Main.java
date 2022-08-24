@@ -3,6 +3,7 @@ package webproj;
 import static spark.Spark.*;
 
 import controller.*;
+import service.MembershipService;
 
 public class Main {
     public final static String uploadDirPath = "src/main/resources/public/img/";
@@ -14,10 +15,10 @@ public class Main {
         String projectDir = System.getProperty("user.dir");
         String staticDir = "/src/main/resources/public";
         staticFiles.externalLocation(projectDir + staticDir);
-
+        
         path("/api", () -> {
             before("/*", (req, res) -> {
-                res.header("Access-Control-Allow-Methods",  "GET,PUT,POST,DELETE,OPTIONS");
+                res.header("Access-Control-Allow-Methods",  "GET,PUT,POST,DELETE,OPTIONS,PATCH");
                 res.header("Access-Control-Allow-Origin",   "*");
                 res.header("Access-Control-Allow-Headers",  "*");
             });
@@ -73,6 +74,13 @@ public class Main {
             path("/comments", () -> {
                 get("/all/:facility_id", CommentController::getAllComments);
                 post("/approval", CommentController::commentApproval);
+            });
+            
+            path("/memberships", () -> {
+        		get("/:username", MembershipController::getMembership);
+        		post("/create", MembershipController::addMembership);
+        		delete("/remove/:username/:membership_id", MembershipController::removeMembership);
+        		patch("/deactivate/:username/:membership_id", MembershipController::deactivateMembership);
             });
         });
     }
