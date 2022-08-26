@@ -1,6 +1,5 @@
 <script>
 import ModalComponent from '@/components/ModalComponent.vue';
-import { isIntegerKey } from '@vue/shared';
 import Settings from '@/settings';
 
   export default {
@@ -23,7 +22,27 @@ import Settings from '@/settings';
     computed: {
         period() {
             return this.price.duration === 1 ? "month" : "months";
-        }
+        },
+				amountWithDiscount() {
+					const user = this.$store.getters['auth/user'];
+					let discount = 0;
+					if( user && user.type != null) {
+						discount = user.type.discount;
+					}
+					return this.$store.getters['memberships/getPriceWithDiscount'](this.price.title, discount);
+				},
+				userType() {
+					return this.$store.getters['auth/user'].type.type;
+				},
+				getTypeColor() {
+					const type = this.$store.getters['auth/user'].type.type;
+					switch(type) {
+						case 'BRONZE': return '#CD7F32';
+						case 'SILVER': return '#C0C0C0';
+						case 'GOLD': return '#FFD700';
+						default: return '#000';
+					}
+				}
     },
     created() {
         window.addEventListener("scroll", this.handleScroll);
@@ -127,8 +146,9 @@ import Settings from '@/settings';
     <div class="header" v-bind:style="{ backgroundColor: price.color }">{{price.title}}</div>
 		<div class="duration">{{price.duration}} <span class="period">{{period}}</span></div>
     <div class="text">{{price.text}}</div>
-    <div class="price">{{price.amount}} <span class="unit">RSD</span></div>
-    <custom-button v-bind:class="{ 'inverse': price.bold }" @click="showModal = !showModal" v-if="this.$store.getters['auth/user']">Buy</custom-button>
+    <div class="price" :class="{ 'invalid': price.amount != amountWithDiscount}">{{price.amount}} <span class="unit">RSD</span></div>
+    <div class="price" v-if="price.amount != amountWithDiscount">{{amountWithDiscount}}<span class="unit">RSD</span> <br/> <span class="info">based on <span :style="{ color: getTypeColor }">{{userType}}</span> type</span></div>
+    <custom-button v-bind:class="{ 'inverse': price.bold }" @click="showModal = !showModal" v-if="this.$store.getters['auth/user'] && this.$store.getters['auth/user'].userType === 'CUSTOMER'">Buy</custom-button>
 		<teleport to="#app">
 			<ModalComponent buttonText="Buy" :show="showModal" :width="600" @close="showModal = false" @confirm="handlePayment(price)">
 				<template #header>
@@ -137,7 +157,7 @@ import Settings from '@/settings';
 				</template>
 				<template #body>
 					{{price.text}} <br/><br/>
-					Price: {{price.amount}} rsd <br/><br/>
+					Price: {{amountWithDiscount}} rsd <br/><br/>
 					<input type="text" v-model="promoCode" placeholder="Promo code(optional)">
 				</template>
 			</ModalComponent>
@@ -190,6 +210,10 @@ import Settings from '@/settings';
       .unit{
         font-size: 22px;
       }
+			.info {
+				font-size: 14px;
+				color: $dark-secondary;
+			}
     }
     .timespan{
       line-height: 40px;
@@ -213,4 +237,9 @@ import Settings from '@/settings';
 			}
 		}
   }
+	.item .price.invalid {
+		text-decoration: line-through;
+		font-size: 20px;
+		color: #aaa;
+	}
 </style>
