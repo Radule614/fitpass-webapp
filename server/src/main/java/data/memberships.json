@@ -1,16 +1,5 @@
 [
   {
-    "id": "e2f2be90f41f4412b712960729ec65f0",
-    "type": "MONTHLY",
-    "paymentDate": "25/08/2022",
-    "expirationDate": "25/09/2022",
-    "cost": 5000.0,
-    "customerUsername": "Milutin123",
-    "active": true,
-    "appointmentNumber": 20,
-    "usedAppointments": 0
-  },
-  {
     "id": "37e7b7756f904074bd5c4c2005b7e7e3",
     "type": "YEARLY",
     "paymentDate": "25/08/2022",
@@ -19,6 +8,39 @@
     "customerUsername": "Luka123",
     "active": true,
     "appointmentNumber": 288,
+    "usedAppointments": 0
+  },
+  {
+    "id": "6ea7d3cfcdfc478c8de857f9e74f89ba",
+    "type": "YEARLY",
+    "paymentDate": "26/08/2022",
+    "expirationDate": "26/08/2023",
+    "cost": 53000.0,
+    "customerUsername": "radule614",
+    "active": true,
+    "appointmentNumber": 288,
+    "usedAppointments": 0
+  },
+  {
+    "id": "ddc2e8bfe1484c87a0b2b1cacb52338a",
+    "type": "YEARLY",
+    "paymentDate": "26/08/2022",
+    "expirationDate": "26/08/2023",
+    "cost": 53000.0,
+    "customerUsername": "Ljubica123",
+    "active": true,
+    "appointmentNumber": 288,
+    "usedAppointments": 0
+  },
+  {
+    "id": "07ad56869c2b4240968c890ecde50551",
+    "type": "MONTHLY",
+    "paymentDate": "26/08/2022",
+    "expirationDate": "26/07/2022",
+    "cost": 13500.0,
+    "customerUsername": "Milutin123",
+    "active": false,
+    "appointmentNumber": 66,
     "usedAppointments": 0
   }
 ]

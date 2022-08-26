@@ -29,7 +29,7 @@
     "gender": "MALE"
   },
   {
-    "membershipId": null,
+    "membershipId": "ddc2e8bfe1484c87a0b2b1cacb52338a",
     "visitedFacilitiesName": null,
     "points": 0,
     "customerType": null,
@@ -81,10 +81,14 @@
     "gender": "MALE"
   },
   {
-    "membershipId": "e2f2be90f41f4412b712960729ec65f0",
+    "membershipId": "07ad56869c2b4240968c890ecde50551",
     "visitedFacilitiesName": null,
-    "points": 239,
-    "customerType": null,
+    "points": 6199,
+    "customerType": {
+      "type": "GOLD",
+      "discount": 5.0,
+      "requiredPoints": 4500
+    },
     "username": "Milutin123",
     "userType": "CUSTOMER",
     "password": "milutin123",

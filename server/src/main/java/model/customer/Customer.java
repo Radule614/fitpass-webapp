@@ -5,6 +5,7 @@ import dto.user.CustomerDTO;
 import dto.user.UserDTO;
 import model.User;
 import model.UserType;
+import model.customer.CustomerType.CustomerTypeEnum;
 import service.MembershipService;
 import service.UserService;
 
@@ -27,6 +28,13 @@ public class Customer extends User {
 				points = 0;
 			}
 		}
+		updateType();
+	}
+	
+	private void updateType() {
+		if			(points > 4500) customerType = new CustomerType(CustomerTypeEnum.GOLD, 5, 4500);
+		else if		(points > 2500) customerType = new CustomerType(CustomerTypeEnum.SILVER, 2.5, 2500);
+		else if		(points > 1500) customerType = new CustomerType(CustomerTypeEnum.BRONZE, 1.5, 1500);
 	}
 
 	@Override
