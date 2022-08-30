@@ -45,13 +45,13 @@ export default {
   <div>
     <h5>comments</h5>
     <hr>
-    <div class="comment-list">
+    <div class="comment-list" v-if="comments.length">
       <div class="comment" v-for="(comment, index) in comments" :key="index" :class="{ 'approved': comment.approved, 'admin': admin }">
         <div class="comment-header">
           <span class="username">{{comment.username}}</span>
           <span class="fullname">&nbsp;({{getFullname(comment)}})</span>
           <span>&nbsp;posted on</span>
-          <span class="date">&nbsp;-datum-</span>
+          <span class="date">&nbsp;{{comment.postedOn}}</span>
         </div>
         <div class="comment-body">
           {{comment.content}}
@@ -69,6 +69,9 @@ export default {
         <hr>
       </div>
     </div>
+		<div v-else>
+			There are no comments yet.
+		</div>
     <confirm-modal :show="deleteModalActive"  @close="clearApproval" @confirm="approvalHandler(false)"></confirm-modal>
     <confirm-modal :show="approveModalActive" @close="clearApproval" @confirm="approvalHandler(true)"></confirm-modal>
   </div>

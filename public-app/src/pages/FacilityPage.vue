@@ -1,8 +1,11 @@
 <script>
 import CommentList from '@/components/facility/CommentList.vue';
 import FacilityDetails from '@/components/facility/FacilityDetails.vue';
+import AddComment from '@/components/facility/AddComment.vue';
+import RateFacility from '../components/facility/RateFacility.vue';
+
 export default {
-  components: { CommentList, FacilityDetails },
+  components: { CommentList, FacilityDetails, AddComment, RateFacility },
   computed: {
     facility(){
       let facilities = this.$store.getters['facility/facilities'];
@@ -30,9 +33,11 @@ export default {
   <div class="container facility">
     <div v-if="facility">
       <facility-details :facility="facility"></facility-details>
+			<rate-facility/>
       <div class="comments">
         <comment-list :forPublic="true" :admin="loggedUserType == 'ADMIN'"></comment-list>
       </div>
+			<add-comment :facility_id="facility_id"/>
     </div>
     <div v-else>
       error 404: facility doesn't exist

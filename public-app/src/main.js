@@ -17,7 +17,7 @@ import CustomLink from './components/utility/CustomLink.vue';
 const app = createApp(App);
 app.use(router);
 app.use(store);
-app.use(Toaster);
+app.use(Toaster).provide('toast', app.config.globalProperties.$toast);
 app.component('fa-icon', FontAwesomeIcon);
 app.component('custom-button', CustomButton);
 app.component('custom-link', CustomLink);
