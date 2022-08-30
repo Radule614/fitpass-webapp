@@ -1,58 +1,10 @@
 [
   {
-    "id": "0",
-    "facility_id": "T E R E T A N A",
-    "user_id": "radule614",
-    "content": "sadrzaj poruke 1",
-    "approved": true
-  },
-  {
-    "id": "1",
-    "facility_id": "T E R E T A N A",
-    "user_id": "Ljubica123",
-    "content": "sadrzaj poruke 2",
-    "approved": true
-  },
-  {
-    "id": "3",
-    "facility_id": "T E R E T A N A",
-    "user_id": "Petar123",
-    "content": "sadrzaj poruke 4",
-    "approved": false
-  },
-  {
-    "id": "5",
-    "facility_id": "T E R E T A N A",
-    "user_id": "Ljubica123",
-    "content": "sadrzaj poruke 2",
-    "approved": true
-  },
-  {
-    "id": "7",
-    "facility_id": "T E R E T A N A",
-    "user_id": "radule614",
-    "content": "sadrzaj poruke 1",
-    "approved": true
-  },
-  {
-    "id": "9",
-    "facility_id": "T E R E T A N A",
-    "user_id": "Petar123",
-    "content": "sadrzaj poruke 4",
-    "approved": false
-  },
-  {
-    "id": "10",
+    "id": "64060a57220d4ab9a164fa0d3ec8dda5",
     "facility_id": "djim",
-    "user_id": "Ljubica123",
-    "content": "sadrzaj 1",
-    "approved": true
-  },
-  {
-    "id": "12",
-    "facility_id": "djim",
-    "user_id": "Petar123",
-    "content": "sadrzaj 3",
+    "user_id": "Milutin123",
+    "postedOn": "28/08/2022",
+    "content": "test",
     "approved": true
   }
 ]

@@ -1,5 +1,7 @@
 package dto.comment;
 
+import java.time.LocalDate;
+
 import model.facility.Comment;
 
 public class CommentDTO {
@@ -9,6 +11,7 @@ public class CommentDTO {
     public String lastname;
     public String content;
     public boolean approved;
+    public LocalDate postedOn;
 
     public CommentDTO(){}
 
@@ -17,5 +20,6 @@ public class CommentDTO {
         this.username = comment.user_id;
         this.content = comment.content;
         this.approved = comment.approved;
+        this.postedOn = comment.postedOn;
     }
 }

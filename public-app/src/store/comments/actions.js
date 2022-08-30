@@ -21,5 +21,15 @@ export default {
     }else{
       context.commit('deleteComment', payload.comment);
     }
-  }
+  },
+	async addComment(context, payload) {
+		const res = await fetch(`${Settings.serverUrl}/api/comments/add`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', 'Data-Type': 'application/json'},
+			body: JSON.stringify(payload)
+		});
+		if(!res.ok) throw new Error(res.message || 'Failed to add comment.'); 
+		const newComment = await res.json();
+		context.commit('addComment', newComment);
+	}
 }

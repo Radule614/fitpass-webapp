@@ -31,4 +31,8 @@ public class CommentService {
         }
         commentRepository.saveAll();
     }
+    
+    public void addComment(Comment newComment) {
+    	commentRepository.add(newComment);
+    }
 }

@@ -3,6 +3,7 @@ package webproj;
 import static spark.Spark.*;
 
 import controller.*;
+import model.facility.Grade;
 import service.MembershipService;
 
 public class Main {
@@ -74,6 +75,7 @@ public class Main {
             path("/comments", () -> {
                 get("/all/:facility_id", CommentController::getAllComments);
                 post("/approval", CommentController::commentApproval);
+                post("/add", CommentController::addComment);
             });
             
             path("/memberships", () -> {
@@ -81,6 +83,10 @@ public class Main {
         		post("/create", MembershipController::addMembership);
         		delete("/remove/:username/:membership_id", MembershipController::removeMembership);
         		patch("/deactivate/:username/:membership_id", MembershipController::deactivateMembership);
+            });
+            
+            path("/grades", () -> {
+            	post("/add", GradeController::addGrade);
             });
         });
     }

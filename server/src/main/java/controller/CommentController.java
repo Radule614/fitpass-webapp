@@ -1,16 +1,21 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import dto.comment.CommentApprovalDTO;
 import dto.comment.CommentDTO;
 import model.User;
 import model.facility.Comment;
+import repository.util.LocalDateAdapter;
 import service.CommentService;
 import service.UserService;
 import spark.Request;
 import spark.Response;
+import utility.UIDGenerator;
 import utility.Utility;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CommentController {
@@ -18,7 +23,10 @@ public class CommentController {
         response.type("application/json");
         String facility_id = request.params("facility_id");
         try{
-            return new Gson().toJson(commentsToDTOs(new CommentService().getAllFacilityComments(facility_id)));
+            return new GsonBuilder()
+            		.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            		.create()
+            		.toJson(commentsToDTOs(new CommentService().getAllFacilityComments(facility_id)));
         }catch (Exception e){
             e.printStackTrace();
             response.status(400);
@@ -38,6 +46,28 @@ public class CommentController {
             return Utility.convertMessageToJSON("Couldn't approve or disapprove comment.");
         }
     }
+    
+    public static String addComment(Request req, Response res) {
+    	res.type("application/json");
+    	Gson gson = new GsonBuilder()
+    			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+    			.create();
+    	try {    		
+    		Comment newComment = gson.fromJson(req.body(), Comment.class);
+    		newComment.id = UIDGenerator.generate();
+        	new CommentService().addComment(newComment);
+        	CommentDTO commentDTO = newComment.toDTO();
+        	if(commentDTO == null) {
+        		res.status(400);
+        		return new Gson().toJson("Error, user doesn't exist");
+        	}
+        	return gson.toJson(commentDTO);
+    	} catch(Exception ex) {
+    		ex.printStackTrace();
+    		System.out.println(ex.getMessage());
+    	}
+    	return null;
+    }
 
 
     private static ArrayList<CommentDTO> commentsToDTOs(ArrayList<Comment> comments){
@@ -52,4 +82,5 @@ public class CommentController {
         }
         return DTOs;
     }
+    
 }
