@@ -24,7 +24,10 @@ export default {
     },
     loggedUserType(){
       return this.$store.getters['auth/userType'];
-    }
+    },
+		loggedUser() {
+			return this.$store.getters['auth/user'];
+		}
   }
 }
 </script>
@@ -33,11 +36,11 @@ export default {
   <div class="container facility">
     <div v-if="facility">
       <facility-details :facility="facility"></facility-details>
-			<rate-facility/>
+			<rate-facility v-if="loggedUser"/>
       <div class="comments">
         <comment-list :forPublic="true" :admin="loggedUserType == 'ADMIN'"></comment-list>
       </div>
-			<add-comment :facility_id="facility_id"/>
+			<add-comment :facility_id="facility_id" v-if="loggedUser"/>
     </div>
     <div v-else>
       error 404: facility doesn't exist

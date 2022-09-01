@@ -1,0 +1,42 @@
+[
+  {
+    "id": "de6294694c65498e8e9df6491ab74013",
+    "name": "Trening1",
+    "type": "PERSONAL_BALANCEandSTABILITY",
+    "facilityName": null,
+    "duration": 85.0,
+    "trainerUsername": "trener2",
+    "description": "",
+    "imgUrl": "http://localhost:9999/img/trainings/trener2abstract5.jpg"
+  },
+  {
+    "id": "36580bbbc02a4660a43959133ed09ffa",
+    "name": "Trening2",
+    "type": "GROUP_BALANCEandSTABILITY",
+    "facilityName": null,
+    "duration": 55.0,
+    "trainerUsername": "trener2",
+    "description": "Neki trening kao ",
+    "imgUrl": "http://localhost:9999/img/trainings/trener2social-media.jpg"
+  },
+  {
+    "id": "8317d2a7ab7d41ab8322fe1c61a1983f",
+    "name": "Trening 3",
+    "type": "PERSONAL_BALANCEandSTABILITY",
+    "facilityName": null,
+    "duration": 99.0,
+    "trainerUsername": "trener2",
+    "description": "Ponedeljak grudi+biceps, utorak ledja+triceps, sreda ramena+noge, godinu dana pauza",
+    "imgUrl": "http://localhost:9999/img/trainings/trener2programming_bg_3.jpg"
+  },
+  {
+    "id": "cbfbe6f0693549efa65e5001dbc902ca",
+    "name": "Trening 4",
+    "type": "PERSONAL_STRENGTH",
+    "facilityName": null,
+    "duration": 87.0,
+    "trainerUsername": "trener2",
+    "description": "Mrtvilo",
+    "imgUrl": "http://localhost:9999/img/trainings/trener2abstract13.jpg"
+  }
+]

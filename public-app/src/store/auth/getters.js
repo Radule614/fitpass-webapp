@@ -13,5 +13,8 @@ export default {
   },
   managerFacility(state){
     return state.user && state.user.facility ? state.user.facility : null;
-  }
+  },
+	username(state) {
+		return state.user.username;
+	}
 }

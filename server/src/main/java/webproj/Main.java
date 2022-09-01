@@ -75,10 +75,12 @@ public class Main {
             path("/comments", () -> {
                 get("/all/:facility_id", CommentController::getAllComments);
                 post("/approval", CommentController::commentApproval);
+                before("/add", AuthController::authenticate);
                 post("/add", CommentController::addComment);
             });
             
             path("/memberships", () -> {
+            	before("/*", AuthController::authenticate);
         		get("/:username", MembershipController::getMembership);
         		post("/create", MembershipController::addMembership);
         		delete("/remove/:username/:membership_id", MembershipController::removeMembership);
@@ -86,7 +88,13 @@ public class Main {
             });
             
             path("/grades", () -> {
+            	before("/*", AuthController::authenticate);
             	post("/add", GradeController::addGrade);
+            });
+            
+            path("/trainings", () -> {
+            	get("/all", TrainingController::getTrainings);
+            	post("/add", TrainingController::addTraining);
             });
         });
     }

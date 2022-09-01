@@ -6,6 +6,7 @@ import usersModule from './users/index.js';
 import commentsModule from './comments/index.js';
 import userTypesModule from './userTypes/index.js';
 import membershipsModule from "./memberships/index.js";
+import trainingsModule from './trainings/index.js';
 
 const store = createStore({
   modules:{
@@ -14,7 +15,8 @@ const store = createStore({
     users: usersModule,
     comments: commentsModule,
 		userTypes: userTypesModule,
-		memberships: membershipsModule
+		memberships: membershipsModule,
+		trainings: trainingsModule
   }
 })
 
