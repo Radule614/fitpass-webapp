@@ -46,14 +46,26 @@ export default{
   },
 	async updateUser(context, payload) {
 		const res = await fetch(`${Settings.serverUrl}/api/users/update`, {
-			method: 'PUT',
+			method: 'PATCH',
 			headers: {'Content-Type': 'application/json', 
 								'Data-Type': 'application/json', 
-								'authorization': 'bearer ' + localStorage.getItem('token')},
+								'authorization': 'bearer ' + context.rootState.auth.token },
 			body: JSON.stringify(payload)
 		});
 		const data = await res.json();
 		context.commit('updateUser', data);
 		return data;
+	},
+	async changeUserPassword(context, payload) {
+		const res = await fetch(`${Settings.serverUrl}/api/users/updatePassword`, {
+			method: 'PATCH',
+			headers: {'Content-Type': 'application/json',
+								'Data-Type': 'application/json',
+								'Authorization': 'Bearer ' + context.rootState.auth.token },
+			body: JSON.stringify(payload)
+		});
+		const data = await res.json();
+		if(!res.ok) throw new Error(data || "Failed to change password");
+	
 	}
 }

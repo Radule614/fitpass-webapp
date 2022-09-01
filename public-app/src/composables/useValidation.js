@@ -1,5 +1,8 @@
 import { ref } from "vue";
 
+const capitalPattern = /^[A-Z]{1}.*$/;		
+const digitPattern = /[0-9]+/;
+
 const useValidation = () => {
 	const valid = ref(false);
 	const usernameError = ref(null);
@@ -7,25 +10,18 @@ const useValidation = () => {
 	const firstNameError = ref(null);
 	const lastNameError = ref(null);
 	
-	const capitalPattern = /^[A-Z]{1}.*$/;		
-	const digitPattern = /[0-9]+/;
-	
 	const validateProfileData = (user) => {
 		// Clear errors
-		passwordError.value = null;
 		firstNameError.value = null;
 		lastNameError.value = null;
 
-		const password = user.password;
 		const firstName = user.firstName;
 		const lastName = user.lastName;
 
-		passwordValidation(password);
 		firstNameValidation(firstName);
 		lastNameValidation(lastName);
 		
 		const errors = {
-			password: passwordError.value,
 			firstName: firstNameError.value,
 			lastName: lastNameError.value
 		};

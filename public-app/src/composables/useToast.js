@@ -1,5 +1,3 @@
-import { inject } from "vue";
-
 const useToast = (toast) => {
 
 	const showMessage = (message, position) => {

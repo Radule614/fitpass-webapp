@@ -1,12 +1,14 @@
 <template>
 	<div class="container-lg m-5">
-		<CustomButton v-if="!showForm" @click="showForm = true">Add Training</CustomButton>
-		<CustomButton v-if="showForm" @click="showForm = false">Close</CustomButton>
-		<transition name="addForm" appear>
-			<AddTraining v-if="showForm"/>
-		</transition>
+		<div v-if="loggedUserType === 'TRAINER'">
+			<CustomButton v-if="!showForm" @click="showForm = true">Add Training</CustomButton>
+			<CustomButton v-if="showForm" @click="showForm = false">Close</CustomButton>
+			<transition name="addForm" appear>
+				<AddTraining v-if="showForm"/>
+			</transition>
+		</div>
 		<div v-if="trainerTrainings.length" class="trainings mt-4">
-			<TrainingList :trainings="trainerTrainings"/>
+				<TrainingList :trainings="trainerTrainings"/>
 		</div>
 		<p class="mt-3" v-else>You don't have any trainings yet.</p>
 	</div>
@@ -26,9 +28,10 @@ export default {
         const store = useStore();
         const trainerTrainings = computed(() => store.getters["trainings/getTrainerTrainings"]);
 				const showForm = ref(false);
+				const loggedUserType = store.getters['auth/userType'];
 
 				console.log(trainerTrainings.value);
-        return { trainerTrainings, showForm };
+        return { trainerTrainings, showForm, loggedUserType };
     },
    
 }

@@ -48,10 +48,10 @@
     "customerType": null,
     "username": "Dragan123",
     "userType": "CUSTOMER",
-    "password": "dragan123",
-    "firstname": "Dragan",
-    "lastname": "Djukic",
-    "dateOfBirth": "11/06/1996",
+    "password": "ovojenovasifra",
+    "firstname": "Dragomir",
+    "lastname": "Lukanovic",
+    "dateOfBirth": "20/10/1996",
     "gender": "MALE"
   },
   {
@@ -75,8 +75,8 @@
     "username": "Luka123",
     "userType": "CUSTOMER",
     "password": "luka123",
-    "firstname": "Luka",
-    "lastname": "Lukic",
+    "firstname": "Luka1",
+    "lastname": "Lukic1",
     "dateOfBirth": "17/02/1994",
     "gender": "MALE"
   },

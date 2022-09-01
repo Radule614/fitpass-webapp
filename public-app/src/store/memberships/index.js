@@ -13,6 +13,9 @@ export default {
 		getPriceWithDiscount: (state) => (title, discount) => {
 			const amount = state.prices.find(price => price.title === title).amount;
 			return amount / 100 * (100 - discount);  
-		}
+		},
+		getPriceByAmount: (state) => (amount) => {
+			return state.prices.filter(price => price.amount === amount)[0];
+		} 
 	}
 }

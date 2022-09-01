@@ -1,12 +1,6 @@
 import Settings from "@/settings"
 
 export default {
-	async fetchUserTrainings(context, payload) {
-		const res = await fetch(`${Settings.serverUrl}/api/trainings/${payload.username}`);
-		const data = await res.json();
-
-		context.commit('setUserTrainings', { trainings: data });
-	},
 	async fetchTrainings(context) {
 		const res = await fetch(`${Settings.serverUrl}/api/trainings/all`);
 		if(!res.ok) throw new Error("Failed to fetch trainings");
@@ -18,6 +12,7 @@ export default {
 	async addTraining(context, payload) {
 		const res = await fetch(`${Settings.serverUrl}/api/trainings/add`, {
 			method: 'POST',
+			headers: { 'Authorization': 'Bearer ' + context.rootState.auth.token },
 			body: payload.formData
 		});
 		const training = await res.json();

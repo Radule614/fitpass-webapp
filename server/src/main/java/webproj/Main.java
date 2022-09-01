@@ -36,7 +36,8 @@ public class Main {
 
                 post("/create", UserController::createUser);
                 post("/delete", UserController::deleteUser);
-                put("/update", UserController::updateUser);
+                patch("/update", UserController::updateUser);
+                patch("/updatePassword", UserController::changePassword);
 
                 path("/get", () -> {
                     before("/*", AuthController::authenticate);
@@ -94,6 +95,7 @@ public class Main {
             
             path("/trainings", () -> {
             	get("/all", TrainingController::getTrainings);
+            	before("/add", AuthController::authenticate);
             	post("/add", TrainingController::addTraining);
             });
         });
