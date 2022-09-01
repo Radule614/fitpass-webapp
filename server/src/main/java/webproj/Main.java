@@ -3,8 +3,6 @@ package webproj;
 import static spark.Spark.*;
 
 import controller.*;
-import model.facility.Grade;
-import service.MembershipService;
 
 public class Main {
     public final static String uploadDirPath = "src/main/resources/public/img/";
@@ -23,14 +21,17 @@ public class Main {
                 res.header("Access-Control-Allow-Origin",   "*");
                 res.header("Access-Control-Allow-Headers",  "*");
             });
+            
             options("/*", (req, res) -> {
                 res.status(200);
                 return "";
             });
+            
             path("/auth", () -> {
                 post("/login", AuthController::login);
                 post("/register", AuthController::register);
             });
+            
             path("/users", () -> {
                 before("/*", AuthController::authenticate);
 
@@ -91,6 +92,7 @@ public class Main {
             	get("/all", TrainingController::getTrainings);
             	before("/add", AuthController::authenticate);
             	post("/add", TrainingController::addTraining);
+            });
 
             path("/content", () -> {
                 before("/*", AuthController::authenticate);

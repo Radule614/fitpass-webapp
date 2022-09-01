@@ -4,13 +4,7 @@ import java.time.LocalDate;
 
 import model.User;
 import model.UserType;
-import model.admin.Admin;
-import model.customer.Customer;
-import model.facility.Facility;
-import model.manager.Manager;
-import model.trainer.Trainer;
 import model.utility.Gender;
-import repository.util.LocalDateAdapter;
 
 public abstract class UserDTO {
     public UserType userType;
@@ -19,7 +13,6 @@ public abstract class UserDTO {
     public String lastname;
     public Gender gender;
     public LocalDate dateOfBirth;
-    public Facility facility;
 
     public UserDTO(User user){
         this.userType = user.userType;

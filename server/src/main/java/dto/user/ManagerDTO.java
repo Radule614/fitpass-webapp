@@ -1,7 +1,6 @@
 package dto.user;
 
 import dto.facility.FacilityDTO;
-import model.facility.Facility;
 import model.manager.Manager;
 
 public class ManagerDTO extends UserDTO {

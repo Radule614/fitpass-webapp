@@ -61,5 +61,12 @@
     "type": "GROUP",
     "trainer_id": null,
     "facility_id": "djim"
+  },
+  {
+    "id": "216f54b2e8ff4e0bb19baabfba7e0d98",
+    "name": "6",
+    "type": "PERSONAL",
+    "trainer_id": null,
+    "facility_id": "bazen54321"
   }
 ]
