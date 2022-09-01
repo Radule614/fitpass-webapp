@@ -81,7 +81,7 @@ export default {
     store.dispatch('users/fetchUsers');
   },
   async addContent(context, payload){
-    const response = await fetch(`${Settings.serverUrl}/api/facilities/manager/content/add`, {
+    const response = await fetch(`${Settings.serverUrl}/api/content/create`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + context.rootState.auth.token
@@ -90,30 +90,53 @@ export default {
     });
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add content.');
-
-    let data = {};
+    let data = { id: responseData.id };
     for (const pair of payload.formData.entries()) {
       data[pair[0]] = pair[1];
     }
     payload.facility.content.push(data);
   },
   async deleteContent(context, payload){
-    const response = await fetch(`${Settings.serverUrl}/api/facilities/manager/content/delete`, {
+    const response = await fetch(`${Settings.serverUrl}/api/content/delete`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + context.rootState.auth.token
       },
-      body: JSON.stringify({ name: payload.content.name })
+      body: JSON.stringify({ id: payload.content.id })
     });
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add content.');
 
     const content = payload.facility.content;
     for(let key in content){
-      if(content[key].name == payload.content.name){
+      if(content[key].id === payload.content.id){
         content.splice(key, 1);
         break;
       }
     }
+  },
+  async setTrainer(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/content/trainer/add`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: JSON.stringify({ trainer_id: payload.trainerUsername, content_id: payload.content.id })
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to set trainer.');
+    payload.content.trainer = responseData;
+  },
+  async removeTrainer(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/content/trainer/clear`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: JSON.stringify({ content_id: payload.content.id })
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to clear trainer.');
+    payload.content.trainer = null;
   }
 }

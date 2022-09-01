@@ -10,12 +10,17 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dto.facility.ContentDTO;
+import dto.facility.FacilityDTO;
 import dto.user.*;
 import model.User;
 import model.UserType;
+import model.facility.Content;
 import model.facility.Facility;
 import model.manager.Manager;
+import model.trainer.Trainer;
 import repository.util.LocalDateAdapter;
+import service.ContentService;
 import service.FacilityService;
 import service.UserService;
 import spark.Request;
@@ -121,15 +126,34 @@ public class UserController {
 
     private static UserDTO userToDTO(User user){
         UserDTO temp = user.getDTO();
-        if(temp instanceof ManagerDTO && user instanceof Manager) temp.facility = new FacilityService().getByName(((Manager) user).facility_id);
+        FacilityService facilityService = new FacilityService();
+        ContentService contentService = new ContentService();
+        if(temp instanceof ManagerDTO && user instanceof Manager) {
+            ManagerDTO dto = (ManagerDTO) temp;
+            Facility facility = facilityService.getByName(((Manager) user).facility_id);
+            if(facility != null){
+                dto.facility = new FacilityDTO(facility);
+
+                dto.facility.content = ContentController.contentToDTOs(contentService.getFacilityContent(dto.facility.name));
+            }
+        }
         return temp;
     }
 
     private static ArrayList<UserDTO> usersToDTOs(ArrayList<User> users){
         ArrayList<UserDTO> DTOs = new ArrayList<>();
+        FacilityService facilityService = new FacilityService();
+        ContentService contentService = new ContentService();
         for(User u: users){
             UserDTO temp = u.getDTO();
-            if (temp instanceof ManagerDTO && u instanceof Manager) temp.facility = new FacilityService().getByName(((Manager) u).facility_id);
+            if (temp instanceof ManagerDTO && u instanceof Manager){
+                ManagerDTO dto = (ManagerDTO)temp;
+                Facility facility = facilityService.getByName(((Manager) u).facility_id);
+                if(facility != null) {
+                    dto.facility = new FacilityDTO(facility);
+                    dto.facility.content = ContentController.contentToDTOs(contentService.getFacilityContent(dto.facility.name));
+                }
+            }
             DTOs.add(temp);
         }
         return DTOs;

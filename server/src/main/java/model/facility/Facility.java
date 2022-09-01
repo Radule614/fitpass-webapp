@@ -11,7 +11,6 @@ public class Facility {
     public double grade;
     public WorkingHours workingHours;
     public String manager_id;
-    public ArrayList<Content> content = new ArrayList<>();
 
     public Facility(){}
 
@@ -33,7 +32,6 @@ public class Facility {
         logoUrl = f.logoUrl;
         grade = f.grade;
         workingHours = f.workingHours;
-        content = f.content;
         this.manager_id = f.manager_id;
     }
     

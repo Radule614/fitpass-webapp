@@ -7,7 +7,7 @@ export default{
   props: {
     selectable: Boolean,
     compact: Boolean,
-    onlyAvailableManagers: Boolean
+    userType: String
   },
   emits: ['userSelected'],
   data() {
@@ -17,16 +17,16 @@ export default{
     }
   },
   created() {
-    if (this.onlyAvailableManagers){
-      this.$store.dispatch('users/fetchUsers', { userFilter: { type: 'MANAGER' } });
-    } else {
+    if(this.userType){
+      this.$store.dispatch('users/fetchUsers', { userFilter: { type: this.userType } });
+    }else {
       this.$store.dispatch('users/fetchUsers');
     }
   },
   computed: {
     users() {
       let users = this.$store.getters['users/users'];
-      if (this.onlyAvailableManagers && users) users.sort((a, b) => b.facility && !a.facility ? -1 : 0);
+      if (this.userType && this.userType === 'MANAGER' && users) users.sort((a, b) => b.facility && !a.facility ? -1 : 0);
       return users;
     },
     currentRouteName() {
@@ -70,7 +70,7 @@ export default{
                         :user="user" 
                         :compact="compact"
                         :selectable="selectable"
-                        :onlyAvailableManagers="onlyAvailableManagers"
+                        :userType="userType"
                         :selected="selectable && selectedUser==user.username" 
                         @selectedEvent="selectedHandler(user)">
       </users-grid-item>
@@ -117,7 +117,7 @@ export default{
     padding-top: 60px;
     padding-bottom: 100px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 30px;
     background-color: #fff;
     position: relative;
@@ -127,43 +127,6 @@ export default{
     font-style: italic;
     color: $active-primary;
     font-size:18px;
-  }
-  &.compact{
-    .grid{
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-}
-
-@media screen and (max-width: 1700px) {
-  .grid-wrapper {
-    .grid{
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-}
-@media screen and (max-width: 1300px) {
-  .grid-wrapper {
-    .grid{
-      grid-template-columns: repeat(3, 1fr);
-    }
-    &.compact{
-      .grid{
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-  }
-}
-@media screen and (max-width: 900px) {
-  .grid-wrapper {
-    .grid{
-      grid-template-columns: repeat(2, 1fr);
-    }
-    &.compact{
-      .grid{
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
   }
 }
 </style>
