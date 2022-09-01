@@ -56,4 +56,11 @@ public class MembershipService {
 		return false;
 	}
 	
+	public void deactivateIfExpired(String username) {
+		Membership m = getByCustomer(username);
+		if(m != null && m.expirationDate.isBefore(LocalDate.now())) {
+			membershipRepo.deactivate(m);
+		}
+	}
+	
 }

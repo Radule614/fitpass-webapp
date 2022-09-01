@@ -15,6 +15,7 @@ import dto.facility.FacilityDTO;
 import dto.user.*;
 import model.User;
 import model.UserType;
+import model.customer.Customer;
 import model.facility.Content;
 import model.facility.Facility;
 import model.manager.Manager;
@@ -106,10 +107,16 @@ public class UserController {
     	
     	try {
     		User updatedUser = new UserService().updateUser(new Gson().fromJson(req.body(), UpdateUserDTO.class));
+    		Gson gson = new GsonBuilder()
+    				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+    				.serializeNulls()
+    				.create();
         	if(updatedUser != null) {
-        		return new GsonBuilder()
-        				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-        				.create().toJson(updatedUser);
+        		if(updatedUser.userType == UserType.CUSTOMER) {
+        			CustomerDTO customerDTO = new CustomerDTO((Customer)updatedUser);
+        			return gson.toJson(customerDTO);
+        		}
+        		return gson.toJson(updatedUser);
         	}
     	} catch(Exception ex) {
     		ex.printStackTrace();
@@ -118,6 +125,28 @@ public class UserController {
     	}
     	
     	return Utility.convertMessageToJSON("Failed to updated user.");
+    }
+    
+    public static String changePassword(Request req, Response res) {
+    	res.type("application/json");
+    	
+    	try {
+    		ChangePasswordDTO changePassDTO = new Gson().fromJson(req.body(), ChangePasswordDTO.class);
+    		if(changePassDTO.newPassword.length() < 6) {
+    			res.status(400);
+    			return new Gson().toJson("Password must be at least 6 characters long.");
+    		}
+    		boolean success = new UserService().changePassword(changePassDTO);
+    		if(!success) {
+    			res.status(400); 
+    			return new Gson().toJson("Your password doesn't match.");
+    		}
+    		return new Gson().toJson(changePassDTO.newPassword);
+    	} catch(Exception ex) {
+    		ex.printStackTrace();
+    		res.status(400);
+    		return new Gson().toJson("Failed to parse input data.");
+    	}
     }
 
 

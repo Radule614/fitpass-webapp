@@ -33,14 +33,14 @@
     "usedAppointments": 0
   },
   {
-    "id": "07ad56869c2b4240968c890ecde50551",
-    "type": "MONTHLY",
-    "paymentDate": "26/08/2022",
-    "expirationDate": "26/07/2022",
-    "cost": 13500.0,
+    "id": "6ed6818337d24c7fb87bd7d12aab00cd",
+    "type": "YEARLY",
+    "paymentDate": "30/08/2022",
+    "expirationDate": "30/08/2023",
+    "cost": 53000.0,
     "customerUsername": "Milutin123",
-    "active": false,
-    "appointmentNumber": 66,
+    "active": true,
+    "appointmentNumber": 288,
     "usedAppointments": 0
   }
 ]

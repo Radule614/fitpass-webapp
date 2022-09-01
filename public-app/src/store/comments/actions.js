@@ -25,7 +25,7 @@ export default {
 	async addComment(context, payload) {
 		const res = await fetch(`${Settings.serverUrl}/api/comments/add`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json', 'Data-Type': 'application/json'},
+			headers: { 'Content-Type': 'application/json', 'Data-Type': 'application/json', 'Authorization': 'Bearer ' + context.rootState.auth.token},
 			body: JSON.stringify(payload)
 		});
 		if(!res.ok) throw new Error(res.message || 'Failed to add comment.'); 

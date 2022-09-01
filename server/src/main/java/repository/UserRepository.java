@@ -64,7 +64,6 @@ public class UserRepository extends GenericRepository<User> {
 			}
 		}
 		if(toUpdate != null) {
-			toUpdate.password = updates.password;
 			toUpdate.firstname = updates.firstname;
 			toUpdate.lastname = updates.lastname;
 			toUpdate.gender = updates.gender;

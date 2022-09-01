@@ -29,9 +29,9 @@ export const routes = [
       { path: ':all(.*)',   redirect: '/manager/overview' }
     ]
   },
+	{ path: '/trainings',			name:			'trainings',		component: () => import('./pages/TrainingsPage.vue'),																		meta: { nav: 'Trainings', 			userTypes: ['CUSTOMER', 'MANAGER', 'TRAINER'] }},
   { path: '/about',         name:     'about',        component: () => import('./pages/AboutPage.vue'),           meta: { nav: 'About',                                 } },
   { path: '/profile',       name:     'profile',      component: () => import('./pages/ProfilePage.vue'),         meta: { nav: 'Profile',       userTypes: ['ANY']      } },
-  { path: '/membership',		name:			'membership',		component: () => import('./pages/MembershipPage.vue'),			meta: { userTypes: ['ANY'] }},
 	{ path: '/:all(.*)',      redirect: '/home' }
 ];
 

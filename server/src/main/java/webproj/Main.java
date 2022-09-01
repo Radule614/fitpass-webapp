@@ -36,7 +36,8 @@ public class Main {
 
                 post("/create", UserController::createUser);
                 post("/delete", UserController::deleteUser);
-                put("/update", UserController::updateUser);
+                patch("/update", UserController::updateUser);
+                patch("/updatePassword", UserController::changePassword);
 
                 path("/get", () -> {
                     before("/*", AuthController::authenticate);
@@ -69,10 +70,12 @@ public class Main {
             path("/comments", () -> {
                 get("/all/:facility_id", CommentController::getAllComments);
                 post("/approval", CommentController::commentApproval);
+                before("/add", AuthController::authenticate);
                 post("/add", CommentController::addComment);
             });
             
             path("/memberships", () -> {
+            	before("/*", AuthController::authenticate);
         		get("/:username", MembershipController::getMembership);
         		post("/create", MembershipController::addMembership);
         		delete("/remove/:username/:membership_id", MembershipController::removeMembership);
@@ -80,8 +83,14 @@ public class Main {
             });
             
             path("/grades", () -> {
+            	before("/*", AuthController::authenticate);
             	post("/add", GradeController::addGrade);
             });
+
+            path("/trainings", () -> {
+            	get("/all", TrainingController::getTrainings);
+            	before("/add", AuthController::authenticate);
+            	post("/add", TrainingController::addTraining);
 
             path("/content", () -> {
                 before("/*", AuthController::authenticate);

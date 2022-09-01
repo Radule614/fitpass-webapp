@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import dto.auth.RegisterDTO;
 import dto.facility.SetManagerDTO;
+import dto.user.ChangePasswordDTO;
 import dto.user.CreateUserDTO;
 import dto.user.DeleteUserDTO;
 import dto.user.UpdateUserDTO;
@@ -185,5 +186,16 @@ public class UserService {
     	customer.updatePoints();
     	userRepository.saveAll();
     	return customer.points;
+    }
+    
+    public boolean changePassword(ChangePasswordDTO changePassDTO) {
+    	User user = getUser(changePassDTO.username);
+    	if(user == null) return false;
+    	
+    	if(!user.password.equals(changePassDTO.oldPassword)) return false;
+    	
+    	user.password = changePassDTO.newPassword;
+    	userRepository.saveAll();
+    	return true;
     }
 }
