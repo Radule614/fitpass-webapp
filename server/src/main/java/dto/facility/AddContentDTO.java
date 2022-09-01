@@ -3,6 +3,7 @@ package dto.facility;
 import model.facility.ContentType;
 
 public class AddContentDTO {
+    public String facility_id;
     public String name;
     public ContentType type;
 

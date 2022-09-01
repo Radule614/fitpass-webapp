@@ -1,13 +1,18 @@
 <script>
 import ConfirmModal from '../utility/ConfirmModal.vue';
+import CustomButton from '../utility/CustomButton.vue';
+import UserSelectModal from '../users/UserSelectModal.vue';
 export default {
-  components: { ConfirmModal },
+  components: { ConfirmModal, CustomButton, UserSelectModal },
   data(){
     return {
       loading: false,
       messages: [],
       modalActive: false,
-      contentForDeletion: null
+      contentForDeletion: null,
+      trainerModalActive: false,
+      clearModalActive: false,
+      selectedContent: null
     }
   },
   computed: {
@@ -15,7 +20,7 @@ export default {
       return this.$store.getters['auth/managerFacility'];
     },
     contentList(){
-      return this.facility ? this.facility.content : [];
+      return this.facility && this.facility.content ? this.facility.content : [];
     }
   },
   methods:{
@@ -23,9 +28,11 @@ export default {
       this.loading = true;
       event.preventDefault();
       const data = new FormData(this.$refs.submitForm);
+      data.append('facility_id', this.facility.name);
       try{
         await this.$store.dispatch('facility/addContent', { formData: data, facility: this.facility });
         this.messages = [];
+        this.$refs.nameInput.value = "";
         this.loading = false;
       }catch(error){
         this.messages = error.message.split(",");
@@ -43,7 +50,7 @@ export default {
     async deleteHandler(){
       this.loading = true;
       try{
-        this.$store.dispatch('facility/deleteContent', { content: this.contentForDeletion, facility: this.facility } );
+        this.$store.dispatch('facility/deleteContent', { content: this.contentForDeletion, facility: this.facility });
         this.modalActive = false;
         this.loading = false;
       }catch(error){
@@ -51,6 +58,37 @@ export default {
         this.modalActive = false;
         this.loading = false;
       }
+    },
+    selectTrainerHandler(trainer){
+      this.loading = true;
+      try{
+        this.$store.dispatch('facility/setTrainer', { trainerUsername: trainer.username, content: this.selectedContent });
+        this.trainerModalActive = false;
+        this.selectedContent = null;
+        this.loading = false;
+      }catch(error){
+        console.error(error);
+        this.trainerModalActive = false;
+        this.selectedContent = null;
+        this.loading = false;
+      }
+    },
+    clearTrainerHandler(){
+      this.loading = true;
+      try{
+        this.$store.dispatch('facility/removeTrainer', { content: this.selectedContent });
+        this.clearModalActive = false;
+        this.selectedContent = null;
+        this.loading = false;
+      }catch(error){
+        console.error(error);
+        this.clearModalActive = false;
+        this.selectedContent = null;
+        this.loading = false;
+      }
+    },
+    trainerName(content){
+      return content && content.trainer ? `${content.trainer.firstname} ${content.trainer.lastname}` : "";
     }
   }
 }
@@ -60,21 +98,36 @@ export default {
   <div>
     <div class="content-list">
       <div class="content-item" v-for="(item, index) in contentList" :key="index">
-        <div class="name">
-          {{item.name}} | {{item.type}}
+        <div class="content-heading">
+          {{item.name}}
         </div>
-        <custom-button class="btn-delete" @click="btnDeleteClick(item)">
-          <fa-icon :icon="['fas', 'xmark']"></fa-icon>
-        </custom-button>
+        <hr>
+        <div class="details">
+          <div class="row">
+            <div class="col">Content Type</div>
+            <div class="col">{{item.type}}</div>
+          </div>
+          <div class="row">
+            <div class="col">Trainer</div>
+            <div class="col">{{trainerName(item)}}</div>
+          </div>
+        </div>
+        <div class="button-group left">
+          <custom-button type="button" class="block" @click="clearModalActive=true;selectedContent=item">Clear Trainer</custom-button>
+          <custom-button type="button" class="block" @click="trainerModalActive=true;selectedContent=item">Set Trainer</custom-button>
+        </div>
+        <div class="button-group">
+          <custom-button type="button" class="btn-delete block inverse" @click="btnDeleteClick(item)">Remove</custom-button>
+        </div>
       </div>
     </div>
     <div v-if="contentList.length == 0">No content</div>
     <hr>
-    <form class="add-form" ref="submitForm" v-if="facility">
+    <form @submit="formSubmit($event)" class="add-form" ref="submitForm" v-if="facility">
       <table>
         <tr>
           <td><label for="name">name:</label></td>
-          <td><input type="text" id="name" name="name"></td>
+          <td><input type="text" id="name" name="name" ref="nameInput"></td>
         </tr>
         <tr>
           <td><label for="type">type:</label></td>
@@ -95,14 +148,15 @@ export default {
         <tr>
           <td colspan="2">
             <div class="button-group">
-              <custom-button class="block inverse" @click="formSubmit($event)">Add Content</custom-button>
+              <custom-button type="submit" class="block inverse">Add Content</custom-button>
             </div>
           </td>
         </tr>
       </table>
     </form>
-
     <confirm-modal :show="modalActive" @close="cancelDelete" @confirm="deleteHandler"></confirm-modal>
+    <user-select-modal :show="trainerModalActive" @close="trainerModalActive=false" @confirm="selectTrainerHandler($event)" userType="TRAINER"></user-select-modal>
+    <confirm-modal :show="clearModalActive" @close="clearModalActive = false" @confirm="clearTrainerHandler"></confirm-modal>
   </div>
 </template>
 
@@ -139,22 +193,59 @@ export default {
 .content-list{
   display: flex;
   flex-wrap: wrap;
-  .content-item{
-    padding-left: 10px;
-    border-radius: 50px;
-    border:1px solid gray;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    &:first-child{
-      margin-left: 0px;
+  .content-item {
+    position: relative;
+    padding: 15px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    min-width: 200px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    .content-heading {
+      margin-bottom: 5px;
+      align-items: center;
     }
-    .btn-delete{
-      padding:0px 14px;
-      margin-left: 20px;
+    hr{
+      margin-top: 0px;
+    }
+    .details{
+      font-size: 14px;
+      .row {
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+        margin: 5px 0px 0px 0px;
+        &:first-child{
+          margin-top: 0px;
+        }
+        .col{
+          color: $dark-primary;
+          font-style: normal;
+          font-size: 15px;
+          display: flex;
+          align-items: center;
+          padding-top:5px;
+          padding-bottom: 5px;
+          &:nth-child(2){
+            font-style: italic;
+            background-color: rgba($active-primary, $alpha: 0.4);
+          }
+        }
+      }
+    }
+    .button-group{
+      &.left{
+        justify-content: left;
+      }
+      display: flex;
+      & > button {
+        margin-left: 15px;
+        &:first-child{
+          margin-left: 0px;
+        }
+      }
+      justify-content: right;
+      margin-top: 20px;
     }
   }
 }
+
 
 </style>

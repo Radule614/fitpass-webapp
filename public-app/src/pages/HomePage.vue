@@ -17,9 +17,11 @@
         const elements = this.scrollAnimated;
         let windowHeight = window.innerHeight;
         for(let element of elements){
-          let distanceFromTop = element.getBoundingClientRect().top;
-          if (distanceFromTop - windowHeight + element.offsetHeight <= 0){
-            element.classList.add('appear');
+          if(element){
+            let distanceFromTop = element.getBoundingClientRect().top;
+            if (distanceFromTop - windowHeight + element.offsetHeight <= 0){
+              element.classList.add('appear');
+            }
           }
         }
       }, 200)

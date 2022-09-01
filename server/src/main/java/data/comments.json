@@ -6,5 +6,21 @@
     "postedOn": "28/08/2022",
     "content": "test",
     "approved": true
+  },
+  {
+    "id": "67e8f747abb04fe98e8f498b04026ee1",
+    "facility_id": "djim",
+    "user_id": "admin",
+    "postedOn": "01/09/2022",
+    "content": "ne valja nicemu\n",
+    "approved": true
+  },
+  {
+    "id": "1541e66061924de1a43c361b9edcf0a7",
+    "facility_id": "djim",
+    "user_id": "manager_2",
+    "postedOn": "01/09/2022",
+    "content": "ne valja\n",
+    "approved": false
   }
 ]

@@ -8,5 +8,10 @@
     "username": "Luka123",
     "facilityName": "djim",
     "grade": 4.0
+  },
+  {
+    "username": "admin",
+    "facilityName": "djim",
+    "grade": 3.0
   }
 ]

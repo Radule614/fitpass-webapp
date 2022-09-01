@@ -7,7 +7,7 @@ export default{
     selectable: Boolean,
     selected: Boolean,
     compact: Boolean,
-    onlyAvailableManagers: Boolean
+    userType: String
   },
   emits: ["selectedEvent"],
   computed:{
@@ -17,7 +17,7 @@ export default{
   },
   methods:{
     selectedEvent(){
-      if(this.onlyAvailableManagers){
+      if(this.userType === 'MANAGER'){
         if(this.isManagerFree) this.$emit('selectedEvent');
       }else{
         this.$emit('selectedEvent');
@@ -28,10 +28,10 @@ export default{
 </script>
 
 <template>
-  <div class="grid-item-wrap" @click="selectedEvent" :class="{'selectable': selectable, 'selected': selected, 'manager-engaged': !isManagerFree && this.onlyAvailableManagers}">
+  <div class="grid-item-wrap" @click="selectedEvent" :class="{'selectable': selectable, 'selected': selected, 'manager-engaged': !isManagerFree&&this.userType==='MANAGER'}">
     <div class="background"></div>
     <div class="grid-item">
-      <user-details :user="user" :compact="compact" :onlyAvailableManagers="onlyAvailableManagers"></user-details>
+      <user-details :user="user" :compact="compact" :userType="userType"></user-details>
     </div>
   </div>
 </template>

@@ -22,7 +22,7 @@
     "facility_id": "T E R E T A N A",
     "username": "manager",
     "userType": "MANAGER",
-    "password": "nesto123",
+    "password": "123",
     "firstname": "Pavle1",
     "lastname": "Aleksic",
     "dateOfBirth": "30/01/1986",
@@ -138,17 +138,17 @@
     "gender": null
   },
   {
-    "facility_id": "djim",
+    "facility_id": null,
     "username": "manager_2",
     "userType": "MANAGER",
-    "password": "12345678",
+    "password": "123",
     "firstname": "ime2",
     "lastname": "prezime2",
     "dateOfBirth": "09/07/2022",
     "gender": "MALE"
   },
   {
-    "facility_id": "teretana",
+    "facility_id": "djim",
     "username": "manager_4",
     "userType": "MANAGER",
     "password": "12345678",
@@ -172,6 +172,46 @@
     "firstname": "Branimir",
     "lastname": "Todorovic",
     "dateOfBirth": "07/07/1990",
+    "gender": "MALE"
+  },
+  {
+    "facility_id": "teretana",
+    "username": "manager_123",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "manager_123",
+    "lastname": "manager_123_prezime",
+    "dateOfBirth": null,
+    "gender": "MALE"
+  },
+  {
+    "facility_id": null,
+    "username": "manager5152521",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "novi",
+    "lastname": "novi_l",
+    "dateOfBirth": null,
+    "gender": "FEMALE"
+  },
+  {
+    "workoutHistory": null,
+    "username": "trener123",
+    "userType": "TRAINER",
+    "password": "12345678",
+    "firstname": "ime",
+    "lastname": "123",
+    "dateOfBirth": null,
+    "gender": "FEMALE"
+  },
+  {
+    "workoutHistory": null,
+    "username": "ttttrener",
+    "userType": "TRAINER",
+    "password": "12345678",
+    "firstname": "12345678",
+    "lastname": "11111111",
+    "dateOfBirth": "02/09/2022",
     "gender": "MALE"
   }
 ]
