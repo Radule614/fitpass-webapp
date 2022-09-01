@@ -14,7 +14,7 @@ public class FacilityDTO {
     public double grade;
     public WorkingHours workingHours;
     public UserDTO manager;
-    public ArrayList<Content> content = new ArrayList<>();
+    public ArrayList<ContentDTO> content = new ArrayList<>();
 
     public FacilityDTO(){}
 
@@ -26,6 +26,5 @@ public class FacilityDTO {
         this.location = f.location;
         this.grade = f.grade;
         this.workingHours = f.workingHours;
-        this.content = f.content;
     }
 }

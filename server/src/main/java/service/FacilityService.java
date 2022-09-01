@@ -161,29 +161,6 @@ public class FacilityService {
 		return extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png");
 	}
 
-	public void addContent(String managerUsername, AddContentDTO dto) throws Content.CreateContentException {
-		if(managerUsername == null || dto == null) throw new Content.CreateContentException("Something went wrong");
-		Facility f = this.getByManager(managerUsername);
-		if(!this.isContentUnique(f.content, dto.name)) throw new Content.CreateContentException("Content already exists");
-		f.content.add(new Content(dto.name, dto.type));
-		facilityRepository.saveAll();
-	}
-
-	private boolean isContentUnique(ArrayList<Content> list, String name){
-		for(Content con: list){
-			if(name.equals(con.name)) return false;
-		}
-		return true;
-	}
-
-	public void deleteContent(String managerUsername, DeleteContentDTO dto) throws Content.DeleteContentException {
-		if(managerUsername == null || dto == null) throw new Content.DeleteContentException("Something went wrong");
-		Facility f = this.getByManager(managerUsername);
-		f.content.removeIf(con -> con.name.equals(dto.name));
-	}
-
-
-
 	//PRIVATE
 
 	private String saveFile(FileDTO fileDTO) {

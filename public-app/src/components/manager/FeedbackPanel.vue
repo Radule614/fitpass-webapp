@@ -3,7 +3,9 @@ import CommentList from '../facility/CommentList.vue';
 export default {
   components:{ CommentList },
   beforeMount () {
-    this.$store.dispatch('comments/getAllFacilityComments', this.facility.name);
+    if(this.facility && this.facility.name){
+      this.$store.dispatch('comments/getAllFacilityComments', this.facility.name);
+    }
   },
   computed:{
     facility(){

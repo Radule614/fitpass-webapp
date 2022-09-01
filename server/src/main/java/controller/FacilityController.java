@@ -5,10 +5,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.facility.*;
 import dto.FileDTO;
+import dto.user.TrainerDTO;
 import model.User;
 import model.facility.*;
 import model.manager.Manager;
+import model.trainer.Trainer;
 import repository.util.LocalDateAdapter;
+import service.ContentService;
 import service.FacilityService;
 import service.UserService;
 import spark.Request;
@@ -135,57 +138,23 @@ public class FacilityController {
 		}
 	}
 
-	public static String addContent(Request request, Response response){
-		request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-		response.type("application/json");
-		try{
-			String name = parseStringInput(request.raw().getPart("name"));
-			String type = parseStringInput(request.raw().getPart("type"));
-			if(name != null && name.isEmpty()) throw new Content.CreateContentException("Content name can't be empty");
-			new FacilityService().addContent(request.attribute("username"), new AddContentDTO(name, ContentType.valueOf(type)));
-			return Utility.convertMessageToJSON("Facility content added");
-		} catch(Content.CreateContentException e){
-			e.printStackTrace();
-			response.status(400);
-			return Utility.convertMessageToJSON(e.getMessage());
-		} catch (Exception e){
-			e.printStackTrace();
-			response.status(400);
-			return Utility.convertMessageToJSON("Failed to add content to facility");
-		}
-	}
-
-	public static String deleteContent(Request request, Response response) {
-		response.type("application/json");
-		try{
-			DeleteContentDTO dto = new Gson().fromJson(request.body(), DeleteContentDTO.class);
-			new FacilityService().deleteContent(request.attribute("username"), dto);
-			return Utility.convertMessageToJSON("Content deleted successfully");
-		} catch(Content.DeleteContentException e){
-			e.printStackTrace();
-			response.status(400);
-			return Utility.convertMessageToJSON(e.getMessage());
-		} catch(Exception e){
-			e.printStackTrace();
-			response.status(400);
-			return Utility.convertMessageToJSON("Failed to add content to facility");
-		}
-	}
-
-
 	//PRIVATE
 
 	private static ArrayList<FacilityDTO> facilitiesToDTOs(ArrayList<Facility> facilities){
 		ArrayList<FacilityDTO> DTOs = new ArrayList<>();
 		UserService userService = new UserService();
+		ContentService contentService = new ContentService();
 		for(Facility f: facilities){
 			FacilityDTO temp = new FacilityDTO(f);
 			User user = userService.getUser(f.manager_id);
-			if(user != null) temp.manager = new UserService().getUser(f.manager_id).getDTO();
+			if(user != null) temp.manager = userService.getUser(f.manager_id).getDTO();
+			temp.content = ContentController.contentToDTOs(contentService.getFacilityContent(f.name));
 			DTOs.add(temp);
 		}
 		return DTOs;
 	}
+
+
 
 	private static String getFileName(Part part) {
 		for (String cd : part.getHeader("content-disposition").split(";")) {

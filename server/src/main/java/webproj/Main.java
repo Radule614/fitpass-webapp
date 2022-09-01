@@ -63,12 +63,6 @@ public class Main {
                     post("/set", FacilityController::setManager);
                     post("/clear", FacilityController::clearManager);
                     get("", FacilityController::getManagerFacility);
-                    path("/content", () -> {
-                        before("/*", AuthController::authenticate);
-
-                        post("/add", FacilityController::addContent);
-                        post("/delete", FacilityController::deleteContent);
-                   });
                 });
             });
 
@@ -87,6 +81,15 @@ public class Main {
             
             path("/grades", () -> {
             	post("/add", GradeController::addGrade);
+            });
+
+            path("/content", () -> {
+                before("/*", AuthController::authenticate);
+
+                post("/create", ContentController::createContent);
+                post("/delete", ContentController::deleteContent);
+                post("/trainer/add", ContentController::addTrainerToContent);
+                post("/trainer/clear", ContentController::clearTrainerFromContent);
             });
         });
     }

@@ -22,13 +22,7 @@
       "endHour": 20,
       "endMinute": 20
     },
-    "manager_id": "manager_2",
-    "content": [
-      {
-        "name": "sadrzaj123",
-        "type": "GROUP"
-      }
-    ]
+    "manager_id": "manager_4"
   },
   {
     "name": "teretana",
@@ -53,8 +47,7 @@
       "endHour": 19,
       "endMinute": 23
     },
-    "manager_id": "manager_4",
-    "content": []
+    "manager_id": "manager_123"
   },
   {
     "name": "teretana2",
@@ -79,8 +72,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "manager_id": null,
-    "content": []
+    "manager_id": null
   },
   {
     "name": "bazen",
@@ -105,8 +97,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "manager_id": null,
-    "content": []
+    "manager_id": null
   },
   {
     "name": "zenba",
@@ -131,8 +122,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "manager_id": null,
-    "content": []
+    "manager_id": null
   },
   {
     "name": "teretana3",
@@ -157,8 +147,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "manager_id": null,
-    "content": []
+    "manager_id": null
   },
   {
     "name": "bazen2",
@@ -183,8 +172,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "manager_id": null,
-    "content": []
+    "manager_id": null
   },
   {
     "name": "bazen54321",
@@ -209,29 +197,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "manager_id": "radule614",
-    "content": [
-      {
-        "name": " as sa",
-        "type": "PERSONAL"
-      },
-      {
-        "name": "  sbbbb",
-        "type": "PERSONAL"
-      },
-      {
-        "name": "bbbbbb",
-        "type": "PERSONAL"
-      },
-      {
-        "name": "bbb",
-        "type": "PERSONAL"
-      },
-      {
-        "name": "bbbsb",
-        "type": "PERSONAL"
-      }
-    ]
+    "manager_id": "radule614"
   },
   {
     "name": "T E R E T A N A",
@@ -256,24 +222,6 @@
       "endHour": 22,
       "endMinute": 2
     },
-    "manager_id": "manager",
-    "content": [
-      {
-        "name": " 4",
-        "type": "PERSONAL"
-      },
-      {
-        "name": " 4 32 23",
-        "type": "PERSONAL"
-      },
-      {
-        "name": " 2 21",
-        "type": "GROUP"
-      },
-      {
-        "name": "2 21",
-        "type": "GROUP"
-      }
-    ]
+    "manager_id": "manager"
   }
 ]

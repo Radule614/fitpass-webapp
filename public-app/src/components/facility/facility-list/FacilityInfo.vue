@@ -1,9 +1,9 @@
 <script>
 import LeafletMap from '../../utility/LeafletMap.vue';
-import ManagerModal from './ManagerModal.vue';
+import UserSelectModal from '../../users/UserSelectModal.vue';
 import ConfirmModal from '../../utility/ConfirmModal.vue';
 export default{
-  components: { LeafletMap, ManagerModal, ConfirmModal },
+  components: { LeafletMap, UserSelectModal, ConfirmModal },
   props: {
     facility: {
       available: Boolean,
@@ -54,7 +54,7 @@ export default{
     selectManagerHandler(manager){
       this.loading = true;
       try{
-        this.$store.dispatch('facility/setManager', { managerUsername: manager.username, facilityName: this.facility.name} );
+        this.$store.dispatch('facility/setManager', { managerUsername: manager.username, facilityName: this.facility.name });
         this.managerModalActive = false;
         this.loading = false;
       }catch(error){
@@ -121,7 +121,7 @@ export default{
       </div>
     </div>
 
-    <manager-modal :show="managerModalActive" @close="managerModalActive = false" @confirm="selectManagerHandler($event)"></manager-modal>
+    <user-select-modal :show="managerModalActive" @close="managerModalActive = false" @confirm="selectManagerHandler($event)" userType="MANAGER"></user-select-modal>
     <confirm-modal :show="clearModalActive" @close="clearModalActive = false" @confirm="clearManagerHandler"></confirm-modal>
   </div>
 </template>

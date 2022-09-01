@@ -1,10 +1,11 @@
 <script>
-import ModalComponent from "../../ModalComponent.vue";
-import UsersGrid from "../../users/UsersGrid.vue";
+import ModalComponent from "../ModalComponent.vue";
+import UsersGrid from "../users/UsersGrid.vue";
 export default {
   components: { ModalComponent, UsersGrid },
   props: {
-    show: Boolean
+    show: Boolean,
+    userType: String
   },
   emits: ['close', 'confirm'],
   data(){
@@ -34,7 +35,7 @@ export default {
       </template>
       <template #body>
         <div class="manager-modal-body">
-          <users-grid class="grid" :compact="true" :onlyAvailableManagers="true" :selectable="true" @userSelected="selectedUser=$event"></users-grid>
+          <users-grid class="grid" :compact="true" :userType="userType" :selectable="true" @userSelected="selectedUser=$event"></users-grid>
         </div>
       </template>
     </modal-component>

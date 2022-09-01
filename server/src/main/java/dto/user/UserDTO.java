@@ -19,7 +19,6 @@ public abstract class UserDTO {
     public String lastname;
     public Gender gender;
     public LocalDate dateOfBirth;
-    public Facility facility;
     public String password;
 
     public UserDTO(User user){

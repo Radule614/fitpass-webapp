@@ -1,0 +1,65 @@
+[
+  {
+    "id": "a272d5e5aebe41a499040cbd39941e62",
+    "name": "2",
+    "type": "GROUP",
+    "trainer_id": "ttttrener",
+    "facility_id": "bazen54321"
+  },
+  {
+    "id": "14cdf7c01e7147669e3132878adcb280",
+    "name": "3",
+    "type": "GROUP",
+    "trainer_id": null,
+    "facility_id": "bazen54321"
+  },
+  {
+    "id": "7880a6223dc14ab5b872319c0ed940d7",
+    "name": "1",
+    "type": "GROUP",
+    "trainer_id": "ttttrener",
+    "facility_id": "T E R E T A N A"
+  },
+  {
+    "id": "e5089ad64536489bb11a9b4cb3e5f487",
+    "name": "0",
+    "type": "GROUP",
+    "trainer_id": "trener123",
+    "facility_id": "T E R E T A N A"
+  },
+  {
+    "id": "e166a9470c2d4dee88322ab6af119001",
+    "name": "65324",
+    "type": "PERSONAL",
+    "trainer_id": "trener2",
+    "facility_id": "T E R E T A N A"
+  },
+  {
+    "id": "78344cc0f6b447e2830d15b1e67a092c",
+    "name": "2",
+    "type": "GROUP",
+    "trainer_id": "ttttrener",
+    "facility_id": "bazen54321"
+  },
+  {
+    "id": "67724f463b6942268737255b2653bc17",
+    "name": "5",
+    "type": "GROUP",
+    "trainer_id": "trener123",
+    "facility_id": "bazen54321"
+  },
+  {
+    "id": "80ba8d42f763447ba4b12c9fecc23cac",
+    "name": "11111111",
+    "type": "GROUP",
+    "trainer_id": "trener123",
+    "facility_id": "djim"
+  },
+  {
+    "id": "edf6c29cc22c48638b833824d15eed44",
+    "name": "412",
+    "type": "GROUP",
+    "trainer_id": null,
+    "facility_id": "djim"
+  }
+]
