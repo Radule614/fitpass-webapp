@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import model.User;
 import repository.util.LocalDateAdapter;
+import repository.util.LocalDateTimeAdapter;
 
 public class FileHandler<T> implements IFileHandler<T> {
 	private String filePath;
@@ -51,6 +53,7 @@ public class FileHandler<T> implements IFileHandler<T> {
 	public void saveAll(ArrayList<T> data) {
 		Gson gson = new GsonBuilder()
 				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
 				.setPrettyPrinting()
 				.serializeNulls()
 				.create();

@@ -4,7 +4,7 @@
 			<CustomButton v-if="!showForm" @click="showForm = true">Add Training</CustomButton>
 			<CustomButton v-if="showForm" @click="showForm = false">Close</CustomButton>
 			<transition name="addForm" appear>
-				<AddTraining v-if="showForm"/>
+				<AddTraining v-show="showForm"/>
 			</transition>
 		</div>
 		<div v-if="trainerTrainings.length" class="trainings mt-4">
@@ -30,7 +30,6 @@ export default {
 				const showForm = ref(false);
 				const loggedUserType = store.getters['auth/userType'];
 
-				console.log(trainerTrainings.value);
         return { trainerTrainings, showForm, loggedUserType };
     },
    

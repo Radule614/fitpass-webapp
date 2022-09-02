@@ -101,6 +101,7 @@ public class Main {
                 post("/delete", ContentController::deleteContent);
                 post("/trainer/add", ContentController::addTrainerToContent);
                 post("/trainer/clear", ContentController::clearTrainerFromContent);
+                get("/trainer/group/:trainerId", ContentController::getTrainersGroupContent);
             });
         });
     }

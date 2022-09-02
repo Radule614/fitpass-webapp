@@ -17,5 +17,6 @@ export default {
 		});
 		const training = await res.json();
 		context.commit('addTraining', { training });
+		return training;
 	}
 }

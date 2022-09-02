@@ -5,8 +5,10 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
@@ -14,9 +16,11 @@ import javax.servlet.http.Part;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dto.user.TrainingDTO;
 import io.jsonwebtoken.io.IOException;
 import model.trainer.Training;
 import model.trainer.TrainingType;
+import repository.util.LocalDateTimeAdapter;
 import service.TrainingService;
 import spark.Request;
 import spark.Response;
@@ -40,7 +44,11 @@ public class TrainingController {
 		res.type("application/json");
 		ArrayList<Training> trainings = new TrainingService().getAll();
 		try {
-			return new Gson().toJson(trainings);
+			return new GsonBuilder()
+					.serializeNulls()
+					.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+					.create()
+					.toJson(convertTrainingsToDTO(trainings));
 		} catch(Exception ex) {
 			res.status(400);
 			return new Gson().toJson("Failed to parse data");
@@ -80,12 +88,41 @@ public class TrainingController {
 		training.setDuration(Integer.parseInt(parameterMap.get("duration")[0]));
 		training.setDescription(parameterMap.get("description")[0]);
 		training.setTrainerUsername(parameterMap.get("trainerUsername")[0]);
-		String individuality = parameterMap.get("individuality")[0].toUpperCase();
-		String type = parameterMap.get("type")[0].toUpperCase().replace("&", "and");
-		training.setType(TrainingType.valueOf(individuality + "_" + type));
 		training.setImgUrl("http://localhost:9999/img/trainings/" + training.getTrainerUsername() + uploadedFile.getSubmittedFileName());
-		
+		training.setContentId(parameterMap.get("content")[0]);
+		training.setStart(parseLocalDateTime(parameterMap.get("date")[0], parameterMap.get("time")[0]));
+		training.setType(TrainingType.valueOf(parameterMap.get("type")[0].toUpperCase().replace("&", "and")));
+		training.setFacilityName(parameterMap.get("facilityName")[0]);
 		new TrainingService().add(training);
-		return new GsonBuilder().serializeNulls().create().toJson(training);
+		try {
+			return new GsonBuilder()
+					.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+					.serializeNulls()
+					.create()
+					.toJson(training.getDTO());
+		} catch(Exception ex) {
+			res.status(400);
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			return new Gson().toJson("Failed to serialize data");
+		}
+
+	}
+	
+	// PRIVATE HELPERS
+	
+	private static LocalDateTime parseLocalDateTime(String date, String time) {
+		String[] dateParts = date.split("/");
+		String[] timeParts = time.split(":");
+		int day = Integer.parseInt(dateParts[0]);
+		int month = Integer.parseInt(dateParts[1]);
+		int year = Integer.parseInt(dateParts[2]);
+		int hour = Integer.parseInt(timeParts[0]);
+		int minute = Integer.parseInt(timeParts[1]);
+		return LocalDateTime.of(year, month, day, hour, minute);
+	}
+	
+	private static ArrayList<TrainingDTO> convertTrainingsToDTO(ArrayList<Training> trainings) {
+		return (ArrayList<TrainingDTO>)trainings.stream().map(training -> training.getDTO()).collect(Collectors.toList());
 	}
 }

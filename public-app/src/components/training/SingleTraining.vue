@@ -4,25 +4,34 @@
 			<img :src="training.imgUrl">
 			<p class="text-center lead">{{ training.description }}</p>
 		</div>
-		<div class="details">
-			<h1 class="display-4 text-center">{{ training.name }}</h1>
-			<slot name="details" :individuality="individuality" :type="type">
+		<div class="content">
+			<div class="details">
+				<h1 class="display-4 text-center mb-5">{{ training.name }}</h1>
+				<slot name="details" :type="type">
 
-			</slot>
+				</slot>
+			</div>
+			<div class="button-wrapper my-5" v-if="loggedUserType === 'TRAINER' && training.content.type === 'PERSONAL'">
+					<CustomButton class="mx-auto">Cancel Training</CustomButton>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core';
-export default {
-	props: ['training'],
-	setup(props) {
-		const individuality = computed(() => props.training.type.split('_')[0]);
-		const type = computed(() => props.training.type.toLowerCase().split('_')[1].split('and').join(', '));
+import { computed } from '@vue/runtime-core'
+import { useStore } from 'vuex';
+import CustomButton from '../utility/CustomButton.vue';
 
-		return { individuality, type }
-	}
+export default {
+    props: ["training"],
+    setup(props) {
+        const type = computed(() => props.training.type.replace("and", ", "));
+        const store = useStore();
+        const loggedUserType = store.getters["auth/userType"];
+        return { type, loggedUserType };
+    },
+    components: { CustomButton }
 }
 </script>
 
@@ -49,7 +58,6 @@ export default {
 			margin-bottom: 10px;
 			font-size: 1.3rem;
 		}
-		
 		&:hover {
 			transform: translateY(-1px);
 		}

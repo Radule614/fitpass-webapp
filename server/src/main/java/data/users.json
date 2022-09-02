@@ -154,7 +154,7 @@
     "password": "12345678",
     "firstname": "ime3",
     "lastname": "prezime3",
-    "dateOfBirth": null,
+    "dateOfBirth": "03/09/1991",
     "gender": "FEMALE"
   },
   {
@@ -181,7 +181,7 @@
     "password": "12345678",
     "firstname": "manager_123",
     "lastname": "manager_123_prezime",
-    "dateOfBirth": null,
+    "dateOfBirth": "06/04/1997",
     "gender": "MALE"
   },
   {
@@ -191,7 +191,7 @@
     "password": "12345678",
     "firstname": "novi",
     "lastname": "novi_l",
-    "dateOfBirth": null,
+    "dateOfBirth": "02/03/1995",
     "gender": "FEMALE"
   },
   {
@@ -201,7 +201,7 @@
     "password": "12345678",
     "firstname": "ime",
     "lastname": "123",
-    "dateOfBirth": null,
+    "dateOfBirth": "05/05/1999",
     "gender": "FEMALE"
   },
   {

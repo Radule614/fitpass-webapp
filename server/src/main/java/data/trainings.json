@@ -1,42 +1,50 @@
 [
   {
-    "id": "de6294694c65498e8e9df6491ab74013",
-    "name": "Trening1",
-    "type": "PERSONAL_BALANCEandSTABILITY",
-    "facilityName": null,
-    "duration": 85.0,
-    "trainerUsername": "trener2",
-    "description": "",
-    "imgUrl": "http://localhost:9999/img/trainings/trener2abstract5.jpg"
+    "id": "0958758ecb4c48afb8289a738aa61d1a",
+    "name": "Trening 1",
+    "type": "BALANCEandSTABILITY",
+    "facilityName": "bazen54321",
+    "duration": 80.0,
+    "trainerUsername": "trener123",
+    "description": "Zdrava hrana teretana",
+    "imgUrl": "http://localhost:9999/img/trainings/trener123boxer-1984344_1920.jpg",
+    "start": "September 14, 2022, 10:40 AM",
+    "contentId": "e166a9470c2d4dee88322ab6af119001"
   },
   {
-    "id": "36580bbbc02a4660a43959133ed09ffa",
-    "name": "Trening2",
-    "type": "GROUP_BALANCEandSTABILITY",
-    "facilityName": null,
-    "duration": 55.0,
-    "trainerUsername": "trener2",
-    "description": "Neki trening kao ",
-    "imgUrl": "http://localhost:9999/img/trainings/trener2social-media.jpg"
+    "id": "4c6d106eeb7340edb71c9226f670d07e",
+    "name": "Trening 2",
+    "type": "STRENGTH",
+    "facilityName": "djim",
+    "duration": 100.0,
+    "trainerUsername": "trener123",
+    "description": "Ponedeljak grudi, utorak ledja, sreda noge, godinu dana pauza.",
+    "imgUrl": "http://localhost:9999/img/trainings/trener123woman-2983129_1920.jpg",
+    "start": "September 21, 2022, 10:55 AM",
+    "contentId": "80ba8d42f763447ba4b12c9fecc23cac"
   },
   {
-    "id": "8317d2a7ab7d41ab8322fe1c61a1983f",
+    "id": "31628e680051435d8c30b198aa36f3de",
     "name": "Trening 3",
-    "type": "PERSONAL_BALANCEandSTABILITY",
-    "facilityName": null,
-    "duration": 99.0,
-    "trainerUsername": "trener2",
-    "description": "Ponedeljak grudi+biceps, utorak ledja+triceps, sreda ramena+noge, godinu dana pauza",
-    "imgUrl": "http://localhost:9999/img/trainings/trener2programming_bg_3.jpg"
+    "type": "STRENGTH",
+    "facilityName": "T E R E T A N A",
+    "duration": 55.0,
+    "trainerUsername": "trener123",
+    "description": "Masa je mama",
+    "imgUrl": "http://localhost:9999/img/trainings/trener123man-2037255_1920.jpg",
+    "start": "September 13, 2022, 12:50 PM",
+    "contentId": "e5089ad64536489bb11a9b4cb3e5f487"
   },
   {
-    "id": "cbfbe6f0693549efa65e5001dbc902ca",
+    "id": "badb2dcc8e8a4e4fb8af3e73bb2750c5",
     "name": "Trening 4",
-    "type": "PERSONAL_STRENGTH",
-    "facilityName": null,
-    "duration": 87.0,
-    "trainerUsername": "trener2",
-    "description": "Mrtvilo",
-    "imgUrl": "http://localhost:9999/img/trainings/trener2abstract13.jpg"
+    "type": "AEROBIC",
+    "facilityName": "T E R E T A N A",
+    "duration": 30.0,
+    "trainerUsername": "trener123",
+    "description": "1 2 vezbam ja, 1 2 3 vezbu svi.",
+    "imgUrl": "http://localhost:9999/img/trainings/trener123man-g367a4d3a8_1920.jpg",
+    "start": "September 30, 2022, 5:55 PM",
+    "contentId": "e5089ad64536489bb11a9b4cb3e5f487"
   }
 ]

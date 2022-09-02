@@ -1,11 +1,13 @@
 <template>
 	<div class="training-list">
-		<transition-group name="list" tag="div" appear>
-			<div v-for="training in trainings" :key="training.id">
+		<transition-group name="list" appear>
+			<div v-for="training in trainings" :key="training.content.id">
 				<SingleTraining :training="training">
-					<template v-slot:details="slotProps">
+					<template #details="slotProps">
+						<p><span class="header">Start:</span> <span class="paint">{{ training.start }}</span></p>
 						<p><span class="header">Duration:</span> <span class="paint">{{ training.duration }} min</span></p>
-						<p><span class="header">Individuality:</span> <span class="paint">{{ slotProps.individuality }}</span></p>
+						<p><span class="header">Place:</span> <span class="paint">{{ training.facilityName }}</span></p>
+						<p><span class="header">Individuality:</span> <span class="paint">{{ training.content.type }}</span></p>
 						<p><span class="header">Type:</span> <span class="paint">{{ slotProps.type }}</span></p>
 					</template>
 				</SingleTraining>
@@ -20,8 +22,8 @@ import SingleTraining from './SingleTraining.vue';
 export default {
 	components: { SingleTraining },
 	props: ["trainings"],
-	setup() {
-		
+	setup(props) {
+		console.log(props.trainings);
 	},
 
 }
