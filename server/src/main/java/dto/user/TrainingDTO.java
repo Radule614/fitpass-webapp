@@ -8,6 +8,7 @@ import model.trainer.TrainingType;
 import service.ContentService;
 
 public class TrainingDTO {
+	public String id;
 	public String name;
 	public TrainingType type;
 	public String facilityName;
@@ -19,6 +20,7 @@ public class TrainingDTO {
 	public Content content;
 	
 	public TrainingDTO(Training t) {
+		this.id = t.getId();
 		this.name = t.getName();
 		this.type = t.getType();
 		this.facilityName = t.getFacilityName();

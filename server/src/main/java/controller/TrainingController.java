@@ -40,9 +40,10 @@ public class TrainingController {
 		}
 	}
 	
-	public static String getTrainings(Request req, Response res) {
+	public static String getTrainingWithRequiredContentTypes(Request req, Response res) {
 		res.type("application/json");
-		ArrayList<Training> trainings = new TrainingService().getAll();
+		String[] contentTypes = new Gson().fromJson(req.body(), String[].class);
+		ArrayList<Training> trainings = new TrainingService().getTrainingsWithRequiredContentTypes(contentTypes);
 		try {
 			return new GsonBuilder()
 					.serializeNulls()
@@ -107,6 +108,23 @@ public class TrainingController {
 			return new Gson().toJson("Failed to serialize data");
 		}
 
+	}
+	
+	public static String removeTraining(Request req, Response res) {
+		res.type("application/json");
+		String trainingId = req.params("training_id");
+		boolean success = new TrainingService().cancel(trainingId);
+		try {
+			if(success) {
+				return new Gson().toJson("Training has been canceled successfully.");
+			} else {
+				res.status(450);
+				return new Gson().toJson("Failed to cancel training, canceling treshold has passed.");
+			}
+		} catch(Exception ex) {
+			res.status(400);
+			return new Gson().toJson("Failed to serialize data.");
+		}
 	}
 	
 	// PRIVATE HELPERS

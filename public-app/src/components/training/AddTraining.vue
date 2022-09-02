@@ -84,8 +84,8 @@ export default {
 				const time = ref("");
         const allowedImgTypes = ["image/jpeg", "image/png"];
         const imgTypeError = ref(null);
-        const formData = new FormData();
 				const formError = ref(null);
+				let formData = new FormData();
 				const store = useStore();
 				const fileRef = ref(null);
 				const content = ref(null);
@@ -101,7 +101,6 @@ export default {
 					const data = await res.json();
 					if(res.ok) {
 						content.value = data;
-						console.log(content.value);
 					}
 				};
 
@@ -110,6 +109,7 @@ export default {
 				})
 
         const handleImgChange = (e) => {
+						formData = new FormData();
             imgTypeError.value = null;
             const img = e.target.files[0];
             if (!allowedImgTypes.includes(img.type)) {
@@ -119,7 +119,6 @@ export default {
             formData.append("image", img);
         };
         const handleSubmit = async (e) => {
-						console.log(selectedContent.value);
 						e.preventDefault();
 						formError.value = null;
 						validateInput();
@@ -133,9 +132,8 @@ export default {
 							formData.append("time", time.value);
 							formData.append("description", description.value);
 							formData.append("trainerUsername", store.getters['auth/username']);
-							resetForm();
 							const newTraining = await store.dispatch("trainings/addTraining", { formData });
-							console.log(newTraining);
+							resetForm();
 						}	
         };
 				const validateInput = () => {

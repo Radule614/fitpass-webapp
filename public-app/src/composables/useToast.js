@@ -5,7 +5,12 @@ const useToast = (toast) => {
 		setTimeout(toast.clear, 3000);
 	};
 
-	return { showMessage }
+	const showError = (message, position) => {
+		toast.error(message, { position });
+		setTimeout(toast.clear, 3000);
+	}
+
+	return { showMessage, showError }
 }
 
 
