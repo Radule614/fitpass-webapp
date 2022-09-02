@@ -1,6 +1,6 @@
 <template>
 	<div class="rate">
-		<h4>Raiting:</h4>
+		<h4 class="banner my-5">RATE US</h4>
 		<div class="buttons">
 			<div class="control-group">
 				<input type="radio" v-model="grade" value="1">1
@@ -69,19 +69,24 @@ export default {
 
 <style scoped lang="scss">
 	.rate {
-		display: flex;
-		align-items: center;
 		margin: 30px 0;
-		h4 {
-			margin: 0;
-			margin-right: 20px;
-		}
 		.control-group {
 			display: inline-block;
-			margin-right: 12px;
+			margin-right: 25px;
 		}
 		input {
-			margin-right: 2px;
+			margin-right: 5px;
+		}
+		.buttons {
+			font-size: 1.4rem;
+		}
+		.banner {
+			background: $active-primary;
+			color: $light-primary;
+			font-size: 72px;
+			padding: 30px 60px;
+			width: 100vw;
+			transform: translateX(-120px);
 		}
 	}
 </style>

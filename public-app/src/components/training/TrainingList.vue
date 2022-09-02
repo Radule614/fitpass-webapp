@@ -2,15 +2,7 @@
 	<div class="training-list">
 		<transition-group name="list" appear>
 			<div v-for="training in trainings" :key="training.content.id">
-				<SingleTraining :training="training">
-					<template #details="slotProps">
-						<p><span class="header">Start:</span> <span class="paint">{{ training.start }}</span></p>
-						<p><span class="header">Duration:</span> <span class="paint">{{ training.duration }} min</span></p>
-						<p><span class="header">Place:</span> <span class="paint">{{ training.facilityName }}</span></p>
-						<p><span class="header">Individuality:</span> <span class="paint">{{ training.content.type }}</span></p>
-						<p><span class="header">Type:</span> <span class="paint">{{ slotProps.type }}</span></p>
-					</template>
-				</SingleTraining>
+				<SingleTraining :training="training" />
 			</div>
 		</transition-group>
 	</div>
@@ -21,7 +13,7 @@ import SingleTraining from './SingleTraining.vue';
 
 export default {
 	components: { SingleTraining },
-	props: ["trainings"],
+	props: ["trainings", "type"],
 	setup(props) {
 		
 	},
@@ -44,14 +36,5 @@ export default {
 	.training-list {
 		position: relative;
 	}
-	.details {
-		padding: 0px 25px;
-		p {
-			display: flex;
-			justify-content: space-between;
-		}
-		.paint {
-			color: $active-primary;
-		}
-	}
+	
 </style>
