@@ -93,6 +93,13 @@ public class ContentController {
             return Utility.convertMessageToJSON("Failed to clear trainer from content");
         }
     }
+    
+    public static String getTrainersGroupContent(Request req, Response res) {
+    	res.type("application/json");
+    	String trainerUsername = req.params("trainerId");
+    	ArrayList<Content> trainersGroupContent = new ContentService().getTrainersGroupContent(trainerUsername);
+    	return new Gson().toJson(trainersGroupContent);
+    }
 
     public static ArrayList<ContentDTO> contentToDTOs(ArrayList<Content> content){
         ArrayList<ContentDTO> DTOs = new ArrayList<>();

@@ -89,9 +89,15 @@ public class Main {
             });
 
             path("/trainings", () -> {
-            	get("/all", TrainingController::getTrainings);
+            	path("/get", () -> {
+            		post("/requiredContentTypes", TrainingController::getTrainingWithRequiredContentTypes);
+            	});
+            	
             	before("/add", AuthController::authenticate);
+            	before("/cancel/*",AuthController::authenticate);
+            	
             	post("/add", TrainingController::addTraining);
+            	delete("/cancel/:training_id", TrainingController::removeTraining);
             });
 
             path("/content", () -> {
@@ -101,6 +107,7 @@ public class Main {
                 post("/delete", ContentController::deleteContent);
                 post("/trainer/add", ContentController::addTrainerToContent);
                 post("/trainer/clear", ContentController::clearTrainerFromContent);
+                get("/trainer/group/:trainerId", ContentController::getTrainersGroupContent);
             });
         });
     }

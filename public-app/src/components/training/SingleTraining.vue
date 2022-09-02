@@ -4,25 +4,62 @@
 			<img :src="training.imgUrl">
 			<p class="text-center lead">{{ training.description }}</p>
 		</div>
-		<div class="details">
-			<h1 class="display-4 text-center">{{ training.name }}</h1>
-			<slot name="details" :individuality="individuality" :type="type">
+		<div class="content">
+			<div class="details">
+				<h1 class="display-4 text-center mb-5">{{ training.name }}</h1>
+				<slot name="details" :type="type">
 
-			</slot>
+				</slot>
+			</div>
+			<div class="button-wrapper my-5" v-if="loggedUserType === 'TRAINER' && training.content.type === 'PERSONAL'">
+					<CustomButton class="mx-auto" @click="showModal = true">Cancel Training</CustomButton>
+			</div>
+			<Teleport to="body">
+				<ModalComponent :simple="true" :show="showModal" buttonText="confirm" :width="320" @close="showModal = false" @confirm="handleCancel">
+					<template #body>
+						Are you sure?
+					</template>
+				</ModalComponent>
+			</Teleport>
 		</div>
 	</div>
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core';
-export default {
-	props: ['training'],
-	setup(props) {
-		const individuality = computed(() => props.training.type.split('_')[0]);
-		const type = computed(() => props.training.type.toLowerCase().split('_')[1].split('and').join(', '));
+import { computed, inject, ref } from '@vue/runtime-core'
+import { useStore } from 'vuex';
+import CustomButton from '../utility/CustomButton.vue';
+import ModalComponent from '../ModalComponent.vue';
+import settings from '@/settings';
+import useToast from '@/composables/useToast';
 
-		return { individuality, type }
-	}
+export default {
+    props: ["training"],
+    setup(props) {
+        const type = computed(() => props.training.type.replace("and", ", "));
+        const store = useStore();
+        const loggedUserType = store.getters["auth/userType"];
+				const showModal = ref(false);
+				const { showError } = useToast(inject('toast'));
+
+				const handleCancel = async () => {
+					const res = await fetch(`${settings.serverUrl}/api/trainings/cancel/${props.training.id}`, {
+						method: 'DELETE',
+						headers: { 'Data-Type': 'application/json', 'Authorization': 'Bearer ' + store.getters['auth/token'] }
+					});
+					const data = await res.json();
+					if(res.status === 450) {
+						showError(data, 'top');
+					}
+					if(res.ok) {
+						store.commit('trainings/removeTraining', { trainingId: props.training.id });
+					}
+					showModal.value = false;
+				}
+
+        return { type, loggedUserType, showModal, handleCancel };
+    },
+    components: { CustomButton, ModalComponent }
 }
 </script>
 
@@ -49,7 +86,6 @@ export default {
 			margin-bottom: 10px;
 			font-size: 1.3rem;
 		}
-		
 		&:hover {
 			transform: translateY(-1px);
 		}

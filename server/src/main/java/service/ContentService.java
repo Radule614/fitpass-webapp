@@ -4,6 +4,7 @@ import dto.AvgGradeRangeDTO;
 import dto.FileDTO;
 import dto.facility.*;
 import model.facility.Content;
+import model.facility.ContentType;
 import model.facility.Facility;
 import model.facility.FacilityType;
 import model.manager.Manager;
@@ -79,5 +80,18 @@ public class ContentService {
         }
         content.trainer_id = null;
         contentRepository.saveAll();
+    }
+    
+    public ArrayList<Content> getTrainersGroupContent(String username) {    		
+    	return (ArrayList<Content>) contentRepository.getAll()
+    			.stream()
+    			.filter(training -> training.trainer_id != null 
+    				&& training.trainer_id.equals(username) 
+    				&& training.type == ContentType.GROUP)
+    			.collect(Collectors.toList());
+    }
+    
+    public Content get(String id) {
+    	return contentRepository.getById(id);
     }
 }

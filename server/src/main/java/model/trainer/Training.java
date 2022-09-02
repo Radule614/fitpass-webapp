@@ -1,5 +1,8 @@
 package model.trainer;
 
+import java.time.LocalDateTime;
+
+import dto.user.TrainingDTO;
 import utility.UIDGenerator;
 
 public class Training {
@@ -11,13 +14,15 @@ public class Training {
 	private String trainerUsername;
 	private String description;
 	private String imgUrl;
+	private LocalDateTime start;
+	private String contentId;
 	
 	public Training() {
 		this.id = UIDGenerator.generate();
 	}
 	
 	public Training(String name, TrainingType type, String facilityName, double duration,
-			String trainerUsername, String description, String imgUrl) {
+			String trainerUsername, String description, String imgUrl, LocalDateTime start, String contentId) {
 		super();
 		this.id = UIDGenerator.generate();
 		this.name = name;
@@ -27,6 +32,12 @@ public class Training {
 		this.trainerUsername = trainerUsername;
 		this.description = description;
 		this.imgUrl = imgUrl;
+		this.start = start;
+		this.contentId = contentId;
+	}
+	
+	public TrainingDTO getDTO() {
+		return new TrainingDTO(this);
 	}
 	
 	public String getId() {
@@ -76,5 +87,17 @@ public class Training {
 	}
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+	public LocalDateTime getStart() {
+		return start;
+	}
+	public void setStart(LocalDateTime ldt) {
+		this.start = ldt;
+	}
+	public String getContentId() {
+		return contentId;
+	}
+	public void setContentId(String id) {
+		this.contentId = id;
 	}
 }
