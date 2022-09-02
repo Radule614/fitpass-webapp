@@ -7,12 +7,29 @@
 		<div class="content">
 			<div class="details">
 				<h1 class="display-4 text-center mb-5">{{ training.name }}</h1>
-				<slot name="details" :type="type">
-
-				</slot>
+				<div class="details">
+					<div v-if="loggedUserType == 'TRAINER'">
+						<p><span class="header">Start:</span> <span class="paint">{{ training.start }}</span></p>
+						<p><span class="header">Duration:</span> <span class="paint">{{ training.duration }} min</span></p>
+						<p><span class="header">Place:</span> <span class="paint">{{ training.facilityName }}</span></p>
+						<p><span class="header">Individuality:</span> <span class="paint">{{ training.content.type }}</span></p>
+						<p><span class="header">Type:</span> <span class="paint">{{ type }}</span></p>
+					</div>
+					<div v-if="loggedUserType == 'CUSTOMER'">
+						<p><span class="header">Start:</span> <span class="paint">{{ training.start }}</span></p>
+						<p><span class="header">Duration:</span> <span class="paint">{{ training.duration }} min</span></p>
+						<p><span class="header">Type:</span> <span class="paint">{{ type }}</span></p>
+						<p><span class="header">Trainer:</span><span class="paint">{{ training.trainerUsername }}</span></p>
+					</div>
+				</div>
 			</div>
-			<div class="button-wrapper my-5" v-if="loggedUserType === 'TRAINER' && training.content.type === 'PERSONAL'">
+			<div class="button-wrapper my-5" >
+				<div v-if="loggedUserType === 'TRAINER' && training.content.type === 'PERSONAL'">
 					<CustomButton class="mx-auto" @click="showModal = true">Cancel Training</CustomButton>
+				</div>
+				<div v-if="loggedUserType === 'CUSTOMER'">
+					<CustomButton class="mx-auto">Join</CustomButton>
+				</div>
 			</div>
 			<Teleport to="body">
 				<ModalComponent :simple="true" :show="showModal" buttonText="confirm" :width="320" @close="showModal = false" @confirm="handleCancel">
@@ -88,6 +105,16 @@ export default {
 		}
 		&:hover {
 			transform: translateY(-1px);
+		}
+	}
+	.details {
+		padding: 0px 25px;
+		p {
+			display: flex;
+			justify-content: space-between;
+		}
+		.paint {
+			color: $active-primary;
 		}
 	}
 </style>

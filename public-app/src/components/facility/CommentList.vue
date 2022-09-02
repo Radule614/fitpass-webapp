@@ -42,9 +42,8 @@ export default {
 </script>
 
 <template>
+	<h5 class="banner my-5">COMMENTS</h5>
   <div>
-    <h5>comments</h5>
-    <hr>
     <div class="comment-list" v-if="comments.length">
       <div class="comment" v-for="(comment, index) in comments" :key="index" :class="{ 'approved': comment.approved, 'admin': admin }">
         <div class="comment-header">
@@ -126,5 +125,13 @@ export default {
       }
     }
   }
+}
+.banner {
+	background: $active-primary;
+	color: $light-primary;
+	font-size: 72px;
+	padding: 30px 60px;
+	width: 100vw;
+	transform: translateX(-120px);
 }
 </style>

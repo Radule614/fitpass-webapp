@@ -1,6 +1,6 @@
 <template>
 	<form>
-		<h5>Comment</h5>
+		<h5>Add Comment</h5>
 		<textarea v-model="content"></textarea>
 		<div class="error">{{ error }}</div>
 		<CustomButton @click="handleSubmit">Send</CustomButton>

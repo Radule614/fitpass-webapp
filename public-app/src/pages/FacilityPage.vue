@@ -3,9 +3,10 @@ import CommentList from '@/components/facility/CommentList.vue';
 import FacilityDetails from '@/components/facility/FacilityDetails.vue';
 import AddComment from '@/components/facility/AddComment.vue';
 import RateFacility from '../components/facility/RateFacility.vue';
+import FacilityOffer from '@/components/facility/facility-list/FacilityOffer.vue';
 
 export default {
-  components: { CommentList, FacilityDetails, AddComment, RateFacility },
+  components: { CommentList, FacilityDetails, AddComment, RateFacility, FacilityOffer },
   computed: {
     facility(){
       let facilities = this.$store.getters['facility/facilities'];
@@ -36,6 +37,7 @@ export default {
   <div class="container facility">
     <div v-if="facility">
       <facility-details :facility="facility"></facility-details>
+			<facility-offer :facility="facility"/>
 			<rate-facility v-if="loggedUser"/>
       <div class="comments">
         <comment-list :forPublic="true" :admin="loggedUserType == 'ADMIN'"></comment-list>
