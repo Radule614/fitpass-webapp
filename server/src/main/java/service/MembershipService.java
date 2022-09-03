@@ -63,4 +63,19 @@ public class MembershipService {
 		}
 	}
 	
+	public boolean canCheckIn(String username) {
+		Membership membership = getByCustomer(username);
+		if(membership == null) return false;
+		if(membership.appointmentNumber == 0) return false;
+		
+		return true;
+	}
+	
+	public void handleAppointmentUsage(String username) {
+		Membership membership = getByCustomer(username);
+		membership.appointmentNumber--;
+		membership.usedAppointments++;
+		membershipRepo.saveAll();
+	}
+	
 }

@@ -46,6 +46,7 @@ public class Main {
                     get("", UserController::getUser);
                     post("/filtered", UserController::getFilteredUsers);
                 });
+                patch("/facilityVisited/:trainingId/:username", UserController::checkIn);
             });
             path("/facilities", () -> {
                 get("/all", FacilityController::getAllFacilities);

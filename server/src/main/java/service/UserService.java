@@ -17,7 +17,11 @@ import model.User;
 import model.UserType;
 import model.customer.Customer;
 import model.customer.CustomerType;
+import model.customer.VisitedFacility;
+import model.facility.Content;
+import model.facility.ContentType;
 import model.manager.Manager;
+import model.trainer.Training;
 import model.utility.Gender;
 import repository.UserRepository;
 
@@ -197,5 +201,35 @@ public class UserService {
     	user.password = changePassDTO.newPassword;
     	userRepository.saveAll();
     	return true;
+    }
+    
+    public boolean addTraining(String username, String trainingId) {
+    	Customer customer = (Customer) getUser(username);
+    	if(customer.trainingHistory == null) customer.trainingHistory = new ArrayList<String>();
+    	// Does same group training already exist
+    	for(String tId : customer.trainingHistory) {
+    		if(tId.equals(trainingId)) {
+    			Training t = new TrainingService().get(tId);
+    			Content trainingContent = new ContentService().get(t.getContentId());
+    			if(trainingContent.type == ContentType.GROUP) {
+    				return false;
+    			}
+    		}
+    	}
+    	
+    	customer.trainingHistory.add(trainingId);
+    	userRepository.saveAll();
+    	return true;
+    }
+    
+    public void addVisitedFacility(String username, VisitedFacility facility) {
+    	Customer customer = (Customer) getUser(username);
+    	if(customer.visitedFacilities == null) customer.visitedFacilities = new ArrayList<VisitedFacility>();
+    	// Has he already visited this facility
+    	for(VisitedFacility vf : customer.visitedFacilities) {
+    		if(vf.getFacilityName().equals(facility.getFacilityName())) return;
+    	}
+    	customer.visitedFacilities.add(facility);
+    	userRepository.saveAll();
     }
 }

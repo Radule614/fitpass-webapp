@@ -10,7 +10,12 @@ const useToast = (toast) => {
 		setTimeout(toast.clear, 3000);
 	}
 
-	return { showMessage, showError }
+	const showInfo = (message, position) => {
+		toast.info(message, { position });
+		setTimeout(toast.clear, 3000);
+	}
+
+	return { showMessage, showError, showInfo }
 }
 
 

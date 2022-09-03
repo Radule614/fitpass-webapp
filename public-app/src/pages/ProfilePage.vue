@@ -9,7 +9,7 @@
 					<h3 class="display-5 text-center mb-4">Membership</h3>
 					<div v-if="user.membership" style="width: 100%;">
 						<div class="card text-center">
-							<div class="card-header fw-bold" style="font-size: 1.3rem;">
+							<div class="card-header fw-bold membership-header" style="font-size: 1.3rem;">
 								{{ price.title.toUpperCase() }}
 							</div>
 							<div class="card-body">
@@ -44,7 +44,7 @@
 						</div>
 					</div>
 					<div v-else>
-						You have {{ user.points }} points which is not enough for any type, collect more points to get a type and discount on every buy. You gain points when your membership expire.
+						You have <span class="paint">{{ user.points }}</span> points which is not enough for any type, collect more points to get a type and discount on every buy. You gain points when your membership expire.
 					</div>
 				</div>
 			</div>
@@ -84,6 +84,14 @@ export default {
 		}
 		.membership {
 			width: 100%;
+			.membership-header {
+				background: $active-primary;
+				color: $light-primary;
+			}
+			.card-header {
+				font-weight: bold;
+				letter-spacing: 1px;
+			}
 		}
 		.membership-type {
 			display: flex;
@@ -96,8 +104,6 @@ export default {
 				display: flex;
 				justify-content: space-between;
 				.paint {
-					color: $active-primary;
-					font-weight: bold;
 					margin-left: 15px;
 				}
 			}
@@ -107,5 +113,9 @@ export default {
 				font-size: 1.3rem;
 			}
 		}
+	}
+	.paint {
+		color: $active-primary;
+		font-weight: bold;
 	}
 </style>

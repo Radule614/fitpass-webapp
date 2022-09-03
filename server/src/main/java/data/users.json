@@ -30,9 +30,23 @@
   },
   {
     "membershipId": "ddc2e8bfe1484c87a0b2b1cacb52338a",
-    "visitedFacilitiesName": null,
+    "visitedFacilities": [
+      {
+        "facilityName": "djim",
+        "checkinDate": "03/09/2022"
+      },
+      {
+        "facilityName": "T E R E T A N A",
+        "checkinDate": "03/09/2022"
+      }
+    ],
     "points": 0,
     "customerType": null,
+    "trainingHistory": [
+      "4c6d106eeb7340edb71c9226f670d07e",
+      "693eeef6c6134a3b9d3c0766b847b2dd",
+      "8a55f6bdddca4566a193a8d8b2399297"
+    ],
     "username": "Ljubica123",
     "userType": "CUSTOMER",
     "password": "ljubi123",
@@ -43,9 +57,10 @@
   },
   {
     "membershipId": null,
-    "visitedFacilitiesName": null,
+    "visitedFacilities": null,
     "points": 0,
     "customerType": null,
+    "trainingHistory": null,
     "username": "Dragan123",
     "userType": "CUSTOMER",
     "password": "ovojenovasifra",
@@ -56,9 +71,10 @@
   },
   {
     "membershipId": null,
-    "visitedFacilitiesName": null,
+    "visitedFacilities": null,
     "points": 0,
     "customerType": null,
+    "trainingHistory": null,
     "username": "Petar123",
     "userType": "CUSTOMER",
     "password": "perica123",
@@ -69,9 +85,25 @@
   },
   {
     "membershipId": "37e7b7756f904074bd5c4c2005b7e7e3",
-    "visitedFacilitiesName": null,
+    "visitedFacilities": [
+      {
+        "facilityName": "bazen54321",
+        "checkinDate": "03/09/2022"
+      },
+      {
+        "facilityName": "T E R E T A N A",
+        "checkinDate": "03/09/2022"
+      }
+    ],
     "points": 0,
     "customerType": null,
+    "trainingHistory": [
+      "1c6f978f5a624b1b8109e985d15614c7",
+      "d5baa56e60a6415d9c8c4f9d0a3aa1fd",
+      "8a55f6bdddca4566a193a8d8b2399297",
+      "d0cf2e7b89914def86335861de533c28",
+      "ca51d4636db7495c9b1d37da31e092f0"
+    ],
     "username": "Luka123",
     "userType": "CUSTOMER",
     "password": "luka123",
@@ -82,13 +114,14 @@
   },
   {
     "membershipId": "6ed6818337d24c7fb87bd7d12aab00cd",
-    "visitedFacilitiesName": null,
+    "visitedFacilities": null,
     "points": 6199,
     "customerType": {
       "type": "GOLD",
       "discount": 5.0,
       "requiredPoints": 4500
     },
+    "trainingHistory": null,
     "username": "Milutin123",
     "userType": "CUSTOMER",
     "password": "milutin123",
@@ -99,9 +132,10 @@
   },
   {
     "membershipId": null,
-    "visitedFacilitiesName": null,
+    "visitedFacilities": null,
     "points": 0,
     "customerType": null,
+    "trainingHistory": null,
     "username": "Radovan123",
     "userType": "CUSTOMER",
     "password": "radovan123",
@@ -112,13 +146,14 @@
   },
   {
     "membershipId": null,
-    "visitedFacilitiesName": null,
+    "visitedFacilities": null,
     "points": 0,
     "customerType": {
       "type": "BRONZE",
       "discount": 0.0,
       "requiredPoints": 0
     },
+    "trainingHistory": null,
     "username": "user123456",
     "userType": "CUSTOMER",
     "password": "12345678",
@@ -159,13 +194,14 @@
   },
   {
     "membershipId": null,
-    "visitedFacilitiesName": null,
+    "visitedFacilities": null,
     "points": 0,
     "customerType": {
       "type": "BRONZE",
       "discount": 0.0,
       "requiredPoints": 0
     },
+    "trainingHistory": null,
     "username": "Branimir123",
     "userType": "CUSTOMER",
     "password": "b123123",
@@ -199,8 +235,8 @@
     "username": "trener123",
     "userType": "TRAINER",
     "password": "12345678",
-    "firstname": "ime",
-    "lastname": "123",
+    "firstname": "Neko",
+    "lastname": "Nekic",
     "dateOfBirth": "05/05/1999",
     "gender": "FEMALE"
   },

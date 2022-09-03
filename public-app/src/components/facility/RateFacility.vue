@@ -85,7 +85,7 @@ export default {
 			color: $light-primary;
 			font-size: 72px;
 			padding: 30px 60px;
-			width: 100vw;
+			width: 104vw;
 			transform: translateX(-120px);
 		}
 	}
