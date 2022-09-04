@@ -137,7 +137,7 @@ export default {
 						}	
         };
 				const validateInput = () => {
-					if(name.value === "" || duration.value === "" || type.value === "" || !formData.get("image")) {
+					if(name.value === "" || duration.value === "" || type.value === "" || !formData.get("image") || selectedContent.value === "") {
 						formError.value = "Please fill all fields";
 					}
 				};

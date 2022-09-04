@@ -27,7 +27,20 @@
 							<span class="paint">{{ single.trainer.username }}</span>
 						</div>
 						<div class="button-wrapper" v-if="loggedUserType === 'CUSTOMER'">
-							<CustomButton class="mx-auto">Schedule</CustomButton>
+							<CustomButton class="mx-auto" @click="showModal = true">Schedule</CustomButton>
+							<Teleport to="body">
+								<ModalComponent buttonText="confirm" :width="600" :responsive="true" @close="showModal = false" :show="showModal">
+									<template #header>
+										Schedule personal training
+									</template>
+									<template #body>
+										<SchedulePersonalTraining :content="single" @closeModal="showModal = false" />
+									</template>
+									<template #footer>
+										<CustomButton @click="showModal = false">Cancel</CustomButton>
+									</template>
+								</ModalComponent>	
+							</Teleport>
 						</div>
 					</div>
 				</div>
@@ -41,25 +54,29 @@
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core';
+import { computed, ref } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import TrainingList from '@/components/training/TrainingList.vue';
 import CustomButton from '../../utility/CustomButton.vue';
+import ModalComponent from '@/components/ModalComponent.vue';
+import SchedulePersonalTraining from '@/components/training/SchedulePersonalTraining.vue';
 
 export default {
-		components: { TrainingList, CustomButton },
+		components: { TrainingList, CustomButton, ModalComponent, SchedulePersonalTraining },
     props: ["facility"],
     setup(props) {
         const store = useStore();
 				const loggedUserType = store.getters['auth/userType'];
+				const showModal = ref(false);
         const facilityTrainings = computed(() => {
             const trainings = store.getters["trainings/getAll"];
-            return trainings.filter(training => training.facilityName === props.facility.name);
+            return trainings.filter(training => training.name !== "Personal Training" && training.facilityName === props.facility.name);
         });
         const facilityPersonalContentWithTrainers = computed(() => {
             return props.facility.content.filter(single => single.trainer && single.type === 'PERSONAL');
         });
-        return { facilityTrainings, facilityPersonalContentWithTrainers, loggedUserType };
+
+        return { facilityTrainings, facilityPersonalContentWithTrainers, loggedUserType, showModal };
     },
 }
 </script>
@@ -70,8 +87,7 @@ export default {
 		color: $light-primary;
 		font-size: 72px;
 		padding: 30px 60px;
-		width: 104vw;
-		transform: translateX(-120px);
+		width: 100%;
 	}
 	.content {
 		.title {

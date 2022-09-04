@@ -32,20 +32,19 @@
     "membershipId": "ddc2e8bfe1484c87a0b2b1cacb52338a",
     "visitedFacilities": [
       {
-        "facilityName": "djim",
-        "checkinDate": "03/09/2022"
+        "facilityName": "T E R E T A N A",
+        "checkinDate": "04/09/2022"
       },
       {
-        "facilityName": "T E R E T A N A",
-        "checkinDate": "03/09/2022"
+        "facilityName": "djim",
+        "checkinDate": "04/09/2022"
       }
     ],
     "points": 0,
     "customerType": null,
     "trainingHistory": [
-      "4c6d106eeb7340edb71c9226f670d07e",
-      "693eeef6c6134a3b9d3c0766b847b2dd",
-      "8a55f6bdddca4566a193a8d8b2399297"
+      "d5baa56e60a6415d9c8c4f9d0a3aa1fd",
+      "4c6d106eeb7340edb71c9226f670d07e"
     ],
     "username": "Ljubica123",
     "userType": "CUSTOMER",

@@ -17,6 +17,7 @@ import model.User;
 import model.UserType;
 import model.customer.Customer;
 import model.customer.CustomerType;
+import model.customer.Membership;
 import model.customer.VisitedFacility;
 import model.facility.Content;
 import model.facility.ContentType;
@@ -231,5 +232,37 @@ public class UserService {
     	}
     	customer.visitedFacilities.add(facility);
     	userRepository.saveAll();
+    }
+    
+    // Removes training from users history
+    public void removeTraining(String trainingId) {
+    	userRepository.getAll().forEach(user -> {
+    		if(user.userType == UserType.CUSTOMER) {
+        		Customer temp = (Customer) user;
+        		if(temp.trainingHistory != null ) {        			
+        			temp.trainingHistory.remove(trainingId);
+        		}
+    		}
+    	});
+    	userRepository.saveAll();
+    }
+    
+    public void incrementAppointmentNumber(String training_id) {
+    	// find customer which scheduled this training
+    	ArrayList<Customer> customers = (ArrayList<Customer>) userRepository.getAll()
+    			.stream()
+    			.filter(user -> user.userType == UserType.CUSTOMER)
+    			.map(user -> (Customer)user)
+    			.collect(Collectors.toList());
+    	if(customers != null) {
+    		customers.forEach(customer -> {
+    			if(customer.trainingHistory != null && customer.trainingHistory.contains(training_id)) {
+    				Membership customerMembership = new MembershipService().getByCustomer(customer.username);
+    				customerMembership.appointmentNumber++;
+    				customerMembership.usedAppointments--;
+    				new MembershipService().saveAll();
+    			}
+    		});
+    	}
     }
 }

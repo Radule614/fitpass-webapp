@@ -78,4 +78,8 @@ public class MembershipService {
 		membershipRepo.saveAll();
 	}
 	
+	public void saveAll() {
+		membershipRepo.saveAll();
+	}
+	
 }

@@ -96,9 +96,11 @@ public class Main {
             	
             	before("/add", AuthController::authenticate);
             	before("/cancel/*",AuthController::authenticate);
+            	before("/addPersonal", AuthController::authenticate);
             	
             	post("/add", TrainingController::addTraining);
-            	delete("/cancel/:training_id", TrainingController::removeTraining);
+            	delete("/cancel/:training_id", TrainingController::cancelTraining);
+            	post("/addPersonal/:username", TrainingController::addPersonalTraining);
             });
 
             path("/content", () -> {

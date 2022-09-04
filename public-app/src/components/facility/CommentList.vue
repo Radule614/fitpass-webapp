@@ -131,7 +131,6 @@ export default {
 	color: $light-primary;
 	font-size: 72px;
 	padding: 30px 60px;
-	width: 104vw;
-	transform: translateX(-120px);
+	width: 100%;
 }
 </style>

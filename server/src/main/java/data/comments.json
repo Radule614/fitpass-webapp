@@ -22,5 +22,13 @@
     "postedOn": "01/09/2022",
     "content": "ne valja\n",
     "approved": false
+  },
+  {
+    "id": "7e89d21b2c8e4b1b820c115a184660d2",
+    "facility_id": "T E R E T A N A",
+    "user_id": "Ljubica123",
+    "postedOn": "04/09/2022",
+    "content": "Jedan jedinica",
+    "approved": false
   }
 ]

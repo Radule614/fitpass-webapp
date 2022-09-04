@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,12 +17,16 @@ import javax.servlet.http.Part;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dto.user.PersonalTrainingDTO;
 import dto.user.TrainingDTO;
 import io.jsonwebtoken.io.IOException;
+import model.customer.VisitedFacility;
 import model.trainer.Training;
 import model.trainer.TrainingType;
 import repository.util.LocalDateTimeAdapter;
+import service.MembershipService;
 import service.TrainingService;
+import service.UserService;
 import spark.Request;
 import spark.Response;
 import spark.utils.IOUtils;
@@ -74,7 +79,7 @@ public class TrainingController {
 		try(InputStream inStream = uploadedFile.getInputStream()) {
 			String fs = File.separator;
 			String outputPath = System.getProperty("user.dir") + fs + "src" + fs + "main" + fs + "resources" + fs 
-					+ "public" + fs + "img" + fs + "trainings" + fs + parameterMap.get("trainerUsername")[0] + 					uploadedFile.getSubmittedFileName(); 
+					+ "public" + fs + "img" + fs + "trainings" + fs + parameterMap.get("trainerUsername")[0] + uploadedFile.getSubmittedFileName(); 
 			OutputStream outputStream = new FileOutputStream(outputPath);
 			IOUtils.copy(inStream, outputStream);
 			outputStream.close();
@@ -110,12 +115,16 @@ public class TrainingController {
 
 	}
 	
-	public static String removeTraining(Request req, Response res) {
+	public static String cancelTraining(Request req, Response res) {
 		res.type("application/json");
 		String trainingId = req.params("training_id");
 		boolean success = new TrainingService().cancel(trainingId);
 		try {
 			if(success) {
+				// Increment user termins by 1
+				new UserService().incrementAppointmentNumber(trainingId);
+				// Remove from customers history
+				new UserService().removeTraining(trainingId);
 				return new Gson().toJson("Training has been canceled successfully.");
 			} else {
 				res.status(450);
@@ -125,6 +134,35 @@ public class TrainingController {
 			res.status(400);
 			return new Gson().toJson("Failed to serialize data.");
 		}
+	}
+	
+	public static String addPersonalTraining(Request req, Response res) {
+		res.type("application/json");
+		String username = req.params("username");
+		try {
+			PersonalTrainingDTO personalTrainingDTO = new Gson().fromJson(req.body(), PersonalTrainingDTO.class);
+			boolean canCheckIn = new MembershipService().canCheckIn(username);
+			if(!canCheckIn) {
+				res.status(250);
+				return new Gson().toJson("You don't have active membership or you ran out of termins.");
+			}
+			Training newTraining = createTrainingFromDTO(personalTrainingDTO);
+			new TrainingService().add(newTraining);
+			// add to user training history
+			new UserService().addTraining(username, newTraining.getId());
+			new MembershipService().handleAppointmentUsage(username);
+			new UserService().addVisitedFacility(username, new VisitedFacility(newTraining.getFacilityName(), LocalDate.now()));
+			return new GsonBuilder()
+					.serializeNulls()
+					.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+					.create()
+					.toJson(newTraining.getDTO());
+		} catch(Exception ex) {
+			res.status(400);
+			ex.printStackTrace();
+			return new Gson().toJson("Failed to parse input data");
+		}
+		
 	}
 	
 	// PRIVATE HELPERS
@@ -138,6 +176,21 @@ public class TrainingController {
 		int hour = Integer.parseInt(timeParts[0]);
 		int minute = Integer.parseInt(timeParts[1]);
 		return LocalDateTime.of(year, month, day, hour, minute);
+	}
+	
+	private static Training createTrainingFromDTO(PersonalTrainingDTO personalTrainingDTO) {
+		Training newTraining = new Training();
+		newTraining.setName(personalTrainingDTO.name);
+		newTraining.setType(TrainingType.valueOf(personalTrainingDTO.type.toUpperCase().replace("&", "and")));
+		newTraining.setFacilityName(personalTrainingDTO.facilityName);
+		newTraining.setTrainerUsername(personalTrainingDTO.trainerUsername);
+		newTraining.setDescription(personalTrainingDTO.description);
+		newTraining.setDuration(personalTrainingDTO.duration);
+		newTraining.setContentId(personalTrainingDTO.contentId);
+		newTraining.setStart(parseLocalDateTime(personalTrainingDTO.date, personalTrainingDTO.time));
+		newTraining.setImgUrl("http://localhost:9999/img/trainings/personalTraining.jpg");
+		
+		return newTraining;
 	}
 	
 	private static ArrayList<TrainingDTO> convertTrainingsToDTO(ArrayList<Training> trainings) {

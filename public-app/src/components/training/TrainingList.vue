@@ -1,7 +1,7 @@
 <template>
 	<div class="training-list">
 		<transition-group name="list" appear>
-			<div v-for="training in trainings" :key="training.content.id">
+			<div v-for="training in trainings" :key="training.id">
 				<SingleTraining :training="training" />
 			</div>
 		</transition-group>

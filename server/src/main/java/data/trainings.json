@@ -106,5 +106,29 @@
     "imgUrl": "http://localhost:9999/img/trainings/trener123man-g367a4d3a8_1920.jpg",
     "start": "September 20, 2022, 1:20 PM",
     "contentId": "e5089ad64536489bb11a9b4cb3e5f487"
+  },
+  {
+    "id": "bd0bc099ff2d4c60936188f7da3a2047",
+    "name": "Personal Training",
+    "type": "AEROBIC",
+    "facilityName": "T E R E T A N A",
+    "duration": 9000.0,
+    "trainerUsername": "trener2",
+    "description": "",
+    "imgUrl": "http://localhost:9999/img/trainings/personalTraining.jpg",
+    "start": "September 5, 2022, 11:00 PM",
+    "contentId": "e166a9470c2d4dee88322ab6af119001"
+  },
+  {
+    "id": "6a1cbb5bae5044009f3d04347d1d8103",
+    "name": "Personal Training",
+    "type": "COORDINATIONandAGILITY",
+    "facilityName": "T E R E T A N A",
+    "duration": 600.0,
+    "trainerUsername": "trener2",
+    "description": "",
+    "imgUrl": "http://localhost:9999/img/trainings/personalTraining.jpg",
+    "start": "September 5, 2022, 11:00 PM",
+    "contentId": "e166a9470c2d4dee88322ab6af119001"
   }
 ]

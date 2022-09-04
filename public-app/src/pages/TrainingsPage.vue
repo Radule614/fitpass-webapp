@@ -27,10 +27,20 @@
 				</div>
 			</transition>
 		</div>
-		<div v-if="trainerFilteredTrainings.length" class="trainings mt-4">
+		<!-- TRAINER -->
+		<div v-if="loggedUserType === 'TRAINER'">
+			<div v-if="trainerFilteredTrainings && trainerFilteredTrainings.length" class="trainings mt-4">
 				<TrainingList :trainings="trainerFilteredTrainings"/>
+			</div>
+			<p class="mt-3" v-else>You don't have any trainings yet.</p>
 		</div>
-		<p class="mt-3" v-else>You don't have any trainings yet.</p>
+		<!-- CUSTOMER -->
+		<div v-if="loggedUserType === 'CUSTOMER'">
+			<div v-if="customerTrainigs.length" class="training mt-4">
+				<TrainingList :trainings="customerTrainigs"/>
+			</div>
+			<p class="mt-3" v-else>You don't have any trainings yet.</p>
+		</div>
 	</div>
 </template>
 
@@ -51,6 +61,11 @@ export default {
 				const loggedUserType = store.getters['auth/userType'];
 				const filters = ref([]);
 				const showFilters = ref(false);
+				const customerTrainigs = computed(() => {
+					const user = store.getters["auth/user"];
+					if(!user) return [];
+					return user.trainingHistory ? store.getters["auth/user"].trainingHistory : [];
+				});
 
 				const fetchTrainings = async () => {
 					try {
@@ -61,7 +76,7 @@ export default {
 					console.log(store.getters['trainings/getTrainerTrainings']);
 				}
 
-        return { trainerFilteredTrainings, showForm, loggedUserType, filters, showFilters ,fetchTrainings };
+        return { trainerFilteredTrainings, showForm, loggedUserType, filters, showFilters ,fetchTrainings, customerTrainigs };
     },
    
 }

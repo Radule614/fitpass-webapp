@@ -18,11 +18,14 @@
 						<p><span class="header">Start:</span> <span class="paint">{{ training.start }}</span></p>
 						<p><span class="header">Duration:</span> <span class="paint">{{ training.duration }} min</span></p>
 						<p><span class="header">Place:</span> <span class="paint">{{ training.facilityName }}</span></p>
-						<p><span class="header">Individuality:</span> <span class="paint">{{ training.content.type }}</span></p>
 						<p><span class="header">Type:</span> <span class="paint">{{ type }}</span></p>
 					</div>
 					<div v-if="route.name === 'trainings' && loggedUserType === 'CUSTOMER'">
-
+						<p><span class="header">Start:</span> <span class="paint">{{ training.start }}</span></p>
+						<p><span class="header">Duration:</span> <span class="paint">{{ training.duration }} min</span></p>
+						<p><span class="header">Place:</span> <span class="paint">{{ training.facilityName }}</span></p>
+						<p><span class="header">Trainer:</span> <span class="paint">{{ training.trainerUsername }}</span></p>
+						<p><span class="header">Type:</span> <span class="paint">{{ type }}</span></p>
 					</div>
 					<div v-if="route.name === 'trainings' && loggedUserType === 'MANAGER'">
 
@@ -33,7 +36,7 @@
 				<div v-if="loggedUserType === 'TRAINER' && training.content.type === 'PERSONAL'">
 					<CustomButton class="mx-auto" @click="showModal = true">Cancel Training</CustomButton>
 				</div>
-				<div v-if="loggedUserType === 'CUSTOMER'">
+				<div v-if="loggedUserType === 'CUSTOMER' && route.name !== 'trainings'">
 					<CustomButton class="mx-auto" @click="handleJoin">Check In</CustomButton>
 				</div>
 			</div>
@@ -57,21 +60,19 @@ import settings from '@/settings';
 import useToast from '@/composables/useToast';
 import useCustomerUtilities from '@/composables/useCustomerUtilities';
 import { useRoute } from 'vue-router';
-import ModalComponent1 from '../ModalComponent.vue';
-import { useDate } from '@/composables/useDate';
 
 export default {
     props: ["training"],
     setup(props) {
         const type = computed(() => props.training.type.replace("and", ", "));
         const store = useStore();
-        const loggedUserType = store.getters["auth/userType"];
+        const loggedUserType = computed(() => store.getters["auth/userType"]);
 				const user = store.getters["auth/user"];
 				const route = useRoute();
 				const showModal = ref(false);
 				const { membershipError, terminsError, checkinValidation } = useCustomerUtilities(user);
 				const { showMessage, showError, showInfo } = useToast(inject('toast'));
-				
+
 				const handleCancel = async () => {
 					const res = await fetch(`${settings.serverUrl}/api/trainings/cancel/${props.training.id}`, {
 						method: 'DELETE',
@@ -83,6 +84,7 @@ export default {
 					}
 					if(res.ok) {
 						store.commit('trainings/removeTraining', { trainingId: props.training.id });
+						showMessage("Training canceled successfully", "top");
 					}
 					showModal.value = false;
 				}
@@ -109,13 +111,14 @@ export default {
 						showMessage(data, "top");
 						store.commit('auth/addCustomerVisitedFacilities', visitedFacility.facilityName);
 						store.commit('auth/addtrainingToCustomerHistory', props.training);
+						store.commit('auth/decrementCustomerAppointmentNumber');
 					}
 				
 				};
 
         return { type, loggedUserType, showModal, handleCancel, handleJoin, route };
     },
-    components: { CustomButton, ModalComponent, ModalComponent1 }
+    components: { CustomButton, ModalComponent }
 }
 </script>
 
