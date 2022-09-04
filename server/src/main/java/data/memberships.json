@@ -7,8 +7,8 @@
     "cost": 53000.0,
     "customerUsername": "Luka123",
     "active": true,
-    "appointmentNumber": 288,
-    "usedAppointments": 0
+    "appointmentNumber": 283,
+    "usedAppointments": 5
   },
   {
     "id": "6ea7d3cfcdfc478c8de857f9e74f89ba",
@@ -29,8 +29,8 @@
     "cost": 53000.0,
     "customerUsername": "Ljubica123",
     "active": true,
-    "appointmentNumber": 288,
-    "usedAppointments": 0
+    "appointmentNumber": 267,
+    "usedAppointments": 21
   },
   {
     "id": "6ed6818337d24c7fb87bd7d12aab00cd",
@@ -40,7 +40,7 @@
     "cost": 53000.0,
     "customerUsername": "Milutin123",
     "active": true,
-    "appointmentNumber": 288,
+    "appointmentNumber": 0,
     "usedAppointments": 0
   }
 ]

@@ -8,55 +8,76 @@
 	<div class="facility-offer row mt-4 mb-5 justify-content-center g-2">
 		<div class="col-11">
 			<h4 class="display-4 text-center offer-title">Group Trainings</h4>
-			<TrainingList :trainings="facilityTrainings" type="CUSTOMER" class="list p-5">
+			<TrainingList :trainings="facilityTrainings" type="CUSTOMER" class="list p-5" v-if="facilityTrainings.length">
 			
 			</TrainingList>
+			<div v-else class="empty text-center lead">
+				There are no trainings yet.
+			</div>
 			<h4 class="display-4 text-center offer-title">Personal Content</h4>
-			<div class="list d-flex justify-content-around flex-wrap">
-				<div v-for="single in facilityContentWithTrainers" :key="single.id">
-					<div class="single">
-						<div class="header text-center">
-							{{ single.name }}
+			<div class="list d-flex justify-content-around flex-wrap" v-if="facilityPersonalContentWithTrainers.length">
+				<div v-for="single in facilityPersonalContentWithTrainers" :key="single.id">
+				<div class="single">
+					<div class="header text-center">
+						{{ single.name }}
+					</div>
+					<div class="body d-grid align-items-center">
+						<div class="group d-flex justify-content-between">
+							<span>Trainer:</span>
+							<span class="paint">{{ single.trainer.username }}</span>
 						</div>
-						<div class="body d-grid align-items-center">
-							<div class="group d-flex justify-content-between">
-								<span>Trainer:</span>
-								<span class="paint">{{ single.trainer.username }}</span>
-							</div>
-							<div class="button-wrapper">
-								<CustomButton class="mx-auto">Schedule</CustomButton>
-							</div>
+						<div class="button-wrapper" v-if="loggedUserType === 'CUSTOMER'">
+							<CustomButton class="mx-auto" @click="showModal = true">Schedule</CustomButton>
+							<Teleport to="body">
+								<ModalComponent buttonText="confirm" :width="600" :responsive="true" @close="showModal = false" :show="showModal">
+									<template #header>
+										Schedule personal training
+									</template>
+									<template #body>
+										<SchedulePersonalTraining :content="single" @closeModal="showModal = false" />
+									</template>
+									<template #footer>
+										<CustomButton @click="showModal = false">Cancel</CustomButton>
+									</template>
+								</ModalComponent>	
+							</Teleport>
 						</div>
 					</div>
 				</div>
+				</div>
+			</div>
+			<div v-else class="empty lead text-center">
+				There is no content yet.
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core';
+import { computed, ref } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import TrainingList from '@/components/training/TrainingList.vue';
 import CustomButton from '../../utility/CustomButton.vue';
+import ModalComponent from '@/components/ModalComponent.vue';
+import SchedulePersonalTraining from '@/components/training/SchedulePersonalTraining.vue';
 
 export default {
+		components: { TrainingList, CustomButton, ModalComponent, SchedulePersonalTraining },
     props: ["facility"],
     setup(props) {
         const store = useStore();
+				const loggedUserType = store.getters['auth/userType'];
+				const showModal = ref(false);
         const facilityTrainings = computed(() => {
-            console.log(store);
             const trainings = store.getters["trainings/getAll"];
-            return trainings.filter(training => training.facilityName === props.facility.name);
+            return trainings.filter(training => training.name !== "Personal Training" && training.facilityName === props.facility.name);
         });
-        const facilityContentWithTrainers = computed(() => {
-						console.log(props.facility.content);
-            return props.facility.content.filter(single => single.trainer);
+        const facilityPersonalContentWithTrainers = computed(() => {
+            return props.facility.content.filter(single => single.trainer && single.type === 'PERSONAL');
         });
-				console.log(facilityContentWithTrainers.value);
-        return { facilityTrainings, facilityContentWithTrainers };
+
+        return { facilityTrainings, facilityPersonalContentWithTrainers, loggedUserType, showModal };
     },
-    components: { TrainingList, CustomButton }
 }
 </script>
 
@@ -66,8 +87,7 @@ export default {
 		color: $light-primary;
 		font-size: 72px;
 		padding: 30px 60px;
-		width: 100vw;
-		transform: translateX(-120px);
+		width: 100%;
 	}
 	.content {
 		.title {
@@ -119,6 +139,10 @@ export default {
 					color: $active-primary;
 				}
 			}
+		}
+		.empty {
+			font-size: 1.6rem;
+			padding: 20px 0px;
 		}
 	}
 </style>
