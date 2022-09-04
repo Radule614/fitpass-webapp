@@ -22,5 +22,13 @@
     "postedOn": "01/09/2022",
     "content": "ne valja\n",
     "approved": false
+  },
+  {
+    "id": "bffec55be2ce4e869a3eb067b7fe3530",
+    "facility_id": "T E R E T A N A",
+    "user_id": "manager",
+    "postedOn": "04/09/2022",
+    "content": "3123 213 2132 1",
+    "approved": true
   }
 ]

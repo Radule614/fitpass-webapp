@@ -51,6 +51,7 @@ export default {
         });
         const facilityContentWithTrainers = computed(() => {
 						console.log(props.facility.content);
+						if(!props.facility.content) return [];
             return props.facility.content.filter(single => single.trainer);
         });
 				console.log(facilityContentWithTrainers.value);

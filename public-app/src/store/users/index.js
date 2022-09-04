@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state() {
     return {
-      users: []
+      users: [],
+      coupons: []
     }
   },
   mutations: userMutations,

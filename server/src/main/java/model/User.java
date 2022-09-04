@@ -76,8 +76,8 @@ public abstract class User {
 	private static class ByPoints implements Comparator<User>{
 		public int compare(User user1, User user2){
 			if		(user1 instanceof Customer && user2 instanceof Customer) 	return ((Customer) user2).points - ((Customer) user1).points;
-			else 	if(user1 instanceof Customer) 								return -1;
-			else 	if(user2 instanceof Customer) 								return 1;
+			else if	(user1 instanceof Customer) 								return -1;
+			else if	(user2 instanceof Customer) 								return 1;
 			else 																return 0;
 		}
 	}

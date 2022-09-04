@@ -138,6 +138,34 @@ public class FacilityController {
 		}
 	}
 
+	public static String getFacilityTrainers(Request request, Response response){
+		response.type("application/json");
+		Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+		try{
+			String facility_id = request.params("id");
+			ArrayList<User> temp = new FacilityService().getFacilityTrainers(facility_id);
+			return g.toJson(UserController.usersToDTOs(temp));
+		}catch (Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Couldn't fetch facility's trainers");
+		}
+	}
+
+	public static String getFacilityVisitors(Request request, Response response){
+		response.type("application/json");
+		Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+		try{
+			String facility_id = request.params("id");
+			ArrayList<User> temp = new FacilityService().getFacilityVisitors(facility_id);
+			return g.toJson(UserController.usersToDTOs(temp));
+		}catch (Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Couldn't fetch facility's trainers");
+		}
+	}
+
 	//PRIVATE
 
 	private static ArrayList<FacilityDTO> facilitiesToDTOs(ArrayList<Facility> facilities){

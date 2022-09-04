@@ -36,6 +36,7 @@ export default {
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add new facility.');
 
     if(responseData) context.commit('addFacility', responseData);
+    return responseData;
   },
   async removeFacility(context, payload){
     const response = await fetch(`${Settings.serverUrl}/api/facilities/delete`, {
@@ -105,7 +106,7 @@ export default {
       body: JSON.stringify({ id: payload.content.id })
     });
     const responseData = await response.json();
-    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add content.');
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to delete coupon.');
 
     const content = payload.facility.content;
     for(let key in content){

@@ -12,8 +12,32 @@ export default{
     });
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
-    //console.log(responseData);
     context.commit('setUsers', responseData);
+  },
+  async fetchFacilityTrainers(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/facilities/manager/trainers/${payload.facility_id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
+    context.commit('setUsers', responseData);
+  },
+  async fetchFacilityVisitors(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/facilities/manager/customers/${payload.facility_id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch filtered users.');
+    context.commit('setUsers', responseData);
+  },
+  usersClear(context, _){
+    context.commit('setUsers', []);
   },
   async createUser(context, payload){
     const response = await fetch(`${Settings.serverUrl}/api/users/create`, {
@@ -66,6 +90,34 @@ export default{
 		});
 		const data = await res.json();
 		if(!res.ok) throw new Error(data || "Failed to change password");
-	
-	}
+	},
+  async addCoupon(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/coupon/create`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: payload.formData
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to add coupon.');
+    let data = { id: responseData.id };
+    for (const pair of payload.formData.entries()) {
+      data[pair[0]] = pair[1];
+    }
+    context.commit('addCoupon', payload.username);
+    payload.facility.content.push(data);
+  },
+  async deleteCoupon(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/content/delete`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: JSON.stringify({ id: payload.content.id })
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to delete coupon.');
+    context.commit('removeCoupon', { id: payload.content.id });
+  },
 }

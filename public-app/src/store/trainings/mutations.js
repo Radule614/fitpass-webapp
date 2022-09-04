@@ -7,5 +7,8 @@ export default {
 	},
 	removeTraining(state, payload) {
 		state.trainings = state.trainings.filter(training => training.id != payload.trainingId);
-	} 
+	},
+	setFacilityTrainings(state, payload) {
+		state.facilityTrainings = payload.trainings;
+	}
 }

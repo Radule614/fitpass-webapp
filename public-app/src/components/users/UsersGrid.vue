@@ -7,7 +7,9 @@ export default{
   props: {
     selectable: Boolean,
     compact: Boolean,
-    userType: String
+    userType: String,
+    noDispatch: Boolean,
+    noPadding: Boolean
   },
   emits: ['userSelected'],
   data() {
@@ -17,10 +19,12 @@ export default{
     }
   },
   created() {
-    if(this.userType){
-      this.$store.dispatch('users/fetchUsers', { userFilter: { type: this.userType } });
-    }else {
-      this.$store.dispatch('users/fetchUsers');
+    if(!this.noDispatch){
+      if(this.userType){
+        this.$store.dispatch('users/fetchUsers', { userFilter: { type: this.userType } });
+      }else {
+        this.$store.dispatch('users/fetchUsers');
+      }
     }
   },
   computed: {
@@ -55,7 +59,7 @@ export default{
 </script>
 
 <template>
-  <div class="grid-wrapper" :class="{'compact': compact}">
+  <div class="grid-wrapper" :class="{'compact': compact, 'no-padding': noPadding}">
     <div v-if="!compact" class="parameter-block">
       <router-view v-slot="{ Component }">
         <transition name="slide-bottom">
@@ -111,6 +115,12 @@ export default{
       padding-bottom:0px;
       opacity: 0;
     }
+  }
+  &.compact .grid{
+    padding-top:30px;
+  }
+  &.no-padding .grid{
+    padding:0px;
   }
   .grid{
     padding:30px;

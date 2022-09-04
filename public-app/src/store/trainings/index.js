@@ -6,7 +6,8 @@ export default {
 	namespaced: true,
 	state() {
 		return {
-			trainings: []
+			trainings: [],
+			facilityTrainings: []
 		}
 	},
 	actions,

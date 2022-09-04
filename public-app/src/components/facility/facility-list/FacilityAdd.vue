@@ -44,7 +44,6 @@ export default{
         await this.$store.dispatch('facility/searchFacilities', "");
         this.loading = false;
         this.scrollToTop();
-        this.$router.replace('facility');
       }catch(error){
         this.messages = error.message.split(",");
         this.loading = false;

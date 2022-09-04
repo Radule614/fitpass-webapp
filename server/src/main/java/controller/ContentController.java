@@ -55,7 +55,7 @@ public class ContentController {
         } catch(Exception e){
             e.printStackTrace();
             response.status(400);
-            return Utility.convertMessageToJSON("Failed to add content to facility");
+            return Utility.convertMessageToJSON("Failed to delete content from facility");
         }
     }
 

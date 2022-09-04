@@ -4,7 +4,8 @@ export default {
   components: { ConfirmModal },
   props: {
     forPublic: Boolean,
-    admin: Boolean
+    admin: Boolean,
+    manager: Boolean
   },
   data(){
     return {
@@ -42,8 +43,8 @@ export default {
 </script>
 
 <template>
-	<h5 class="banner my-5">COMMENTS</h5>
-  <div>
+  <div :class="{ 'manager': manager }">
+    <h5 class="banner my-5">COMMENTS</h5>
     <div class="comment-list" v-if="comments.length">
       <div class="comment" v-for="(comment, index) in comments" :key="index" :class="{ 'approved': comment.approved, 'admin': admin }">
         <div class="comment-header">
@@ -133,5 +134,12 @@ export default {
 	padding: 30px 60px;
 	width: 100vw;
 	transform: translateX(-120px);
+}
+.manager .banner{
+  width: 100%;
+  transform: none;
+  font-size: 52px;
+  padding-left: 30px;
+  margin-top: 0px!important;
 }
 </style>

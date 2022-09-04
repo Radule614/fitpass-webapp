@@ -175,31 +175,6 @@
     "manager_id": null
   },
   {
-    "name": "bazen54321",
-    "facilityType": "POOL",
-    "available": true,
-    "location": {
-      "lat": 43.92163712834673,
-      "lng": 12.436523437500002,
-      "country": "San Marino",
-      "state": null,
-      "city": "City of San Marino",
-      "town": "City of San Marino",
-      "road": "Strada di Canepa",
-      "number": null,
-      "postcode": "47890"
-    },
-    "logoUrl": "img/facilities/5095264036414325184.png",
-    "grade": 3.0,
-    "workingHours": {
-      "startHour": 19,
-      "startMinute": 2,
-      "endHour": 24,
-      "endMinute": 0
-    },
-    "manager_id": "radule614"
-  },
-  {
     "name": "T E R E T A N A",
     "facilityType": "GYM",
     "available": true,

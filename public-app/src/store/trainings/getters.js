@@ -4,5 +4,8 @@ export default {
 	},
 	getAll(state) {
 		return state.trainings;
-	} 
+	} ,
+	getFacilityTrainings(state){
+		return state.facilityTrainings;
+	}
 }

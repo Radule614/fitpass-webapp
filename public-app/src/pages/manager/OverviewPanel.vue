@@ -1,6 +1,6 @@
 <script>
-import LeafletMap from '../utility/LeafletMap.vue';
-import FacilityDetails from '../facility/FacilityDetails.vue';
+import LeafletMap from '@/components/utility/LeafletMap.vue';
+import FacilityDetails from '@/components/facility/FacilityDetails.vue';
 export default {
   components: { LeafletMap, FacilityDetails },
   computed: {
@@ -12,11 +12,13 @@ export default {
 </script>
 
 <template>
-  <div v-if="facility">
-    <facility-details :facility="facility"></facility-details>
-  </div>
-  <div v-else>
-    no facility
+  <div class="custom-container">
+    <div v-if="facility">
+      <facility-details :facility="facility"></facility-details>
+    </div>
+    <div v-else>
+      no facility
+    </div>
   </div>
 </template>
 

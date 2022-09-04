@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import dto.user.TrainingWithContentType;
+import model.facility.Content;
 import model.facility.ContentType;
 import model.trainer.Training;
 import repository.TrainingRepository;
@@ -49,6 +50,14 @@ public class TrainingService {
 	public void add(Training training) {
 		trainingRepository.add(training);
 	}
+
+	public void removeByFacility(String facility_id){
+		trainingRepository.getAll().removeIf(c -> c.getFacilityName().equals(facility_id));
+		for(Training t: trainingRepository.getAll()){
+			if(t.getFacilityName().equals(facility_id)) trainingRepository.delete(t);
+		}
+		trainingRepository.saveAll();
+	}
 	
 	public boolean cancel(String trainingId) {
 		Training trainingToRemove = get(trainingId);
@@ -58,6 +67,10 @@ public class TrainingService {
 		trainingRepository.delete(trainingToRemove);
 		trainingRepository.saveAll();
 		return true;
+	}
+
+	public ArrayList<Training> getFacilityTrainings(String facility_id){
+		return (ArrayList<Training>) trainingRepository.getAll().stream().filter(t -> t.getFacilityName().equals(facility_id)).collect(Collectors.toList());
 	}
 	
 	public ArrayList<Training> getTrainingsWithRequiredContentTypes(String[] contentTypes) {

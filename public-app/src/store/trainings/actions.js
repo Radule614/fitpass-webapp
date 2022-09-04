@@ -21,5 +21,13 @@ export default {
 		const training = await res.json();
 		context.commit('addTraining', { training });
 		return training;
+	},
+	async fetchFacilityTrainings(context, payload){
+		const response = await fetch(`${Settings.serverUrl}/api/trainings/facility/${payload.facility_id}`, {
+      method: 'GET'
+    })
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch user data.');
+		context.commit('setFacilityTrainings', { trainings: responseData })
 	}
 }

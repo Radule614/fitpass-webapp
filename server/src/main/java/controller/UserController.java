@@ -153,7 +153,7 @@ public class UserController {
 
     //PRIVATE
 
-    private static UserDTO userToDTO(User user){
+    public static UserDTO userToDTO(User user){
         UserDTO temp = user.getDTO();
         FacilityService facilityService = new FacilityService();
         ContentService contentService = new ContentService();
@@ -162,27 +162,16 @@ public class UserController {
             Facility facility = facilityService.getByName(((Manager) user).facility_id);
             if(facility != null){
                 dto.facility = new FacilityDTO(facility);
-
                 dto.facility.content = ContentController.contentToDTOs(contentService.getFacilityContent(dto.facility.name));
             }
         }
         return temp;
     }
 
-    private static ArrayList<UserDTO> usersToDTOs(ArrayList<User> users){
+    public static ArrayList<UserDTO> usersToDTOs(ArrayList<User> users){
         ArrayList<UserDTO> DTOs = new ArrayList<>();
-        FacilityService facilityService = new FacilityService();
-        ContentService contentService = new ContentService();
         for(User u: users){
-            UserDTO temp = u.getDTO();
-            if (temp instanceof ManagerDTO && u instanceof Manager){
-                ManagerDTO dto = (ManagerDTO)temp;
-                Facility facility = facilityService.getByName(((Manager) u).facility_id);
-                if(facility != null) {
-                    dto.facility = new FacilityDTO(facility);
-                    dto.facility.content = ContentController.contentToDTOs(contentService.getFacilityContent(dto.facility.name));
-                }
-            }
+            UserDTO temp = UserController.userToDTO(u);
             DTOs.add(temp);
         }
         return DTOs;

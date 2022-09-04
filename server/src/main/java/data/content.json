@@ -1,19 +1,5 @@
 [
   {
-    "id": "a272d5e5aebe41a499040cbd39941e62",
-    "name": "2",
-    "type": "GROUP",
-    "trainer_id": "ttttrener",
-    "facility_id": "bazen54321"
-  },
-  {
-    "id": "14cdf7c01e7147669e3132878adcb280",
-    "name": "3",
-    "type": "GROUP",
-    "trainer_id": null,
-    "facility_id": "bazen54321"
-  },
-  {
     "id": "7880a6223dc14ab5b872319c0ed940d7",
     "name": "1",
     "type": "GROUP",
@@ -35,20 +21,6 @@
     "facility_id": "T E R E T A N A"
   },
   {
-    "id": "78344cc0f6b447e2830d15b1e67a092c",
-    "name": "2",
-    "type": "GROUP",
-    "trainer_id": "ttttrener",
-    "facility_id": "bazen54321"
-  },
-  {
-    "id": "67724f463b6942268737255b2653bc17",
-    "name": "5",
-    "type": "GROUP",
-    "trainer_id": "trener123",
-    "facility_id": "bazen54321"
-  },
-  {
     "id": "80ba8d42f763447ba4b12c9fecc23cac",
     "name": "11111111",
     "type": "GROUP",
@@ -63,10 +35,10 @@
     "facility_id": "djim"
   },
   {
-    "id": "216f54b2e8ff4e0bb19baabfba7e0d98",
-    "name": "6",
-    "type": "PERSONAL",
+    "id": "502539cd25b249ecbc0d0416f7469c3a",
+    "name": "321321321",
+    "type": "GROUP",
     "trainer_id": null,
-    "facility_id": "bazen54321"
+    "facility_id": "T E R E T A N A"
   }
 ]

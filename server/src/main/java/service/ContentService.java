@@ -3,10 +3,7 @@ package service;
 import dto.AvgGradeRangeDTO;
 import dto.FileDTO;
 import dto.facility.*;
-import model.facility.Content;
-import model.facility.ContentType;
-import model.facility.Facility;
-import model.facility.FacilityType;
+import model.facility.*;
 import model.manager.Manager;
 import model.trainer.Trainer;
 import repository.ContentRepository;
@@ -26,6 +23,9 @@ public class ContentService {
     public static final ContentRepository contentRepository = ContentRepository.getInstance();
     public ContentService(){}
 
+    public ArrayList<Content> getAll(){
+        return contentRepository.getAll();
+    }
 
     public String createContent(String managerUsername, AddContentDTO dto) throws Content.CreateContentException {
         if(managerUsername == null || dto == null) throw new Content.CreateContentException("Something went wrong");
@@ -89,6 +89,21 @@ public class ContentService {
     				&& training.trainer_id.equals(username) 
     				&& training.type == ContentType.GROUP)
     			.collect(Collectors.toList());
+    }
+    public void removeByFacility(String facility_id){
+        for(Content c: contentRepository.getAll()){
+            if(c.facility_id.equals(facility_id)) contentRepository.delete(c);
+        }
+        contentRepository.saveAll();
+    }
+
+    public void clearTrainer(String trainer_id){
+        if(trainer_id == null) return;
+        for(Content c: contentRepository.getAll()){
+            if(c.trainer_id == null) continue;
+            if(c.trainer_id.equals(trainer_id)) c.trainer_id = null;
+        }
+        contentRepository.saveAll();
     }
     
     public Content get(String id) {

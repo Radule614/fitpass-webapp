@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -18,13 +19,16 @@ import com.google.gson.GsonBuilder;
 
 import dto.user.TrainingDTO;
 import io.jsonwebtoken.io.IOException;
+import model.facility.Facility;
 import model.trainer.Training;
 import model.trainer.TrainingType;
 import repository.util.LocalDateTimeAdapter;
+import service.FacilityService;
 import service.TrainingService;
 import spark.Request;
 import spark.Response;
 import spark.utils.IOUtils;
+import utility.Utility;
 
 public class TrainingController {
 	
@@ -124,6 +128,24 @@ public class TrainingController {
 		} catch(Exception ex) {
 			res.status(400);
 			return new Gson().toJson("Failed to serialize data.");
+		}
+	}
+
+	public static String getFacilityTrainings(Request request, Response response){
+		response.type("application/json");
+		try{
+			String facility_id = request.params("id");
+			ArrayList<Training> trainings = new TrainingService().getFacilityTrainings(facility_id);
+			if(trainings == null) throw new Exception();
+			return new GsonBuilder()
+					.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+					.serializeNulls()
+					.create()
+					.toJson(trainings);
+		}catch(Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Couldn't fetch facility's trainings.");
 		}
 	}
 	

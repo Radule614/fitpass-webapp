@@ -1,5 +1,6 @@
 <script>
 import LeafletMap from '../utility/LeafletMap.vue';
+import Settings from '@/settings';
 export default {
   components: { LeafletMap },
   props: {
@@ -20,13 +21,17 @@ export default {
       if (this.facility.manager)
         return this.facility.manager.firstname + " " + this.facility.manager.lastname;
       return "";
-    }
+    },
+    imagePath(){
+      return `url(${Settings.serverUrl}/${this.facility.logoUrl})`;
+    },
   }
 }
 </script>
 
 <template>
   <div>
+    <div class="image" :style="{ 'background-image': imagePath }"></div>
     <div class="location">
       <leaflet-map class="map" :showOnly="true" :locationProp="latLng" :markerTooltip="facility.name"></leaflet-map>
     </div>
@@ -68,39 +73,46 @@ export default {
 </template>
 
 <style scoped lang="scss">
+.image{
+  height: 400px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 30px;
+  background-position: center;
+}
 .location{
-    width: 100%;
-    height: 400px;
-    position: relative;
-    border:1px solid gray;
-    .map{
-      width: 100%!important;
-      height: 100%!important;
-      position: absolute;
-      top:0px;
-      left:0px;
+  width: 100%;
+  height: 400px;
+  position: relative;
+  border:1px solid gray;
+  .map{
+    width: 100%!important;
+    height: 100%!important;
+    position: absolute;
+    top:0px;
+    left:0px;
+  }
+}
+.info{
+  max-width: 700px;
+  padding-top: 30px;
+  .row {
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+    margin: 5px 0px 0px 0px;
+    margin-right: 30px;
+    &:first-child{
+      margin-top: 0px;
+    }
+    .col{
+      color: $dark-primary;
+      font-style: normal;
+      font-size: 15px;
+      line-height: 36px;
+      &:nth-child(2){
+        font-style: italic;
+        background-color: rgba($active-primary, $alpha: 0.4);
+      }
     }
   }
-  .info{
-    max-width: 700px;
-    padding-top: 30px;
-    .row {
-      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-      margin: 5px 0px 0px 0px;
-      margin-right: 30px;
-      &:first-child{
-        margin-top: 0px;
-      }
-      .col{
-        color: $dark-primary;
-        font-style: normal;
-        font-size: 15px;
-        line-height: 36px;
-        &:nth-child(2){
-          font-style: italic;
-          background-color: rgba($active-primary, $alpha: 0.4);
-        }
-      }
-    }
-  }
+}
 </style>

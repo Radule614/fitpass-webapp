@@ -65,6 +65,8 @@ public class Main {
                     post("/set", FacilityController::setManager);
                     post("/clear", FacilityController::clearManager);
                     get("", FacilityController::getManagerFacility);
+                    get("/trainers/:id", FacilityController::getFacilityTrainers);
+                    get("/customers/:id", FacilityController::getFacilityVisitors);
                 });
             });
 
@@ -98,6 +100,8 @@ public class Main {
             	
             	post("/add", TrainingController::addTraining);
             	delete("/cancel/:training_id", TrainingController::removeTraining);
+
+                get("/facility/:id", TrainingController::getFacilityTrainings);
             });
 
             path("/content", () -> {
@@ -108,6 +112,13 @@ public class Main {
                 post("/trainer/add", ContentController::addTrainerToContent);
                 post("/trainer/clear", ContentController::clearTrainerFromContent);
                 get("/trainer/group/:trainerId", ContentController::getTrainersGroupContent);
+            });
+
+            path("/coupon", () -> {
+                before("/*", AuthController::authenticate);
+
+                post("/create", CouponController::createCoupon);
+                post("/delete", CouponController::deleteCoupon);
             });
         });
     }
