@@ -19,4 +19,8 @@ public class Trainer extends User {
     public UserDTO getDTO() {
         return new TrainerDTO(this);
     }
+    @Override
+    public UserDTO getDTO(boolean __) {
+        return new TrainerDTO(this);
+    }
 }

@@ -34,7 +34,7 @@ export const routes = [
   {
     path: "/users",
     name: "users",
-    component: () => import("./pages/admin/UsersPage.vue"),
+    component: () => import("./pages/UsersPage.vue"),
     meta: { nav: "Users", userTypes: ["ADMIN"] },
     children: [
       {

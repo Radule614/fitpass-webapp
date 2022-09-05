@@ -35,10 +35,17 @@
     "facility_id": "djim"
   },
   {
-    "id": "502539cd25b249ecbc0d0416f7469c3a",
-    "name": "321321321",
+    "id": "b4f169b2c63a4c4aaf0eeb08f36c89df",
+    "name": "32121321",
     "type": "GROUP",
-    "trainer_id": null,
+    "trainer_id": "ttttrener",
+    "facility_id": "T E R E T A N A"
+  },
+  {
+    "id": "7905fb48ad4a4e2390cd2edd2a4810ad",
+    "name": "312321",
+    "type": "PERSONAL",
+    "trainer_id": "tren123",
     "facility_id": "T E R E T A N A"
   }
 ]

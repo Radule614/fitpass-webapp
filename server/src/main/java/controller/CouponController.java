@@ -1,19 +1,34 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dto.AddCouponDTO;
 import dto.DeleteCouponDTO;
 import model.Coupon;
+import repository.util.LocalDateAdapter;
 import service.CouponService;
+import service.FacilityService;
 import spark.Request;
 import spark.Response;
 import utility.Utility;
 
 import javax.servlet.MultipartConfigElement;
 
+import java.time.LocalDate;
+
 import static utility.Utility.parseStringInput;
 
 public class CouponController {
+    public static String getAllCoupons(Request request, Response response) {
+        response.type("application/json");
+        try{
+            return new Gson().toJson(new CouponService().getAll());
+        }catch (Exception e){
+            e.printStackTrace();
+            response.status(400);
+            return Utility.convertMessageToJSON("Couldn't fetch coupons");
+        }
+    }
     public static String createCoupon(Request request, Response response){
         request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
         response.type("application/json");

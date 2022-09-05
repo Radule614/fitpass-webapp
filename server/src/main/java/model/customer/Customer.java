@@ -42,5 +42,10 @@ public class Customer extends User {
 	public UserDTO getDTO() {
 		return new CustomerDTO(this);
 	}
+
+	@Override
+	public UserDTO getDTO(boolean __){
+		return new CustomerDTO(this, true);
+	}
 	
 }

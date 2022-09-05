@@ -16,4 +16,8 @@ public class Admin extends User {
         return new AdminDTO(this);
     }
 
+    @Override
+    public UserDTO getDTO(boolean __) {
+        return new AdminDTO(this);
+    }
 }

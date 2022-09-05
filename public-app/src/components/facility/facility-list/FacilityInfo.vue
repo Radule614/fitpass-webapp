@@ -66,7 +66,19 @@ export default{
     clearManagerHandler(){
       this.loading = true;
       try{
-        this.$store.dispatch('facility/clearManager', { facilityName: this.facility.name} );
+        this.$store.dispatch('facility/clearManager', { facilityName: this.facility.name });
+        this.clearModalActive = false;
+        this.loading = false;
+      }catch(error){
+        console.error(error);
+        this.clearModalActive = false;
+        this.loading = false;
+      }
+    },
+    setAvailability(available){
+      this.loading = true;
+      try{
+        this.$store.dispatch('facility/setAvailability', { facility: this.facility, available: available });
         this.clearModalActive = false;
         this.loading = false;
       }catch(error){
@@ -110,6 +122,8 @@ export default{
         <div class="col">{{managerName}}</div>
       </div>
       <div class="button-group">
+        <custom-button v-if="facility.available && loggedUserType == 'ADMIN'" class="block" @click="setAvailability(false)">Make unavailable</custom-button>
+        <custom-button v-if="!facility.available && loggedUserType == 'ADMIN'" class="block" @click="setAvailability(true)">Make available</custom-button>
         <custom-button v-if="loggedUserType == 'ADMIN'" class="block" @click="clearModalActive = true">Clear Manager</custom-button>
         <custom-button v-if="loggedUserType == 'ADMIN'" class="block" @click="managerModalActive = true">Set Manager</custom-button>
         <custom-link :to="`/facility/${facility.name}`" @click="scrollToTop">Details</custom-link>

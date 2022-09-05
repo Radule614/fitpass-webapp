@@ -17,4 +17,8 @@ public class Manager extends User {
     public UserDTO getDTO() {
         return new ManagerDTO(this);
     }
+    @Override
+    public UserDTO getDTO(boolean __) {
+        return new ManagerDTO(this);
+    }
 }

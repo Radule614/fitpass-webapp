@@ -91,6 +91,12 @@ export default{
 		const data = await res.json();
 		if(!res.ok) throw new Error(data || "Failed to change password");
 	},
+  async fetchCoupons(context, _){
+    const response = await fetch(`${Settings.serverUrl}/api/coupon/all`);
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch coupons.');
+    context.commit('setCoupons', responseData);
+  },
   async addCoupon(context, payload){
     const response = await fetch(`${Settings.serverUrl}/api/coupon/create`, {
       method: 'POST',
@@ -105,11 +111,10 @@ export default{
     for (const pair of payload.formData.entries()) {
       data[pair[0]] = pair[1];
     }
-    context.commit('addCoupon', payload.username);
-    payload.facility.content.push(data);
+    context.commit('addCoupon', data);
   },
   async deleteCoupon(context, payload){
-    const response = await fetch(`${Settings.serverUrl}/api/content/delete`, {
+    const response = await fetch(`${Settings.serverUrl}/api/coupon/delete`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + context.rootState.auth.token

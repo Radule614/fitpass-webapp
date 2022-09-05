@@ -60,7 +60,11 @@ public class UserController {
 
     public static String getFilteredUsers(Request request, Response response){
         response.type("application/json");
-        Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Gson g = new GsonBuilder()
+                .serializeNulls()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
 
         try{
             UsersFilterDTO dto = g.fromJson(request.body(), UsersFilterDTO.class);
@@ -75,7 +79,11 @@ public class UserController {
     public static String createUser(Request request, Response response){
         response.type("application/json");
         request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-        Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Gson g = new GsonBuilder()
+                .serializeNulls()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
 
         try{
             CreateUserDTO dto = extractCreateUserData(request);
@@ -194,7 +202,7 @@ public class UserController {
     //PRIVATE
 
     public static UserDTO userToDTO(User user){
-        UserDTO temp = user.getDTO();
+        UserDTO temp = user.getDTO(true);
         FacilityService facilityService = new FacilityService();
         ContentService contentService = new ContentService();
         if(temp instanceof ManagerDTO && user instanceof Manager) {

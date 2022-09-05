@@ -139,5 +139,17 @@ export default {
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to clear trainer.');
     payload.content.trainer = null;
+  },
+  async setAvailability(context, payload){
+    const response = await fetch(`${Settings.serverUrl}/api/facilities/available`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + context.rootState.auth.token
+      },
+      body: JSON.stringify({ facility_id: payload.facility.name, available: payload.available })
+    });
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to clear trainer.');
+    payload.facility.available = payload.available;
   }
 }

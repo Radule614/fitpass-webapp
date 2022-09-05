@@ -55,10 +55,12 @@ public class Main {
 
                 before("/add", AuthController::authenticate);
                 before("/delete", AuthController::authenticate);
+                before("/available", AuthController::authenticate);
                 before("/manager", AuthController::authenticate);
 
                 post("/add", FacilityController::addFacility);
                 post("/delete", FacilityController::deleteFacility);
+                post("/available", FacilityController::setAvailability);
 
                 path("/manager", () -> {
                     before("/*", AuthController::authenticate);
@@ -117,7 +119,10 @@ public class Main {
             });
 
             path("/coupon", () -> {
-                before("/*", AuthController::authenticate);
+                get("/all", CouponController::getAllCoupons);
+
+                before("/create", AuthController::authenticate);
+                before("/delete", AuthController::authenticate);
 
                 post("/create", CouponController::createCoupon);
                 post("/delete", CouponController::deleteCoupon);

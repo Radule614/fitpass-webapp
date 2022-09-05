@@ -10,9 +10,12 @@ export default {
       contentForDeletion: null,
     }
   },
+  beforeMount() {
+    this.$store.dispatch('users/fetchCoupons');
+  },
   computed: {
     coupons(){
-      return this.$store.getters['user/coupons'];
+      return this.$store.getters['users/coupons'];
     },
   },
   methods: {
@@ -42,7 +45,7 @@ export default {
     async deleteHandler(){
       this.loading = true;
       try{
-        this.$store.dispatch('facility/deleteContent', { content: this.contentForDeletion });
+        this.$store.dispatch('users/deleteCoupon', { content: this.contentForDeletion });
         this.modalActive = false;
         this.loading = false;
       }catch(error){
@@ -68,7 +71,7 @@ export default {
         <hr>
         <div class="details">
           <div class="row">
-            <div class="col">Coupon Size</div>
+            <div class="col">discount</div>
             <div class="col">{{item.size}}</div>
           </div>
         </div>
@@ -142,17 +145,17 @@ export default {
     }
   }
 }
-.content-list{
+.coupon-list{
   display: flex;
   flex-wrap: wrap;
-  .content-item {
+  .coupon-item {
     position: relative;
     padding: 15px;
     margin-right: 15px;
     margin-bottom: 15px;
-    min-width: 200px;
+    min-width: 250px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
-    .content-heading {
+    .coupon-heading {
       margin-bottom: 5px;
       align-items: center;
     }

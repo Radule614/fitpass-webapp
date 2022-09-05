@@ -11,6 +11,7 @@ import model.facility.*;
 import model.manager.Manager;
 import model.trainer.Trainer;
 import repository.util.LocalDateAdapter;
+import repository.util.LocalDateTimeAdapter;
 import service.ContentService;
 import service.FacilityService;
 import service.UserService;
@@ -24,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static utility.Utility.parseStringInput;
@@ -154,11 +156,28 @@ public class FacilityController {
 
 	public static String getFacilityVisitors(Request request, Response response){
 		response.type("application/json");
-		Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+		Gson g = new GsonBuilder()
+				.serializeNulls()
+				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+				.create();
 		try{
 			String facility_id = request.params("id");
 			ArrayList<User> temp = new FacilityService().getFacilityVisitors(facility_id);
 			return g.toJson(UserController.usersToDTOs(temp));
+		}catch (Exception e){
+			e.printStackTrace();
+			response.status(400);
+			return Utility.convertMessageToJSON("Couldn't fetch facility's trainers");
+		}
+	}
+
+	public static String setAvailability(Request request, Response response){
+		response.type("application/json");
+		try{
+			AvailabilityDTO dto = new Gson().fromJson(request.body(), AvailabilityDTO.class);
+			new FacilityService().setAvailability(dto.facility_id, dto.available);
+			return Utility.convertMessageToJSON("Facility's availability has been set successfully");
 		}catch (Exception e){
 			e.printStackTrace();
 			response.status(400);

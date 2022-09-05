@@ -45,6 +45,7 @@ public abstract class User {
 	}
 
 	public abstract UserDTO getDTO();
+	public abstract UserDTO getDTO(boolean __);
 
 	private static HashMap<String, Comparator<User>> initComparators(){
 		return new HashMap<String, Comparator<User>>(){{
