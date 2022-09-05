@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -16,13 +17,16 @@ import dto.user.*;
 import model.User;
 import model.UserType;
 import model.customer.Customer;
+import model.customer.VisitedFacility;
 import model.facility.Content;
 import model.facility.Facility;
 import model.manager.Manager;
 import model.trainer.Trainer;
 import repository.util.LocalDateAdapter;
+import repository.util.LocalDateTimeAdapter;
 import service.ContentService;
 import service.FacilityService;
+import service.MembershipService;
 import service.UserService;
 import spark.Request;
 import spark.Response;
@@ -37,7 +41,11 @@ import static utility.Utility.parseStringInput;
 public class UserController {
     public static String getUser(Request request, Response response){
         response.type("application/json");
-        Gson g = new GsonBuilder().serializeNulls().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Gson g = new GsonBuilder()
+        		.serializeNulls()
+        		.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        		.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+        		.create();
 
         try{
             String username = request.attribute("username");
@@ -142,6 +150,38 @@ public class UserController {
     			return new Gson().toJson("Your password doesn't match.");
     		}
     		return new Gson().toJson(changePassDTO.newPassword);
+    	} catch(Exception ex) {
+    		ex.printStackTrace();
+    		res.status(400);
+    		return new Gson().toJson("Failed to parse input data.");
+    	}
+    }
+    
+    public static String checkIn(Request req, Response res) {
+    	res.type("application/json");
+    	String trainingId = req.params("trainingId");
+    	String username = req.params("username");
+    	try {
+        	VisitedFacility visitedFacility = new GsonBuilder()
+        			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        			.create()
+        			.fromJson(req.body(), VisitedFacility.class);
+        	
+        	// Mora ovim redosledom prvo se proveri da l ima dovoljno termina, pa onda da l se trening dodaje(ako je vec prijavljen)
+        	// na isti grupni trening onda se ne dodaje i ako je uspesno dodat onda se smanjuje broj termina i dodaje broj iskoriscenjih
+        	boolean success = new MembershipService().canCheckIn(username);
+    		if(!success) {
+    			res.status(250);
+    			return new Gson().toJson("You don't have active membership or you ran out of termins.");
+    		}
+        	boolean trainingAdded = new UserService().addTraining(username, trainingId);
+    		if(!trainingAdded) {
+    			res.status(250);
+    			return new Gson().toJson("You have already checked in for this group training.");
+    		}
+    		new MembershipService().handleAppointmentUsage(username);
+    		new UserService().addVisitedFacility(username, visitedFacility);
+    		return new Gson().toJson("Your checkIn has been accepted.");
     	} catch(Exception ex) {
     		ex.printStackTrace();
     		res.status(400);

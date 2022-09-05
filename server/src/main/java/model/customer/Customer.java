@@ -11,9 +11,10 @@ import service.UserService;
 
 public class Customer extends User {
 	public String membershipId;
-	public ArrayList<String> visitedFacilitiesName;
+	public ArrayList<VisitedFacility> visitedFacilities;
 	public int points;
 	public CustomerType customerType;
+	public ArrayList<String> trainingHistory; // array lista training id-eva
 
 	public Customer() {
 		super(UserType.CUSTOMER);

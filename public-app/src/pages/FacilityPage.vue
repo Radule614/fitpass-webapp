@@ -4,6 +4,7 @@ import FacilityDetails from '@/components/facility/FacilityDetails.vue';
 import AddComment from '@/components/facility/AddComment.vue';
 import RateFacility from '../components/facility/RateFacility.vue';
 import FacilityOffer from '@/components/facility/facility-list/FacilityOffer.vue';
+import { STATEMENT_OR_BLOCK_KEYS } from '@babel/types';
 
 export default {
   components: { CommentList, FacilityDetails, AddComment, RateFacility, FacilityOffer },
@@ -28,6 +29,10 @@ export default {
     },
 		loggedUser() {
 			return this.$store.getters['auth/user'];
+		},
+		visitedFacility() {
+			if(this.loggedUserType !== 'CUSTOMER') return true;
+			return this.loggedUser.visitedFacilities ? this.loggedUser.visitedFacilities.includes(this.facility_id) : false;
 		}
   }
 }
@@ -42,7 +47,7 @@ export default {
       <div class="comments">
         <comment-list :forPublic="true" :admin="loggedUserType == 'ADMIN'"></comment-list>
       </div>
-			<add-comment :facility_id="facility_id" v-if="loggedUser"/>
+			<add-comment :facility_id="facility_id" v-if="loggedUser && visitedFacility"/>
     </div>
     <div v-else>
       error 404: facility doesn't exist
