@@ -125,4 +125,7 @@ export default{
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to delete coupon.');
     context.commit('removeCoupon', { id: payload.content.id });
   },
+  couponsClear(context, _){
+    context.commit('setCoupons', []);
+  }
 }

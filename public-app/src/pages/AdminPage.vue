@@ -11,6 +11,7 @@ export default {
     }
   },
   beforeMount() {
+    this.$store.dispatch('users/couponsClear');
     this.$store.dispatch('users/fetchCoupons');
   },
   computed: {
