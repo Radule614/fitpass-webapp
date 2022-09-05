@@ -10,5 +10,14 @@ export default{
   },
 	updateUser(state, user) {
 		state.users = state.users.map(u => u.username === user.username ? user : u);
-	}
+	},
+  setCoupons(state, coupons){
+    state.coupons = coupons;
+  },
+  addCoupon(state, coupon){
+    state.coupons.push(coupon);
+  },
+  removeCoupon(state, payload){
+    state.coupons = state.coupons.filter(c => c.id != payload.id);
+  }
 }

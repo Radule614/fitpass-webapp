@@ -60,7 +60,11 @@ public class UserController {
 
     public static String getFilteredUsers(Request request, Response response){
         response.type("application/json");
-        Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Gson g = new GsonBuilder()
+                .serializeNulls()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
 
         try{
             UsersFilterDTO dto = g.fromJson(request.body(), UsersFilterDTO.class);
@@ -75,7 +79,11 @@ public class UserController {
     public static String createUser(Request request, Response response){
         response.type("application/json");
         request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-        Gson g = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Gson g = new GsonBuilder()
+                .serializeNulls()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
 
         try{
             CreateUserDTO dto = extractCreateUserData(request);
@@ -193,8 +201,8 @@ public class UserController {
 
     //PRIVATE
 
-    private static UserDTO userToDTO(User user){
-        UserDTO temp = user.getDTO();
+    public static UserDTO userToDTO(User user){
+        UserDTO temp = user.getDTO(true);
         FacilityService facilityService = new FacilityService();
         ContentService contentService = new ContentService();
         if(temp instanceof ManagerDTO && user instanceof Manager) {
@@ -202,27 +210,16 @@ public class UserController {
             Facility facility = facilityService.getByName(((Manager) user).facility_id);
             if(facility != null){
                 dto.facility = new FacilityDTO(facility);
-
                 dto.facility.content = ContentController.contentToDTOs(contentService.getFacilityContent(dto.facility.name));
             }
         }
         return temp;
     }
 
-    private static ArrayList<UserDTO> usersToDTOs(ArrayList<User> users){
+    public static ArrayList<UserDTO> usersToDTOs(ArrayList<User> users){
         ArrayList<UserDTO> DTOs = new ArrayList<>();
-        FacilityService facilityService = new FacilityService();
-        ContentService contentService = new ContentService();
         for(User u: users){
-            UserDTO temp = u.getDTO();
-            if (temp instanceof ManagerDTO && u instanceof Manager){
-                ManagerDTO dto = (ManagerDTO)temp;
-                Facility facility = facilityService.getByName(((Manager) u).facility_id);
-                if(facility != null) {
-                    dto.facility = new FacilityDTO(facility);
-                    dto.facility.content = ContentController.contentToDTOs(contentService.getFacilityContent(dto.facility.name));
-                }
-            }
+            UserDTO temp = UserController.userToDTO(u);
             DTOs.add(temp);
         }
         return DTOs;

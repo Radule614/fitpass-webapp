@@ -1,5 +1,5 @@
 <script>
-import { routes } from '../../router.js';
+import { routes } from '@/router.js';
 export default {
   data(){
     return {

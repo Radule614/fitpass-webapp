@@ -3,6 +3,8 @@ package service;
 import dto.facility.*;
 import dto.FileDTO;
 import model.User;
+import model.customer.Customer;
+import model.customer.VisitedFacility;
 import model.facility.Content;
 import model.facility.ContentType;
 import model.facility.Facility;
@@ -110,6 +112,9 @@ public class FacilityService {
 		Facility f = facilityRepository.getByName(dto.name);
 		if(f != null && facilityRepository.delete(f)){
 			deleteFile(f.logoUrl);
+			new TrainingService().removeByFacility(f.name);
+			new ContentService().removeByFacility(f.name);
+			new CommentService().removeByFacility(f.name);
 			facilityRepository.saveAll();
 			new UserService().clearFacilityReferences(f.name);
 			return true;
@@ -160,6 +165,50 @@ public class FacilityService {
 	public boolean checkIfImageValid(String extension){
 		return extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png");
 	}
+
+	public ArrayList<User> getFacilityTrainers(String facility_id){
+		ArrayList<User> temp = new ArrayList<>();
+		UserService userService = new UserService();
+		for(Content c: new ContentService().getAll()){
+			if(c.facility_id.equals(facility_id) && c.trainer_id != null){
+				User user = userService.getUser(c.trainer_id);
+				if(user != null){
+					temp.add(user);
+				}
+			}
+		}
+		return temp;
+	}
+
+	public ArrayList<User> getFacilityVisitors(String facility_id){
+		ArrayList<User> temp = new ArrayList<>();
+		for(User u: new UserService().getAll()){
+			if(u instanceof Customer){
+				Customer c = (Customer) u;
+				if(c.visitedFacilities != null){
+					for(VisitedFacility vf: c.visitedFacilities){
+						String f = vf.getFacilityName();
+						if(f != null && f.equals(facility_id)){
+							temp.add(c);
+						}
+					}
+				}
+			}
+		}
+		return temp;
+	}
+
+	public void setAvailability(String facility_id, boolean val){
+		if(facility_id == null) return;
+		for(Facility f: facilityRepository.getAll()){
+			if(f.name.equals(facility_id)){
+				f.available = val;
+				facilityRepository.saveAll();
+				return;
+			}
+		}
+	}
+
 
 	//PRIVATE
 

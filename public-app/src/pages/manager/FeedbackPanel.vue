@@ -1,5 +1,5 @@
 <script>
-import CommentList from '../facility/CommentList.vue';
+import CommentList from '@/components/facility/CommentList.vue';
 export default {
   components:{ CommentList },
   beforeMount () {
@@ -17,7 +17,7 @@ export default {
 
 <template>
   <div>
-    <comment-list></comment-list>
+    <comment-list :manager="true"></comment-list>
   </div>
 </template>
 

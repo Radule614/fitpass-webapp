@@ -9,7 +9,7 @@
     "gender": "MALE"
   },
   {
-    "facility_id": "bazen54321",
+    "facility_id": null,
     "username": "radule614",
     "userType": "MANAGER",
     "password": "123",
@@ -247,6 +247,16 @@
     "firstname": "12345678",
     "lastname": "11111111",
     "dateOfBirth": "02/09/2022",
+    "gender": "MALE"
+  },
+  {
+    "workoutHistory": null,
+    "username": "tren123",
+    "userType": "TRAINER",
+    "password": "12345678",
+    "firstname": "2131",
+    "lastname": "231312231",
+    "dateOfBirth": null,
     "gender": "MALE"
   }
 ]

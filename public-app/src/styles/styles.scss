@@ -57,6 +57,7 @@ input[type=email],
 input[type=date],
 input[type=time],
 input[type=search],
+input[type=number],
 input.input-primary,
 select.select-primary,
 textarea.textarea-primary,
@@ -118,4 +119,10 @@ textarea.textarea-primary{
 .error {
 	font-size: 14px;
 	color: crimson;
+}
+
+.custom-container{
+  max-width: 1100px;
+  margin-left:auto;
+  margin-right:auto;
 }

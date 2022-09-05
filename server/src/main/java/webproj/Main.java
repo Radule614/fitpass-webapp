@@ -55,10 +55,12 @@ public class Main {
 
                 before("/add", AuthController::authenticate);
                 before("/delete", AuthController::authenticate);
+                before("/available", AuthController::authenticate);
                 before("/manager", AuthController::authenticate);
 
                 post("/add", FacilityController::addFacility);
                 post("/delete", FacilityController::deleteFacility);
+                post("/available", FacilityController::setAvailability);
 
                 path("/manager", () -> {
                     before("/*", AuthController::authenticate);
@@ -66,6 +68,8 @@ public class Main {
                     post("/set", FacilityController::setManager);
                     post("/clear", FacilityController::clearManager);
                     get("", FacilityController::getManagerFacility);
+                    get("/trainers/:id", FacilityController::getFacilityTrainers);
+                    get("/customers/:id", FacilityController::getFacilityVisitors);
                 });
             });
 
@@ -99,6 +103,7 @@ public class Main {
             	before("/addPersonal", AuthController::authenticate);
             	
             	post("/add", TrainingController::addTraining);
+                get("/facility/:id", TrainingController::getFacilityTrainings);
             	delete("/cancel/:training_id", TrainingController::cancelTraining);
             	post("/addPersonal/:username", TrainingController::addPersonalTraining);
             });
@@ -111,6 +116,16 @@ public class Main {
                 post("/trainer/add", ContentController::addTrainerToContent);
                 post("/trainer/clear", ContentController::clearTrainerFromContent);
                 get("/trainer/group/:trainerId", ContentController::getTrainersGroupContent);
+            });
+
+            path("/coupon", () -> {
+                get("/all", CouponController::getAllCoupons);
+
+                before("/create", AuthController::authenticate);
+                before("/delete", AuthController::authenticate);
+
+                post("/create", CouponController::createCoupon);
+                post("/delete", CouponController::deleteCoupon);
             });
         });
     }

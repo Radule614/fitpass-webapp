@@ -85,6 +85,8 @@ public class UserService {
 		if(user != null && userRepository.delete(user)){
 			userRepository.saveAll();
 			new FacilityService().clearManagerReferences(user.username);
+			new ContentService().clearTrainer(user.username);
+			new CommentService().removeByUser(user.username);
 			return true;
 		}
 		return false;

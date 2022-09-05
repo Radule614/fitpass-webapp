@@ -1,7 +1,7 @@
 <script>
-import ConfirmModal from '../utility/ConfirmModal.vue';
-import CustomButton from '../utility/CustomButton.vue';
-import UserSelectModal from '../users/UserSelectModal.vue';
+import ConfirmModal from '@/components/utility/ConfirmModal.vue';
+import CustomButton from '@/components/utility/CustomButton.vue';
+import UserSelectModal from '@/components/users/UserSelectModal.vue';
 export default {
   components: { ConfirmModal, CustomButton, UserSelectModal },
   data(){

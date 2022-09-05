@@ -42,5 +42,11 @@ public class CustomerDTO extends UserDTO {
         
     }
 
+    public CustomerDTO(Customer customer, boolean __){
+        super(customer);
+        this.points = customer.points;
+        this.type = customer.customerType;
+    }
+
 
 }

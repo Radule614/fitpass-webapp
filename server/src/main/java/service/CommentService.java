@@ -31,7 +31,21 @@ public class CommentService {
         }
         commentRepository.saveAll();
     }
-    
+
+    public void removeByUser(String user_id){
+        for(Comment c: commentRepository.getAll()){
+            if(c.user_id.equals(user_id)) commentRepository.delete(c);
+        }
+        commentRepository.saveAll();
+    }
+
+    public void removeByFacility(String facility_id){
+        for(Comment c: commentRepository.getAll()){
+            if(c.facility_id.equals(facility_id)) commentRepository.delete(c);
+        }
+        commentRepository.saveAll();
+    }
+
     public void addComment(Comment newComment) {
     	commentRepository.add(newComment);
     }

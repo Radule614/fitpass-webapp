@@ -36,30 +36,6 @@
     "contentId": "e5089ad64536489bb11a9b4cb3e5f487"
   },
   {
-    "id": "1c6f978f5a624b1b8109e985d15614c7",
-    "name": "Boxing",
-    "type": "STRENGTH",
-    "facilityName": "bazen54321",
-    "duration": 120.0,
-    "trainerUsername": "trener123",
-    "description": "Samo Box",
-    "imgUrl": "http://localhost:9999/img/trainings/trener123boxer-1984344_1920.jpg",
-    "start": "September 13, 2022, 3:35 PM",
-    "contentId": "67724f463b6942268737255b2653bc17"
-  },
-  {
-    "id": "da7e9d471bca4b528647a80f3f053839",
-    "name": "Aikido",
-    "type": "COORDINATIONandAGILITY",
-    "facilityName": "bazen54321",
-    "duration": 90.0,
-    "trainerUsername": "trener123",
-    "description": "Ne saljite decu na aikido",
-    "imgUrl": "http://localhost:9999/img/trainings/trener123children-1822701_1920.jpg",
-    "start": "September 14, 2022, 10:55 AM",
-    "contentId": "67724f463b6942268737255b2653bc17"
-  },
-  {
     "id": "693eeef6c6134a3b9d3c0766b847b2dd",
     "name": "Gym",
     "type": "STRENGTH",
@@ -82,18 +58,6 @@
     "imgUrl": "http://localhost:9999/img/trainings/trener123crossfit-534615_1920.jpg",
     "start": "September 8, 2022, 9:07 AM",
     "contentId": "e5089ad64536489bb11a9b4cb3e5f487"
-  },
-  {
-    "id": "a89cc679f1f540b19a22b3f515dea646",
-    "name": "Krcanje",
-    "type": "FLEXIBILITYandMOBILITY",
-    "facilityName": "bazen54321",
-    "duration": 30.0,
-    "trainerUsername": "trener123",
-    "description": "Ode 1 dodju 2",
-    "imgUrl": "http://localhost:9999/img/trainings/trener123man-2604149_1920.jpg",
-    "start": "September 22, 2022, 2:30 PM",
-    "contentId": "67724f463b6942268737255b2653bc17"
   },
   {
     "id": "ca51d4636db7495c9b1d37da31e092f0",
