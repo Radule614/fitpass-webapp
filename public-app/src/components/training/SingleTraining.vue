@@ -27,8 +27,11 @@
 						<p><span class="header">Trainer:</span> <span class="paint">{{ training.trainerUsername }}</span></p>
 						<p><span class="header">Type:</span> <span class="paint">{{ type }}</span></p>
 					</div>
-					<div v-if="route.name === 'trainings' && loggedUserType === 'MANAGER'">
-
+					<div v-if="route.name === 'managerTraining' && loggedUserType === 'MANAGER'">
+						<p><span class="header">Start:</span> <span class="paint">{{ training.start }}</span></p>
+						<p><span class="header">Duration:</span> <span class="paint">{{ training.duration }} min</span></p>
+						<p><span class="header">Trainer:</span> <span class="paint">{{ training.trainerUsername }}</span></p>
+						<p><span class="header">Type:</span> <span class="paint">{{ type }}</span></p>
 					</div>
 				</div>
 			</div>
@@ -40,13 +43,14 @@
 					<CustomButton class="mx-auto" @click="handleJoin">Check In</CustomButton>
 				</div>
 			</div>
-			<Teleport to="body">
+			<confirm-modal :show="showModal" @close="showModal = false" @confirm="handleCancel"></confirm-modal>
+			<!-- <Teleport to="body">
 				<ModalComponent :simple="true" :show="showModal" buttonText="confirm" :width="320" @close="showModal = false" @confirm="handleCancel">
 					<template #body>
 						Are you sure?
 					</template>
 				</ModalComponent>
-			</Teleport>
+			</Teleport> -->
 		</div>
 	</div>
 </template>
@@ -60,6 +64,7 @@ import settings from '@/settings';
 import useToast from '@/composables/useToast';
 import useCustomerUtilities from '@/composables/useCustomerUtilities';
 import { useRoute } from 'vue-router';
+import ConfirmModal from '../utility/ConfirmModal.vue';
 
 export default {
     props: ["training"],
@@ -83,7 +88,7 @@ export default {
 						showError(data, 'top');
 					}
 					if(res.ok) {
-						store.commit('trainings/removeTraining', { trainingId: props.training.id });
+						setTimeout(() => store.commit('trainings/removeTraining', { trainingId: props.training.id }), 0)
 						showMessage("Training canceled successfully", "top");
 					}
 					showModal.value = false;
@@ -118,7 +123,7 @@ export default {
 
         return { type, loggedUserType, showModal, handleCancel, handleJoin, route };
     },
-    components: { CustomButton, ModalComponent }
+    components: { CustomButton, ModalComponent, ConfirmModal }
 }
 </script>
 

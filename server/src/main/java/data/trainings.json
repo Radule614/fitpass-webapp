@@ -94,5 +94,41 @@
     "imgUrl": "http://localhost:9999/img/trainings/personalTraining.jpg",
     "start": "September 5, 2022, 11:00 PM",
     "contentId": "e166a9470c2d4dee88322ab6af119001"
+  },
+  {
+    "id": "2c904d7102184b75a5a2345d9c54abf0",
+    "name": "12312",
+    "type": "STRENGTH",
+    "facilityName": "T E R E T A N A",
+    "duration": 123.0,
+    "trainerUsername": "trener2",
+    "description": "21321",
+    "imgUrl": "http://localhost:9999/img/trainings/trener2foreground.png",
+    "start": "September 22, 2022, 7:14 PM",
+    "contentId": "db52934c34e149c38d3e4a8e0da3029c"
+  },
+  {
+    "id": "c92afa67dcbc46f596dd2fb0e6b3950a",
+    "name": "Personal Training",
+    "type": "BALANCEandSTABILITY",
+    "facilityName": "T E R E T A N A",
+    "duration": 1.0,
+    "trainerUsername": "trener2",
+    "description": "",
+    "imgUrl": "http://localhost:9999/img/trainings/personalTraining.jpg",
+    "start": "September 24, 2022, 5:46 PM",
+    "contentId": "7905fb48ad4a4e2390cd2edd2a4810ad"
+  },
+  {
+    "id": "c999461e27894f5eb7f1e76626234070",
+    "name": "Personal Training",
+    "type": "BALANCEandSTABILITY",
+    "facilityName": "T E R E T A N A",
+    "duration": 122.0,
+    "trainerUsername": "trener2",
+    "description": "",
+    "imgUrl": "http://localhost:9999/img/trainings/personalTraining.jpg",
+    "start": "September 23, 2022, 5:48 PM",
+    "contentId": "7905fb48ad4a4e2390cd2edd2a4810ad"
   }
 ]

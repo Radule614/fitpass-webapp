@@ -45,7 +45,14 @@
     "id": "7905fb48ad4a4e2390cd2edd2a4810ad",
     "name": "312321",
     "type": "PERSONAL",
-    "trainer_id": "tren123",
+    "trainer_id": "trener2",
+    "facility_id": "T E R E T A N A"
+  },
+  {
+    "id": "db52934c34e149c38d3e4a8e0da3029c",
+    "name": "213321231",
+    "type": "GROUP",
+    "trainer_id": "trener2",
     "facility_id": "T E R E T A N A"
   }
 ]
