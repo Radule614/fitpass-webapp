@@ -36,7 +36,7 @@
 				</div>
 			</div>
 			<div class="button-wrapper my-5" >
-				<div v-if="loggedUserType === 'TRAINER' && training.content.type === 'PERSONAL'">
+				<div v-if="loggedUserType === 'TRAINER' && training.content && training.content.type === 'PERSONAL'">
 					<CustomButton class="mx-auto" @click="showModal = true">Cancel Training</CustomButton>
 				</div>
 				<div v-if="loggedUserType === 'CUSTOMER' && route.name !== 'trainings'">
