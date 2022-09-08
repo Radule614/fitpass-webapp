@@ -16,6 +16,9 @@ export default {
 		},
 		getPriceByAmount: (state) => (amount) => {
 			return state.prices.filter(price => price.amount === amount)[0];
+		},
+		getPrices(state) {
+			return state.prices;
 		} 
 	}
 }

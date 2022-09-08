@@ -34,7 +34,6 @@ public class CustomerDTO extends UserDTO {
         if(customer.trainingHistory != null) {
         	this.trainingHistory = (ArrayList<Training>) customer.trainingHistory.stream()
     			.map(trainingId -> new TrainingService().get(trainingId))
-    			.sorted((t1, t2) -> t1.getStart().compareTo(t2.getStart()))
     			.collect(Collectors.toList());
         } else {
         	this.trainingHistory = null;
@@ -47,6 +46,5 @@ public class CustomerDTO extends UserDTO {
         this.points = customer.points;
         this.type = customer.customerType;
     }
-
 
 }

@@ -38,4 +38,9 @@ public class CouponService {
     public Coupon get(String id) {
     	return couponRepository.getById(id);
     }
+    
+    public boolean isValid(String coupon) {
+    	Coupon c = get(coupon);
+    	return c != null;
+    }
 }

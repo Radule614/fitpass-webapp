@@ -5,9 +5,16 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import dto.user.TrainingWithContentType;
+import dto.user.TrainingsFilterDTO;
+import dto.user.UserTrainingsFilterDTO;
+import model.User;
+import model.UserType;
+import model.customer.Customer;
 import model.facility.Content;
 import model.facility.ContentType;
+import model.facility.FacilityType;
 import model.trainer.Training;
+import model.trainer.TrainingType;
 import repository.TrainingRepository;
 
 public class TrainingService {
@@ -36,7 +43,7 @@ public class TrainingService {
 		return requiredTraining;
 	}
 	
-	public ArrayList<Training> getUserTrainings(String username) {
+	public ArrayList<Training> getTrainerTrainings(String username) {
 		ArrayList<Training> userTrainings = (ArrayList<Training>) trainingRepository
 				.getAll()
 				.stream()
@@ -86,5 +93,76 @@ public class TrainingService {
 				.filter(trainingWithContType -> allowedContentTypes.contains(trainingWithContType.contentType))
 				.map(trainingWithContType -> trainingWithContType.training)
 				.collect(Collectors.toList());
+	}
+	
+	public ArrayList<Training> searchCustomerTrainings(String username, String name) {
+		Customer customer = (Customer) new UserService().getUser(username);
+		if(customer.trainingHistory != null) {
+			return (ArrayList<Training>) customer.trainingHistory.stream()
+					.map(trainingId -> new TrainingService().get(trainingId))
+					.filter(training -> training.getName().toLowerCase().contains(name.toLowerCase()))
+					.collect(Collectors.toList());
+		}
+		return null;
+	}
+	
+	public ArrayList<Training> getUserTrainings(UserTrainingsFilterDTO dto) {
+		User user = new UserService().getUser(dto.username);
+		ArrayList<Training> requiredTrainings = new ArrayList<Training>();
+		if(user.userType == UserType.CUSTOMER) {
+			Customer customer = (Customer) user;
+			requiredTrainings = (ArrayList<Training>) customer.trainingHistory.stream()
+					.map(trainingId -> new TrainingService().get(trainingId))
+					.collect(Collectors.toList());
+		}
+		if(user.userType == UserType.TRAINER) {
+			requiredTrainings = new TrainingService().getTrainerTrainings(user.username);
+		}
+		
+		if(dto.filters == null) return requiredTrainings;
+		
+		if(dto.filters.search != null && dto.filters.search.facilityName != null && !dto.filters.search.facilityName.trim().isEmpty()) {
+			String query = dto.filters.search.facilityName.toLowerCase();
+			requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
+					.filter(training -> training.getFacilityName().toLowerCase().contains(query))
+					.collect(Collectors.toList());
+			
+		}
+		
+		if(dto.filters.sort != null) {
+			if(!dto.filters.sort.reverse) {
+				requiredTrainings = (ArrayList<Training>)requiredTrainings.stream()
+					.sorted((t1, t2) -> t1.getFacilityName().compareToIgnoreCase(t2.getFacilityName()))
+					.collect(Collectors.toList());
+			} else {
+				requiredTrainings = (ArrayList<Training>)requiredTrainings.stream()
+						.sorted((t1, t2) -> t2.getFacilityName().compareToIgnoreCase(t1.getFacilityName()))
+						.collect(Collectors.toList());
+			}
+		}
+		
+		if(dto.filters.filter != null) {
+			try {
+				if(dto.filters.filter.facilityType != null && !dto.filters.filter.facilityType.trim().isEmpty()) {
+					requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
+							.filter(t -> new FacilityService().getByName(t.getFacilityName()).facilityType == 
+									FacilityType.valueOf(dto.filters.filter.facilityType))
+							.collect(Collectors.toList());
+				}
+				
+			
+				if(dto.filters.filter.trainingType != null && !dto.filters.filter.trainingType.trim().isEmpty()) {
+					requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
+							.filter(t -> t.getType() == TrainingType.valueOf(dto.filters.filter.trainingType))
+							.collect(Collectors.toList());
+				}
+			} catch(Exception ex) {
+				ex.printStackTrace();
+				System.out.println(ex.getMessage());
+			}
+			
+		}
+		
+		return requiredTrainings;
 	}
 }

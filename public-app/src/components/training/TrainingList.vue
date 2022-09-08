@@ -13,9 +13,8 @@ import SingleTraining from './SingleTraining.vue';
 
 export default {
 	components: { SingleTraining },
-	props: ["trainings", "type"],
+	props: ["trainings"],
 	setup(props) {
-		
 	},
 
 }

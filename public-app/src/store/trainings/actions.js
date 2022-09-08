@@ -9,7 +9,6 @@ export default {
 		if(!res.ok) throw new Error("Failed to fetch trainings");
 
 		const trainings = await res.json();
-		// trainings.reverse();
 		context.commit('setTrainings', { trainings });
 	},
 	async addTraining(context, payload) {
@@ -29,5 +28,16 @@ export default {
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.messages || responseData.message || 'Failed to fetch user data.');
 		context.commit('setFacilityTrainings', { trainings: responseData })
+	},
+	async fetchUserTrainings(context, payload) {
+		const response = await fetch(`${Settings.serverUrl}/api/trainings/get/filtered`, {
+			method: 'POST',
+			headers: {'Contenty-Type': 'applicaiton/json', 'Data-Type': 'application/json' },
+			body: JSON.stringify(payload)
+		});
+		const data = await response.json();
+		if(!response.ok) throw new Error("Failed to fetch user trainings");
+		context.commit('setUserTrainings', { trainings: data });
+		context.commit('setTrainings', { trainings: data });
 	}
 }

@@ -202,7 +202,7 @@ public class UserController {
     //PRIVATE
 
     public static UserDTO userToDTO(User user){
-        UserDTO temp = user.getDTO(true);
+        UserDTO temp = user.getDTO();
         FacilityService facilityService = new FacilityService();
         ContentService contentService = new ContentService();
         if(temp instanceof ManagerDTO && user instanceof Manager) {

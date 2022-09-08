@@ -7,5 +7,8 @@ export default {
 	} ,
 	getFacilityTrainings(state){
 		return state.facilityTrainings;
+	},
+	getUserTrainings(state) {
+		return state.userTrainings;
 	}
 }

@@ -20,12 +20,15 @@ import com.google.gson.GsonBuilder;
 
 import dto.user.PersonalTrainingDTO;
 import dto.user.TrainingDTO;
+import dto.user.TrainingsFilterDTO;
+import dto.user.UserTrainingsFilterDTO;
 import io.jsonwebtoken.io.IOException;
 import model.facility.Facility;
 import model.trainer.Training;
 import model.trainer.TrainingType;
 import repository.util.LocalDateTimeAdapter;
 import service.FacilityService;
+import model.User;
 import model.customer.VisitedFacility;
 import model.trainer.Training;
 import model.trainer.TrainingType;
@@ -33,24 +36,13 @@ import repository.util.LocalDateTimeAdapter;
 import service.MembershipService;
 import service.TrainingService;
 import service.UserService;
+import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 import spark.utils.IOUtils;
 import utility.Utility;
 
 public class TrainingController {
-	
-	public static String getUserTrainings(Request req, Response res) {
-		res.type("application/json");
-		String username = req.params("username");
-		ArrayList<Training> userTrainings = new TrainingService().getUserTrainings(username);
-		try {
-			return new Gson().toJson(userTrainings);
-		} catch(Exception ex) {
-			res.status(400);
-			return new Gson().toJson("Failed to parse data");
-		}
-	}
 	
 	public static String getTrainingWithRequiredContentTypes(Request req, Response res) {
 		res.type("application/json");
@@ -188,6 +180,30 @@ public class TrainingController {
 			return new Gson().toJson("Failed to parse input data");
 		}
 		
+	}
+	
+	public static String searchCustomerTrainings(Request req, Response res) {
+		res.type("application/json");
+		QueryParamsMap queryMap = req.queryMap();
+		String username = queryMap.get("username").value();
+		String name = queryMap.get("name").value();
+		ArrayList<Training> requiredTrainings = new TrainingService().searchCustomerTrainings(username, name);
+		return new GsonBuilder()
+				.serializeNulls()
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+				.create()
+				.toJson(requiredTrainings);
+	}
+	
+	public static String getUserFilteredTrainings(Request req, Response res) {
+		res.type("applicaiton/json");
+		UserTrainingsFilterDTO dto = new Gson().fromJson(req.body(), UserTrainingsFilterDTO.class);
+		ArrayList<Training> userTrainings = new TrainingService().getUserTrainings(dto);
+		return new GsonBuilder()
+				.serializeNulls()
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+				.create()
+				.toJson(userTrainings);
 	}
 	
 	// PRIVATE HELPERS
