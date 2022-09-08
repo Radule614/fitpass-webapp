@@ -66,4 +66,11 @@ public class CouponController {
             return Utility.convertMessageToJSON("Failed to delete coupon");
         }
     }
+    
+    public static String validateCoupon(Request req, Response res) {
+    	res.type("application.json");
+    	String coupon = new Gson().fromJson(req.body(), String.class);
+    	boolean isValid = new CouponService().isValid(coupon);
+    	return new Gson().toJson(isValid);
+    }
 }

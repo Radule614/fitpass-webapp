@@ -1,18 +1,19 @@
 <script>
-  import PriceItem from './PriceItem.vue'
+  import { ref } from 'vue';
+import PriceItem from './PriceItem.vue'
+import { useStore } from 'vuex';
+import { computed } from '@vue/reactivity';
   export default{
     components:{
       PriceItem
     },
-    data(){
-      return {
-        prices: [
-          {title: "Small", color: "#CD7F32", amount:5000, duration: 1, appointmentNumber: 20, text: "20 training sessions per month in some of sport facilities that we offer", bold: false},
-          {title: "Medium", color: "#C0C0C0", amount:13500, duration: 3, appointmentNumber: 22, text: "22 training sessions per month in some of sport facilities that we offer", bold: false},
-          {title: "Large", color: "#FFD700", amount:53000, duration: 12, appointmentNumber: 24, text: "24 training sessions per month in some of sport facilities that we offer", bold: true}
-        ]
-      }
-    }
+		setup() {
+			const store = useStore();
+			const prices = computed(() => store.getters['memberships/getPrices']);
+
+
+			return { prices }
+		}
   }
 </script>
 

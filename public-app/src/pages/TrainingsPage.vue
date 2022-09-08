@@ -1,5 +1,13 @@
 <template>
 	<div class="container-lg m-5">
+		<CustomButton @click="showFilters = true" v-if="!showFilters">Show Filters</CustomButton>
+		<CustomButton @click="showFilters = false" v-if="showFilters">Close Filters</CustomButton>	
+		<transition name="filters">
+			<div v-if="showFilters" class="mt-4">
+				<SearchTraining />
+			</div>
+		</transition>
+		
 		<div v-if="loggedUserType === 'TRAINER'">
 			<CustomButton v-if="!showForm" @click="showForm = true">Add Training</CustomButton>
 			<CustomButton v-if="showForm" @click="showForm = false">Close</CustomButton>
@@ -32,28 +40,29 @@
 			<div v-if="trainerFilteredTrainings && trainerFilteredTrainings.length" class="trainings mt-4">
 				<TrainingList :trainings="trainerFilteredTrainings"/>
 			</div>
-			<p class="mt-3" v-else>You don't have any trainings yet.</p>
+			<p class="mt-3" v-else>You don't have any trainings.</p>
 		</div>
 		<!-- CUSTOMER -->
 		<div v-if="loggedUserType === 'CUSTOMER'">
-			<div v-if="customerTrainigs.length" class="training mt-4">
-				<TrainingList :trainings="customerTrainigs"/>
+			<div v-if="customerTrainings.length" class="training mt-4">
+				<TrainingList :trainings="customerTrainings"/>
 			</div>
-			<p class="mt-3" v-else>You don't have any trainings yet.</p>
+			<p class="mt-3" v-else>You don't have any trainings.</p>
 		</div>
 	</div>
 </template>
 
 <script>
-import { ref } from '@vue/runtime-core'
+import { onMounted, ref } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 import TrainingList from '@/components/training/TrainingList.vue';
 import CustomButton from '../components/utility/CustomButton.vue';
 import AddTraining from '../components/training/AddTraining.vue';
 import { computed } from '@vue/reactivity';
+import SearchTraining from '@/components/training/SearchTraining.vue';
 
 export default {
-		components: { TrainingList, CustomButton, AddTraining },
+		components: { TrainingList, CustomButton, AddTraining, SearchTraining },
     setup() {
         const store = useStore();
         const trainerFilteredTrainings = computed(() => store.getters["trainings/getTrainerTrainings"]);
@@ -61,22 +70,21 @@ export default {
 				const loggedUserType = store.getters['auth/userType'];
 				const filters = ref([]);
 				const showFilters = ref(false);
-				const customerTrainigs = computed(() => {
-					const user = store.getters["auth/user"];
-					if(!user) return [];
-					return user.trainingHistory ? store.getters["auth/user"].trainingHistory : [];
+				const customerTrainings = loggedUserType === 'CUSTOMER' ? computed(() => store.getters['trainings/getUserTrainings']) : null;
+
+				onMounted(() => {
+					store.dispatch('trainings/fetchUserTrainings', { username: store.getters['auth/username'] });
 				});
 
 				const fetchTrainings = async () => {
 					try {
 						await store.dispatch('trainings/fetchTrainings', filters.value);
-					} catch(ex) {
-						console.log(ex.message);
+					} catch(err) {
+						console.log(err.message);
 					}
-					console.log(store.getters['trainings/getTrainerTrainings']);
 				}
 
-        return { trainerFilteredTrainings, showForm, loggedUserType, filters, showFilters ,fetchTrainings, customerTrainigs };
+        return { trainerFilteredTrainings, showForm, loggedUserType, filters, showFilters ,fetchTrainings, customerTrainings };
     },
    
 }
@@ -126,4 +134,17 @@ export default {
 		transition: all 0.8s ease-in;
 	}
 
+	/* Filters */
+	.filters-enter-from,
+	.filters-leave-to {
+		max-height: 0;
+	}
+	.filters-enter-active,
+	.filters-leave-active {
+		transition: all 0.3s linear;
+	}
+	.filters-enter-to,
+	.filters-leave-from {
+		max-height: 200px;
+	}
 </style>

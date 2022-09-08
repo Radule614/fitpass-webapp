@@ -33,20 +33,19 @@
     "visitedFacilities": [
       {
         "facilityName": "T E R E T A N A",
-        "checkinDate": "04/09/2022"
+        "checkinDate": "07/09/2022"
       },
       {
         "facilityName": "djim",
-        "checkinDate": "04/09/2022"
+        "checkinDate": "07/09/2022"
       }
     ],
     "points": 0,
     "customerType": null,
     "trainingHistory": [
-      "d5baa56e60a6415d9c8c4f9d0a3aa1fd",
-      "4c6d106eeb7340edb71c9226f670d07e",
-      "c92afa67dcbc46f596dd2fb0e6b3950a",
-      "c999461e27894f5eb7f1e76626234070"
+      "1b13aac61e16459cb17d14ec8bd3ed95",
+      "398308d627a14b6c9e420f2dc5276f16",
+      "f9ffd1d9d4e04c7bbeb78677aad927b9"
     ],
     "username": "Ljubica123",
     "userType": "CUSTOMER",
@@ -86,25 +85,10 @@
   },
   {
     "membershipId": "37e7b7756f904074bd5c4c2005b7e7e3",
-    "visitedFacilities": [
-      {
-        "facilityName": "bazen54321",
-        "checkinDate": "03/09/2022"
-      },
-      {
-        "facilityName": "T E R E T A N A",
-        "checkinDate": "03/09/2022"
-      }
-    ],
+    "visitedFacilities": [],
     "points": 0,
     "customerType": null,
-    "trainingHistory": [
-      "1c6f978f5a624b1b8109e985d15614c7",
-      "d5baa56e60a6415d9c8c4f9d0a3aa1fd",
-      "8a55f6bdddca4566a193a8d8b2399297",
-      "d0cf2e7b89914def86335861de533c28",
-      "ca51d4636db7495c9b1d37da31e092f0"
-    ],
+    "trainingHistory": [],
     "username": "Luka123",
     "userType": "CUSTOMER",
     "password": "luka123",

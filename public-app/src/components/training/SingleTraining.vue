@@ -69,6 +69,7 @@ import ConfirmModal from '../utility/ConfirmModal.vue';
 export default {
     props: ["training"],
     setup(props) {
+				console.log(props.training);
         const type = computed(() => props.training.type.replace("and", ", "));
         const store = useStore();
         const loggedUserType = computed(() => store.getters["auth/userType"]);
@@ -121,7 +122,7 @@ export default {
 				
 				};
 
-        return { type, loggedUserType, showModal, handleCancel, handleJoin, route };
+        return { loggedUserType, showModal, handleCancel, handleJoin, route, type };
     },
     components: { CustomButton, ModalComponent, ConfirmModal }
 }

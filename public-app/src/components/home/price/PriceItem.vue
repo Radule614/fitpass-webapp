@@ -1,6 +1,8 @@
 <script>
 import ModalComponent from '@/components/ModalComponent.vue';
 import Settings from '@/settings';
+import CustomButton from '../../utility/CustomButton.vue';
+import settings from '@/settings';
 
   export default {
     props: {
@@ -16,7 +18,10 @@ import Settings from '@/settings';
 		data() {
 			return {
 				showModal: false,
-				promoCode: ''
+				promoCode: '',
+				newAmount: null,
+				showNewAmount: false,
+				promoCodeError: null
 			}
 		},
     computed: {
@@ -135,9 +140,28 @@ import Settings from '@/settings';
             position: "top"
           });
           setTimeout(this.$toast.clear, 2000);
+				},
+				async validatePromoCode() {
+					this.promoCodeError = null;
+					this.newAmount = null;
+					this.showNewAmount = false;
+					if(this.promoCode.trim() === '') return;
+					const res = await fetch(`${settings.serverUrl}/api/coupon/validate`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json', 'Data-Type': 'application/json', 'Authorization': 'Bearer ' + this.$store.getters['auth/token']},
+						body: JSON.stringify(this.promoCode)
+					});
+					const valid = await res.json();
+					if(!res.ok) throw new Error('Error validating promo code');
+					if(valid) {
+						this.newAmount = Math.floor(this.price.amount / 100 * 95);
+						this.showNewAmount = true;
+					} else {
+						this.promoCodeError = 'Invalid promo code.';
+					}
 				}
     },
-    components: { ModalComponent }
+    components: { ModalComponent, CustomButton }
 }
 </script>
 
@@ -158,7 +182,16 @@ import Settings from '@/settings';
 				<template #body>
 					{{price.text}} <br/><br/>
 					Price: {{amountWithDiscount}} rsd <br/><br/>
-					<input type="text" v-model="promoCode" placeholder="Promo code(optional)">
+					<div class="d-flex align-items-center mb-3">
+						<input class="me-3" type="text" v-model="promoCode" placeholder="Promo code(optional)">
+						<span v-if="showNewAmount" class="text-success">
+							New price: {{ newAmount }}
+						</span>
+						<span class="error">
+							{{ promoCodeError }}
+						</span>
+					</div>
+					<CustomButton @click="validatePromoCode">validate</CustomButton>
 				</template>
 			</ModalComponent>
 		</teleport>
@@ -241,5 +274,8 @@ import Settings from '@/settings';
 		text-decoration: line-through;
 		font-size: 20px;
 		color: #aaa;
+	}
+	input {
+		margin-bottom: 0 !important;
 	}
 </style>

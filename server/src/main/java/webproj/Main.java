@@ -96,7 +96,9 @@ public class Main {
             path("/trainings", () -> {
             	path("/get", () -> {
             		post("/requiredContentTypes", TrainingController::getTrainingWithRequiredContentTypes);
+            		post("/filtered", TrainingController::getUserFilteredTrainings);
             	});
+            	
             	
             	before("/add", AuthController::authenticate);
             	before("/cancel/*",AuthController::authenticate);
@@ -123,9 +125,11 @@ public class Main {
 
                 before("/create", AuthController::authenticate);
                 before("/delete", AuthController::authenticate);
+                before("/validate", AuthController::authenticate);
 
                 post("/create", CouponController::createCoupon);
                 post("/delete", CouponController::deleteCoupon);
+                post("/validate", CouponController::validateCoupon);
             });
         });
     }

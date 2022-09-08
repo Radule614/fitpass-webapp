@@ -7,17 +7,6 @@
     "cost": 53000.0,
     "customerUsername": "Luka123",
     "active": true,
-    "appointmentNumber": 283,
-    "usedAppointments": 5
-  },
-  {
-    "id": "6ea7d3cfcdfc478c8de857f9e74f89ba",
-    "type": "YEARLY",
-    "paymentDate": "26/08/2022",
-    "expirationDate": "26/08/2023",
-    "cost": 53000.0,
-    "customerUsername": "radule614",
-    "active": true,
     "appointmentNumber": 288,
     "usedAppointments": 0
   },
@@ -29,8 +18,8 @@
     "cost": 53000.0,
     "customerUsername": "Ljubica123",
     "active": true,
-    "appointmentNumber": 265,
-    "usedAppointments": 23
+    "appointmentNumber": 285,
+    "usedAppointments": 3
   },
   {
     "id": "6ed6818337d24c7fb87bd7d12aab00cd",

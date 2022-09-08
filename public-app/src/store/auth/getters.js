@@ -16,5 +16,8 @@ export default {
   },
 	username(state) {
 		return state.user.username;
+	},
+	customerTrainingHistory(state) {
+		return state.user.trainingHistory ? state.user.trainingHistory : [];
 	}
 }

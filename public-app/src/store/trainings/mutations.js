@@ -10,5 +10,8 @@ export default {
 	},
 	setFacilityTrainings(state, payload) {
 		state.facilityTrainings = payload.trainings;
+	},
+	setUserTrainings(state, payload) { 
+		state.userTrainings = payload.trainings;
 	}
 }
