@@ -21,7 +21,8 @@ import settings from '@/settings';
 				promoCode: '',
 				newAmount: null,
 				showNewAmount: false,
-				promoCodeError: null
+				promoCodeError: null,
+				priceRef: null
 			}
 		},
     computed: {
@@ -155,9 +156,11 @@ import settings from '@/settings';
 					if(!res.ok) throw new Error('Error validating promo code');
 					if(valid) {
 						this.newAmount = Math.floor(this.price.amount / 100 * 95);
+						this.$refs.priceRef.style.textDecoration = 'line-through';
 						this.showNewAmount = true;
 					} else {
 						this.promoCodeError = 'Invalid promo code.';
+						this.$refs.priceRef.style.textDecoration = 'none';
 					}
 				}
     },
@@ -181,7 +184,7 @@ import settings from '@/settings';
 				</template>
 				<template #body>
 					{{price.text}} <br/><br/>
-					Price: {{amountWithDiscount}} rsd <br/><br/>
+					Price: <span ref="priceRef">{{amountWithDiscount}}</span> rsd <br/><br/>
 					<div class="d-flex align-items-center mb-3">
 						<input class="me-3" type="text" v-model="promoCode" placeholder="Promo code(optional)">
 						<span v-if="showNewAmount" class="text-success">

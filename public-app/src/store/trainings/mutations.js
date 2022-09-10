@@ -12,6 +12,10 @@ export default {
 		state.facilityTrainings = payload.trainings;
 	},
 	setUserTrainings(state, payload) { 
-		state.userTrainings = payload.trainings;
+		state.userTrainings = [];
+		state.userTrainings.push(...payload.trainings);
+	},
+	removeUserTraining(state, payload) {
+		state.userTrainings = state.userTrainings.filter(training => training.id != payload.trainingId);
 	}
 }

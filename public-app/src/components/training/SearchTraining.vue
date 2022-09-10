@@ -10,6 +10,10 @@
 			<label class="form-check-label" for="facilityNameSort">Facility Name</label>
 		</div>
 		<div class="form-check ms-3">
+			<input type="radio" class="form-check-input" name="facilityNameSort" v-model="sortByDate" @change="handleSearch">
+			<label class="form-check-label" for="facilityNameSort">Date</label>
+		</div>
+		<div class="form-check ms-3">
 			<input type="checkbox" class="form-check-input" name="reverse" v-model="reverse" @change="handleSearch">
 			<label class="form-check-label" for="reverse">Reverse</label>
 		</div>
@@ -32,6 +36,11 @@
 			<option value="coordination&agility">Coordination & Agility</option>
 			<option value="flexibility&mobility">Flexibility & Mobility</option>
 		</select>
+		<select class="form-select" v-model="contentType" @change="handleSearch">
+			<option value="" selected>Content Type</option>
+			<option value="personal">Personal</option>
+			<option value="group">Group</option>
+		</select>
 	</div>
 </template>
 
@@ -46,28 +55,34 @@ export default {
         const store = useStore();
         const username = store.getters["auth/username"];
         const sortByFacName = ref(false);
+				const sortByDate = ref(false);
         const reverse = ref(false);
         const facilityType = ref("");
         const trainingType = ref("");
+				const contentType = ref("");
 
         const handleSearch = async () => {
 						const search = {
 							facilityName: facilityName.value
 						};
-						const sort = sortByFacName.value ? {
+						const sort = sortByFacName.value || sortByDate.value ? {
+							by: sortByFacName.value ? 'facilityName' : 'date',
 							reverse: reverse.value
 						} : null;
-						const filter = (facilityType.value !== '' || trainingType.value !== '') ? {
+						const filter = (facilityType.value !== '' || trainingType.value !== '' || contentType.value !== '') ? {
 							facilityType: facilityType.value.toUpperCase(),
-							trainingType: trainingType.value.toUpperCase().replace('&', 'and')
+							trainingType: trainingType.value.toUpperCase().replace('&', 'and'),
+							contentType: contentType.value.toUpperCase()
 						} : null;
             const payload = {
                 username,
                 filters: { search, sort, filter }
             };
-						store.dispatch("trainings/fetchUserTrainings", payload);
+						await store.commit("trainings/setUserTrainings", { trainings: [] });
+						await store.dispatch("trainings/fetchUserTrainings", payload);
         };
-        return { facilityName, handleSearch, sortByFacName, reverse, facilityType, trainingType };
+
+        return { facilityName, handleSearch, sortByFacName, reverse, facilityType, trainingType, sortByDate, contentType };
     },
     components: { CustomButton }
 }

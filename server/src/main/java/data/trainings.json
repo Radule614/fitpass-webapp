@@ -36,18 +36,6 @@
     "contentId": "80ba8d42f763447ba4b12c9fecc23cac"
   },
   {
-    "id": "f9ffd1d9d4e04c7bbeb78677aad927b9",
-    "name": "Personal Training",
-    "type": "FLEXIBILITYandMOBILITY",
-    "facilityName": "T E R E T A N A",
-    "duration": 30.0,
-    "trainerUsername": "trener2",
-    "description": "",
-    "imgUrl": "http://localhost:9999/img/trainings/personalTraining.jpg",
-    "start": "September 17, 2022, 8:10 PM",
-    "contentId": "7905fb48ad4a4e2390cd2edd2a4810ad"
-  },
-  {
     "id": "9421f150674a4680b2bcf6d58f5290f8",
     "name": "Nesto",
     "type": "COORDINATIONandAGILITY",
@@ -58,5 +46,29 @@
     "imgUrl": "http://localhost:9999/img/trainings/trener123woman-2983129_1920.jpg",
     "start": "September 15, 2022, 6:00 PM",
     "contentId": "80ba8d42f763447ba4b12c9fecc23cac"
+  },
+  {
+    "id": "89d6e0fd992c4039bd0c9a4dbf930e9f",
+    "name": "Balance Jogurt",
+    "type": "BALANCEandSTABILITY",
+    "facilityName": "djim",
+    "duration": 90.0,
+    "trainerUsername": "trener123",
+    "description": "",
+    "imgUrl": "http://localhost:9999/img/trainings/trener123crossfit-534615_1920.jpg",
+    "start": "September 15, 2022, 6:30 PM",
+    "contentId": "80ba8d42f763447ba4b12c9fecc23cac"
+  },
+  {
+    "id": "57442351d7924d309185853390c78eb6",
+    "name": "Personal Training",
+    "type": "COORDINATIONandAGILITY",
+    "facilityName": "T E R E T A N A",
+    "duration": 40.0,
+    "trainerUsername": "trener2",
+    "description": "",
+    "imgUrl": "http://localhost:9999/img/trainings/personalTraining.jpg",
+    "start": "September 11, 2022, 1:30 PM",
+    "contentId": "7905fb48ad4a4e2390cd2edd2a4810ad"
   }
 ]

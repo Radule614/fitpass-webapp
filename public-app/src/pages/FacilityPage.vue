@@ -39,8 +39,8 @@ export default {
 </script>
 
 <template>
-  <div class="container facility">
-    <div v-if="facility">
+  <div class="facility">
+    <div class="container" v-if="facility">
       <facility-details :facility="facility"></facility-details>
 			<facility-offer :facility="facility"/>
 			<rate-facility v-if="loggedUser"/>

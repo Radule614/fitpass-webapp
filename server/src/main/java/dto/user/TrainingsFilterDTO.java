@@ -10,11 +10,13 @@ public class TrainingsFilterDTO {
 	}
 	
 	public static class SortDTO {
+		public String by;
 		public boolean reverse;
 	}
 	
 	public static class FilterDTO {
 		public String facilityType;
 		public String trainingType;
+		public String contentType;
 	}
 }

@@ -69,7 +69,6 @@ import ConfirmModal from '../utility/ConfirmModal.vue';
 export default {
     props: ["training"],
     setup(props) {
-				console.log(props.training);
         const type = computed(() => props.training.type.replace("and", ", "));
         const store = useStore();
         const loggedUserType = computed(() => store.getters["auth/userType"]);
@@ -89,11 +88,12 @@ export default {
 						showError(data, 'top');
 					}
 					if(res.ok) {
-						setTimeout(() => store.commit('trainings/removeTraining', { trainingId: props.training.id }), 0)
+						setTimeout(() => store.commit('trainings/removeUserTraining', { trainingId: props.training.id }), 0);
 						showMessage("Training canceled successfully", "top");
 					}
 					showModal.value = false;
 				}
+				
 				const handleJoin = async () => {
 					if(!checkinValidation()) {
 						if(membershipError.value) showError("You don't have active membership.", "top");

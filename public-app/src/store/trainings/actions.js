@@ -37,7 +37,7 @@ export default {
 		});
 		const data = await response.json();
 		if(!response.ok) throw new Error("Failed to fetch user trainings");
-		context.commit('setUserTrainings', { trainings: data });
-		context.commit('setTrainings', { trainings: data });
+		await context.commit('setUserTrainings', { trainings: data });
+		await context.commit('setTrainings', { trainings: data });
 	}
 }

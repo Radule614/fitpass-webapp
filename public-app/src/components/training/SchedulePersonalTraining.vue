@@ -5,7 +5,7 @@
 				Date:
 			</div>
 			<div class="col input">
-				<input type="date" v-model="date" :min="new Date().toISOString().split('T')[0]">
+				<input type="date" v-model="date" :min="minDate">
 			</div>
 		</div>
 		<div class="row align-items-center mb-2">
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { inject, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import CustomButton from '../utility/CustomButton.vue';
 import useDate from '@/composables/useDate';
 import settings from '@/settings';
@@ -67,6 +67,11 @@ export default {
 				const { formateDateForRequest } = useDate();
 				const store = useStore();
 				const { showError, showMessage } = useToast(inject('toast'));
+				const minDate = computed(() => {
+					const today = new Date();
+					const minDate = new Date(today.setDate(today.getDate() + 4));
+					return minDate.toISOString().split('T')[0];
+				});
 
 				const handleSchedule = async () => {
 					if(!validateInput()) return;
@@ -123,7 +128,7 @@ export default {
 					durationError.value = null;
 				};
 
-        return { date, time, duration, type, handleSchedule, error, durationError };
+        return { date, time, duration, type, handleSchedule, error, durationError, minDate };
     },
     components: { CustomButton }
 }

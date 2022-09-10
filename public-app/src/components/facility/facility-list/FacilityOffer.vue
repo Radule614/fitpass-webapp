@@ -68,10 +68,12 @@ export default {
         const store = useStore();
 				const loggedUserType = store.getters['auth/userType'];
 				const showModal = ref(false);
-        const facilityTrainings = computed(() => {
+        
+				const facilityTrainings = computed(() => {
             const trainings = store.getters["trainings/getAll"];
             return trainings.filter(training => training.name !== "Personal Training" && training.facilityName === props.facility.name);
         });
+
         const facilityPersonalContentWithTrainers = computed(() => {
             return props.facility.content.filter(single => single.trainer && single.type === 'PERSONAL');
         });

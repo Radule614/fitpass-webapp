@@ -203,7 +203,7 @@ public class TrainingController {
 				.serializeNulls()
 				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
 				.create()
-				.toJson(userTrainings);
+				.toJson(convertTrainingsToDTO(userTrainings));
 	}
 	
 	// PRIVATE HELPERS

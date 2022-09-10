@@ -125,6 +125,7 @@ public class UserController {
     		User updatedUser = new UserService().updateUser(new Gson().fromJson(req.body(), UpdateUserDTO.class));
     		Gson gson = new GsonBuilder()
     				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+    				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
     				.serializeNulls()
     				.create();
         	if(updatedUser != null) {

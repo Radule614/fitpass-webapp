@@ -130,14 +130,26 @@ public class TrainingService {
 		}
 		
 		if(dto.filters.sort != null) {
-			if(!dto.filters.sort.reverse) {
-				requiredTrainings = (ArrayList<Training>)requiredTrainings.stream()
-					.sorted((t1, t2) -> t1.getFacilityName().compareToIgnoreCase(t2.getFacilityName()))
-					.collect(Collectors.toList());
-			} else {
-				requiredTrainings = (ArrayList<Training>)requiredTrainings.stream()
-						.sorted((t1, t2) -> t2.getFacilityName().compareToIgnoreCase(t1.getFacilityName()))
+			if(dto.filters.sort.by.equalsIgnoreCase("facilityName")) {
+				if(!dto.filters.sort.reverse) {
+					requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
+						.sorted((t1, t2) -> t1.getFacilityName().compareToIgnoreCase(t2.getFacilityName()))
 						.collect(Collectors.toList());
+				} else {
+					requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
+							.sorted((t1, t2) -> t2.getFacilityName().compareToIgnoreCase(t1.getFacilityName()))
+							.collect(Collectors.toList());
+				}
+			} else if(dto.filters.sort.by.equalsIgnoreCase("date")) {
+				if(!dto.filters.sort.reverse) {
+					requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
+							.sorted((t1, t2) -> t1.getStart().isBefore(t2.getStart()) ? -1 : 1)
+							.collect(Collectors.toList());
+				} else {
+					requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
+							.sorted((t1, t2) -> t1.getStart().isBefore(t2.getStart()) ? 1 : -1)
+							.collect(Collectors.toList());
+				}
 			}
 		}
 		
@@ -154,6 +166,14 @@ public class TrainingService {
 				if(dto.filters.filter.trainingType != null && !dto.filters.filter.trainingType.trim().isEmpty()) {
 					requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
 							.filter(t -> t.getType() == TrainingType.valueOf(dto.filters.filter.trainingType))
+							.collect(Collectors.toList());
+				}
+				
+				if(dto.filters.filter.contentType != null && !dto.filters.filter.contentType.trim().isEmpty()) {
+					requiredTrainings = (ArrayList<Training>) requiredTrainings.stream()
+							.map(t -> new TrainingWithContentType(t))
+							.filter(t -> t.contentType.equals(ContentType.valueOf(dto.filters.filter.contentType.trim().toUpperCase())))
+							.map(t -> t.training)
 							.collect(Collectors.toList());
 				}
 			} catch(Exception ex) {
