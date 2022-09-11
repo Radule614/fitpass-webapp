@@ -7,7 +7,8 @@ export default {
 	state() {
 		return {
 			trainings: [],
-			userTrainings: []
+			userTrainings: [],
+			facilityTrainings: []
 		}
 	},
 	actions,

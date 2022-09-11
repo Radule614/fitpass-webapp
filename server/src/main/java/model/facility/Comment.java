@@ -1,10 +1,10 @@
 package model.facility;
 
-import java.time.LocalDate;
-
 import dto.comment.CommentDTO;
 import model.User;
 import service.UserService;
+
+import java.time.LocalDate;
 
 public class Comment {
     public String id;           //TODO: generate during comment creation (must be unique)

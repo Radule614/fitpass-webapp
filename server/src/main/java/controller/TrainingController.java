@@ -1,34 +1,10 @@
 package controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringWriter;
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.http.Part;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import dto.user.PersonalTrainingDTO;
 import dto.user.TrainingDTO;
-import dto.user.TrainingsFilterDTO;
 import dto.user.UserTrainingsFilterDTO;
-import io.jsonwebtoken.io.IOException;
-import model.facility.Facility;
-import model.trainer.Training;
-import model.trainer.TrainingType;
-import repository.util.LocalDateTimeAdapter;
-import service.FacilityService;
-import model.User;
 import model.customer.VisitedFacility;
 import model.trainer.Training;
 import model.trainer.TrainingType;
@@ -41,6 +17,18 @@ import spark.Request;
 import spark.Response;
 import spark.utils.IOUtils;
 import utility.Utility;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TrainingController {
 	

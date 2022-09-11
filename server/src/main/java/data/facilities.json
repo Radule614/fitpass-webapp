@@ -198,5 +198,55 @@
       "endMinute": 2
     },
     "manager_id": "manager"
+  },
+  {
+    "name": "DZim",
+    "facilityType": "GYM",
+    "available": true,
+    "location": {
+      "lat": 59.17592824927138,
+      "lng": 202.85156250000003,
+      "country": null,
+      "state": null,
+      "city": null,
+      "town": null,
+      "road": null,
+      "number": null,
+      "postcode": null
+    },
+    "logoUrl": "img/facilities/9575382261366067928.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 18,
+      "startMinute": 35,
+      "endHour": 18,
+      "endMinute": 38
+    },
+    "manager_id": null
+  },
+  {
+    "name": "DZim2",
+    "facilityType": "GYM",
+    "available": true,
+    "location": {
+      "lat": 59.17592824927138,
+      "lng": 202.85156250000003,
+      "country": null,
+      "state": null,
+      "city": null,
+      "town": null,
+      "road": null,
+      "number": null,
+      "postcode": null
+    },
+    "logoUrl": "img/facilities/4911742570555301156.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 18,
+      "startMinute": 35,
+      "endHour": 18,
+      "endMinute": 38
+    },
+    "manager_id": null
   }
 ]

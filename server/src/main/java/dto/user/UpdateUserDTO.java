@@ -1,8 +1,8 @@
 package dto.user;
 
-import java.time.LocalDate;
-
 import model.utility.Gender;
+
+import java.time.LocalDate;
 
 public class UpdateUserDTO {
 	public String username;

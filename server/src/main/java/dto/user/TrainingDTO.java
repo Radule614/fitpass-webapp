@@ -1,11 +1,11 @@
 package dto.user;
 
-import java.time.LocalDateTime;
-
 import model.facility.Content;
 import model.trainer.Training;
 import model.trainer.TrainingType;
 import service.ContentService;
+
+import java.time.LocalDateTime;
 
 public class TrainingDTO {
 	public String id;

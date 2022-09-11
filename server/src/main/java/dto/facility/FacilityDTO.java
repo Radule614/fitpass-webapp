@@ -1,7 +1,10 @@
 package dto.facility;
 
 import dto.user.UserDTO;
-import model.facility.*;
+import model.facility.Facility;
+import model.facility.FacilityType;
+import model.facility.Location;
+import model.facility.WorkingHours;
 
 import java.util.ArrayList;
 

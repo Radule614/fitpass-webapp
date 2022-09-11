@@ -1,18 +1,8 @@
 package service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.stream.Collectors;
-
 import dto.auth.RegisterDTO;
 import dto.facility.SetManagerDTO;
-import dto.user.ChangePasswordDTO;
-import dto.user.CreateUserDTO;
-import dto.user.DeleteUserDTO;
-import dto.user.UpdateUserDTO;
-import dto.user.UserDTO;
-import dto.user.UsersFilterDTO;
+import dto.user.*;
 import model.User;
 import model.UserType;
 import model.customer.Customer;
@@ -25,6 +15,10 @@ import model.manager.Manager;
 import model.trainer.Training;
 import model.utility.Gender;
 import repository.UserRepository;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class UserService {
     private static final UserRepository userRepository = UserRepository.getInstance();

@@ -1,32 +1,23 @@
 package repository;
 
-import java.io.File;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import dto.user.UpdateUserDTO;
 import model.User;
 import model.UserType;
 import model.admin.Admin;
 import model.customer.Customer;
-import model.facility.Facility;
 import model.manager.Manager;
 import model.trainer.Trainer;
-import model.utility.Gender;
 import repository.fileHandler.FileHandler;
 import repository.generic.GenericRepository;
+import repository.util.LocalDateAdapter;
 import repository.util.RuntimeTypeAdapterFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import dto.user.UpdateUserDTO;
-import repository.util.LocalDateAdapter;
+import java.io.File;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class UserRepository extends GenericRepository<User> {
 	private static UserRepository instance;

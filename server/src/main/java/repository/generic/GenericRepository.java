@@ -1,9 +1,8 @@
 package repository.generic;
 
-import java.util.ArrayList;
-
-import model.User;
 import repository.fileHandler.FileHandler;
+
+import java.util.ArrayList;
 
 public abstract class GenericRepository<T> implements IRepository<T> {
     protected ArrayList<T> data;

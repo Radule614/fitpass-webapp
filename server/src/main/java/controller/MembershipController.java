@@ -1,11 +1,8 @@
 package controller;
 
-import java.time.LocalDate;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-
 import dto.membership.MembershipCustomerDTO;
 import model.customer.Membership;
 import repository.util.LocalDateAdapter;
@@ -14,6 +11,8 @@ import service.UserService;
 import spark.Request;
 import spark.Response;
 import utility.UIDGenerator;
+
+import java.time.LocalDate;
 
 public class MembershipController {
 	public static String getMembership(Request req, Response res) {

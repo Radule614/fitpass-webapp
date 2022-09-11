@@ -1,13 +1,13 @@
 package model.customer;
 
-import java.util.ArrayList;
 import dto.user.CustomerDTO;
 import dto.user.UserDTO;
 import model.User;
 import model.UserType;
 import model.customer.CustomerType.CustomerTypeEnum;
 import service.MembershipService;
-import service.UserService;
+
+import java.util.ArrayList;
 
 public class Customer extends User {
 	public String membershipId;

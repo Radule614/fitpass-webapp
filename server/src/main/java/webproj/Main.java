@@ -1,8 +1,8 @@
 package webproj;
 
-import static spark.Spark.*;
-
 import controller.*;
+
+import static spark.Spark.*;
 
 public class Main {
     public final static String uploadDirPath = "src/main/resources/public/img/";

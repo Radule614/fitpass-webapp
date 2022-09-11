@@ -39,5 +39,8 @@ export default {
 		if(!response.ok) throw new Error("Failed to fetch user trainings");
 		await context.commit('setUserTrainings', { trainings: data });
 		await context.commit('setTrainings', { trainings: data });
+	},
+	trainingsClear(context, _){
+		context.commit('setFacilityTrainings', { trainings: [] });
 	}
 }

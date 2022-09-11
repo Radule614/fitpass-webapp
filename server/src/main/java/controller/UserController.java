@@ -1,27 +1,15 @@
 package controller;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import dto.facility.ContentDTO;
 import dto.facility.FacilityDTO;
 import dto.user.*;
 import model.User;
 import model.UserType;
 import model.customer.Customer;
 import model.customer.VisitedFacility;
-import model.facility.Content;
 import model.facility.Facility;
 import model.manager.Manager;
-import model.trainer.Trainer;
 import repository.util.LocalDateAdapter;
 import repository.util.LocalDateTimeAdapter;
 import service.ContentService;
@@ -35,6 +23,12 @@ import utility.Utility;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static utility.Utility.parseStringInput;
 

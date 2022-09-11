@@ -1,17 +1,16 @@
 package repository;
 
-import java.io.File;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import model.trainer.Training;
 import repository.fileHandler.FileHandler;
 import repository.generic.GenericRepository;
 import repository.util.LocalDateTimeAdapter;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class TrainingRepository extends GenericRepository<Training> {
 	private static TrainingRepository trainingRepository;

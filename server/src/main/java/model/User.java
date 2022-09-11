@@ -1,17 +1,15 @@
 package model;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-
 import dto.user.UserDTO;
 import model.admin.Admin;
 import model.customer.Customer;
 import model.manager.Manager;
 import model.trainer.Trainer;
 import model.utility.Gender;
+
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public abstract class User {
 	public static final HashMap<String, Comparator<User>> COMPARATORS = initComparators();

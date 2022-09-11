@@ -1,13 +1,10 @@
 package service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import model.customer.Customer;
 import model.customer.Membership;
 import repository.MembershipRepository;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class MembershipService {
 	private static final MembershipRepository membershipRepo = MembershipRepository.getInstance();

@@ -1,7 +1,6 @@
 package controller;
 
 import com.google.gson.Gson;
-
 import model.facility.Grade;
 import service.GradeService;
 import spark.Request;

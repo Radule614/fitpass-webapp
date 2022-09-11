@@ -9,7 +9,8 @@ export default {
 		state.trainings = state.trainings.filter(training => training.id != payload.trainingId);
 	},
 	setFacilityTrainings(state, payload) {
-		state.facilityTrainings = payload.trainings;
+		state.facilityTrainings = [];
+		state.facilityTrainings.push(...payload.trainings);
 	},
 	setUserTrainings(state, payload) { 
 		state.userTrainings = [];

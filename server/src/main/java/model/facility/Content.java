@@ -1,7 +1,5 @@
 package model.facility;
 
-import java.util.ArrayList;
-
 public class Content {
     public String id;
     public String name;

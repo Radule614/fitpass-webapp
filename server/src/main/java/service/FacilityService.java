@@ -1,16 +1,20 @@
 package service;
 
-import dto.facility.*;
+import dto.AvgGradeRangeDTO;
 import dto.FileDTO;
+import dto.facility.ClearManagerDTO;
+import dto.facility.CreateFacilityDTO;
+import dto.facility.DeleteFacilityDTO;
+import dto.facility.SetManagerDTO;
 import model.User;
 import model.customer.Customer;
 import model.customer.VisitedFacility;
 import model.facility.Content;
-import model.facility.ContentType;
 import model.facility.Facility;
 import model.facility.FacilityType;
 import model.manager.Manager;
 import repository.FacilityRepository;
+import webproj.Main;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -19,8 +23,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import dto.AvgGradeRangeDTO;
-import webproj.Main;
 
 public class FacilityService {
     public static final FacilityRepository facilityRepository = FacilityRepository.getInstance();

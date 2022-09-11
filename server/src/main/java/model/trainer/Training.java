@@ -1,9 +1,9 @@
 package model.trainer;
 
-import java.time.LocalDateTime;
-
 import dto.user.TrainingDTO;
 import utility.UIDGenerator;
+
+import java.time.LocalDateTime;
 
 public class Training {
 	private String id;

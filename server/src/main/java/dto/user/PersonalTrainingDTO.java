@@ -1,7 +1,5 @@
 package dto.user;
 
-import model.trainer.TrainingType;
-
 public class PersonalTrainingDTO {
 	public String name;
 	public String date;

@@ -3,6 +3,7 @@ import TrainingList from '@/components/training/TrainingList.vue';
 export default {
   components: { TrainingList },
   beforeMount () {
+    this.$store.dispatch('trainings/trainingsClear');
     if(this.facility && this.facility.name){
       this.$store.dispatch('trainings/fetchFacilityTrainings', { facility_id: this.facility.name });
     }
@@ -21,7 +22,10 @@ export default {
 
 <template>
   <div>
-    <training-list :trainings="trainings"></training-list>
+    <training-list v-if="trainings.length > 0" :trainings="trainings"></training-list>
+    <div v-else>
+      No trainings
+    </div>
   </div>
 </template>
 

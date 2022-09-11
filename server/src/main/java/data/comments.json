@@ -8,20 +8,12 @@
     "approved": true
   },
   {
-    "id": "67e8f747abb04fe98e8f498b04026ee1",
-    "facility_id": "djim",
-    "user_id": "admin",
-    "postedOn": "01/09/2022",
-    "content": "ne valja nicemu\n",
-    "approved": true
-  },
-  {
     "id": "1541e66061924de1a43c361b9edcf0a7",
     "facility_id": "djim",
     "user_id": "manager_2",
     "postedOn": "01/09/2022",
     "content": "ne valja\n",
-    "approved": false
+    "approved": true
   },
   {
     "id": "7e89d21b2c8e4b1b820c115a184660d2",
@@ -29,6 +21,14 @@
     "user_id": "Ljubica123",
     "postedOn": "04/09/2022",
     "content": "Jedan jedinica",
+    "approved": false
+  },
+  {
+    "id": "3ae4abc9d2a246879567545d5ed0c3be",
+    "facility_id": "djim",
+    "user_id": "manager_4",
+    "postedOn": "11/09/2022",
+    "content": "asdbsa dasd sa",
     "approved": false
   }
 ]

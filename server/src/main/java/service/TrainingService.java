@@ -1,21 +1,19 @@
 package service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import dto.user.TrainingWithContentType;
-import dto.user.TrainingsFilterDTO;
 import dto.user.UserTrainingsFilterDTO;
 import model.User;
 import model.UserType;
 import model.customer.Customer;
-import model.facility.Content;
 import model.facility.ContentType;
 import model.facility.FacilityType;
 import model.trainer.Training;
 import model.trainer.TrainingType;
 import repository.TrainingRepository;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TrainingService {
 	private static final TrainingRepository trainingRepository = TrainingRepository.getInstance();

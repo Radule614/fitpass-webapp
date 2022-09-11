@@ -1,8 +1,8 @@
 package dto.comment;
 
-import java.time.LocalDate;
-
 import model.facility.Comment;
+
+import java.time.LocalDate;
 
 public class CommentDTO {
     public String id;

@@ -38,11 +38,11 @@ export default{
       event.preventDefault();
       const data = new FormData(this.$refs.submitForm);
       data.append('location', JSON.stringify(this.address));
-
       try{
         await this.$store.dispatch('facility/addFacility', data);
         await this.$store.dispatch('facility/searchFacilities', "");
         this.loading = false;
+        this.$router.push('/facility');
         this.scrollToTop();
       }catch(error){
         this.messages = error.message.split(",");

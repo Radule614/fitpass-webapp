@@ -1,16 +1,14 @@
 package dto.user;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import model.customer.Customer;
 import model.customer.CustomerType;
 import model.customer.Membership;
-import model.customer.VisitedFacility;
-import model.facility.Facility;
 import model.trainer.Training;
 import service.MembershipService;
 import service.TrainingService;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class CustomerDTO extends UserDTO {
     public int points;

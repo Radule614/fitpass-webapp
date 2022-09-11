@@ -1,15 +1,15 @@
 package controller;
 
 import com.google.gson.Gson;
-
 import com.google.gson.GsonBuilder;
-import dto.facility.*;
 import dto.FileDTO;
-import dto.user.TrainerDTO;
+import dto.facility.*;
 import model.User;
-import model.facility.*;
+import model.facility.Facility;
+import model.facility.FacilityType;
+import model.facility.Location;
+import model.facility.WorkingHours;
 import model.manager.Manager;
-import model.trainer.Trainer;
 import repository.util.LocalDateAdapter;
 import repository.util.LocalDateTimeAdapter;
 import service.ContentService;
@@ -23,7 +23,7 @@ import utility.Utility;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
-import java.io.*;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

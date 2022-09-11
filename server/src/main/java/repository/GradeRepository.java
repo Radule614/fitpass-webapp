@@ -1,15 +1,14 @@
 package repository;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import model.facility.Grade;
 import repository.fileHandler.FileHandler;
 import repository.generic.GenericRepository;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class GradeRepository extends GenericRepository<Grade> {
 	private static GradeRepository instance;

@@ -1,7 +1,5 @@
 package model.facility;
 
-import java.util.ArrayList;
-
 public class Facility {
     public String name;
     public FacilityType facilityType;

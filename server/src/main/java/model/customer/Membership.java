@@ -1,8 +1,8 @@
 package model.customer;
 
-import java.time.LocalDate;
-
 import dto.membership.MembershipCustomerDTO;
+
+import java.time.LocalDate;
 
 public class Membership {
 	public String id;

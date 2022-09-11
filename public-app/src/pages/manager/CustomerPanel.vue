@@ -3,8 +3,8 @@ import UsersGrid from '@/components/users/UsersGrid.vue';
 export default {
   components: { UsersGrid },
   beforeMount () {
+    this.$store.dispatch('users/usersClear');
     if(this.facility && this.facility.name){
-      this.$store.dispatch('users/usersClear');
       this.$store.dispatch('users/fetchFacilityVisitors', { facility_id: this.facility.name });
     }
   },

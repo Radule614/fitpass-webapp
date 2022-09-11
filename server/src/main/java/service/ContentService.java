@@ -1,22 +1,15 @@
 package service;
 
-import dto.AvgGradeRangeDTO;
-import dto.FileDTO;
-import dto.facility.*;
-import model.facility.*;
-import model.manager.Manager;
+import dto.facility.AddContentDTO;
+import dto.facility.DeleteContentDTO;
+import model.facility.Content;
+import model.facility.ContentType;
+import model.facility.Facility;
 import model.trainer.Trainer;
 import repository.ContentRepository;
-import repository.FacilityRepository;
 import utility.UIDGenerator;
-import webproj.Main;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class ContentService {

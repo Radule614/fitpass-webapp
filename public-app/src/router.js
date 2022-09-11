@@ -110,7 +110,7 @@ export const routes = [
     path: "/trainings",
     name: "trainings",
     component: () => import("./pages/TrainingsPage.vue"),
-    meta: { nav: "Trainings", userTypes: ["CUSTOMER", "MANAGER", "TRAINER"] },
+    meta: { nav: "Trainings", userTypes: ["CUSTOMER", "TRAINER"] },
   },
   {
     path: "/profile",

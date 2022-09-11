@@ -1,24 +1,12 @@
 package repository;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import dto.user.UpdateUserDTO;
-import model.User;
-import model.UserType;
-import model.admin.Admin;
-import model.customer.Customer;
 import model.facility.Content;
-import model.facility.Facility;
-import model.manager.Manager;
-import model.trainer.Trainer;
 import repository.fileHandler.FileHandler;
 import repository.generic.GenericRepository;
-import repository.util.LocalDateAdapter;
-import repository.util.RuntimeTypeAdapterFactory;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ContentRepository extends GenericRepository<Content> {

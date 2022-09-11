@@ -1,20 +1,15 @@
 package controller;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import dto.AddCouponDTO;
 import dto.DeleteCouponDTO;
 import model.Coupon;
-import repository.util.LocalDateAdapter;
 import service.CouponService;
-import service.FacilityService;
 import spark.Request;
 import spark.Response;
 import utility.Utility;
 
 import javax.servlet.MultipartConfigElement;
-
-import java.time.LocalDate;
 
 import static utility.Utility.parseStringInput;
 
