@@ -107,12 +107,19 @@ public class TrainingService {
 	public ArrayList<Training> getUserTrainings(UserTrainingsFilterDTO dto) {
 		User user = new UserService().getUser(dto.username);
 		ArrayList<Training> requiredTrainings = new ArrayList<Training>();
-		if(user.userType == UserType.CUSTOMER) {
-			Customer customer = (Customer) user;
-			requiredTrainings = (ArrayList<Training>) customer.trainingHistory.stream()
-					.map(trainingId -> new TrainingService().get(trainingId))
-					.collect(Collectors.toList());
+		try {
+			if(user.userType == UserType.CUSTOMER) {
+				Customer customer = (Customer) user;
+				if(customer.trainingHistory == null) return requiredTrainings;
+				requiredTrainings = (ArrayList<Training>) customer.trainingHistory.stream()
+						.map(trainingId -> new TrainingService().get(trainingId))
+						.collect(Collectors.toList());
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
 		}
+		
 		if(user.userType == UserType.TRAINER) {
 			requiredTrainings = new TrainingService().getTrainerTrainings(user.username);
 		}

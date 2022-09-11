@@ -135,8 +135,16 @@ export default {
 		sortByLocation(asc) {
 			if(this.lists.facilityPageFacilities) {
 				asc ? 
-					this.lists.facilityPageFacilities.sort((a, b) => a.location.city.localeCompare(b.location.city)) : 
-					this.lists.facilityPageFacilities.sort((a, b) => b.location.city.localeCompare(a.location.city));
+					this.lists.facilityPageFacilities.sort((a, b) => {
+						const cityA = a.location.city ? a.location.city : '';
+						const cityB = b.location.city ? b.location.city : '';
+						return cityA.localeCompare(cityB);
+					}) : 
+					this.lists.facilityPageFacilities.sort((a, b) => {
+						const cityA = a.location.city ? a.location.city : '';
+						const cityB = b.location.city ? b.location.city : '';
+						cityA.localeCompare(cityB);
+					});
 			}
 		},
 		sortByAvgGrade(asc) {
