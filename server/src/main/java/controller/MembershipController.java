@@ -78,9 +78,9 @@ public class MembershipController {
 	public static String deactivateMembership(Request req, Response res) {
 		res.type("application/json");
 		boolean success = new MembershipService().deactivate(req.params("membership_id"));
-		int points = new UserService().calculateCustomerPoints(req.params("username"));
 		String message;
 		if(success) {
+			int points = new UserService().calculateCustomerPoints(req.params("username"));
 			message = "Membership deactivated, you have " + points + " points";
 		} else {
 			message = "Failed to deactivate membership";

@@ -64,8 +64,14 @@ public class CouponController {
     
     public static String validateCoupon(Request req, Response res) {
     	res.type("application.json");
-    	String coupon = new Gson().fromJson(req.body(), String.class);
-    	boolean isValid = new CouponService().isValid(coupon);
-    	return new Gson().toJson(isValid);
+    	String couponId = new Gson().fromJson(req.body(), String.class);
+    	Coupon coupon = new CouponService().get(couponId);
+    	Double size = null;
+    	try {
+        	size = (coupon != null) ? coupon.size : null;
+    	} catch(Exception ex) {
+    		ex.printStackTrace();
+    	}
+    	return new Gson().toJson(size);
     }
 }

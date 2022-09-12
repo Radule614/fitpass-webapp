@@ -29,7 +29,7 @@
     "gender": "MALE"
   },
   {
-    "membershipId": "ddc2e8bfe1484c87a0b2b1cacb52338a",
+    "membershipId": "f77b4b0b88c24e91b5f49200d6ba261c",
     "visitedFacilities": [
       {
         "facilityName": "T E R E T A N A",
@@ -40,12 +40,19 @@
         "checkinDate": "07/09/2022"
       }
     ],
-    "points": 0,
-    "customerType": null,
+    "points": 69048,
+    "customerType": {
+      "type": "GOLD",
+      "discount": 5.0,
+      "requiredPoints": 4500
+    },
     "trainingHistory": [
       "1b13aac61e16459cb17d14ec8bd3ed95",
       "398308d627a14b6c9e420f2dc5276f16",
-      "57442351d7924d309185853390c78eb6"
+      "57442351d7924d309185853390c78eb6",
+      "126653d6e90747399ca2a3a9d4f4609d",
+      "82aac651dc1442f395c80b73b428ae29",
+      "c1f6812a92be44ebb80fa3ec0306fc2c"
     ],
     "username": "Ljubica123",
     "userType": "CUSTOMER",
@@ -85,10 +92,17 @@
   },
   {
     "membershipId": "37e7b7756f904074bd5c4c2005b7e7e3",
-    "visitedFacilities": [],
+    "visitedFacilities": [
+      {
+        "facilityName": "T E R E T A N A",
+        "checkinDate": "12/09/2022"
+      }
+    ],
     "points": 0,
     "customerType": null,
-    "trainingHistory": [],
+    "trainingHistory": [
+      "1b13aac61e16459cb17d14ec8bd3ed95"
+    ],
     "username": "Luka123",
     "userType": "CUSTOMER",
     "password": "luka123",
@@ -254,5 +268,19 @@
     "lastname": "123",
     "dateOfBirth": "13/09/2022",
     "gender": "FEMALE"
+  },
+  {
+    "membershipId": null,
+    "visitedFacilities": null,
+    "points": 0,
+    "customerType": null,
+    "trainingHistory": null,
+    "username": "Drago",
+    "userType": "CUSTOMER",
+    "password": "22222222",
+    "firstname": "Dragomir",
+    "lastname": "Aleksic",
+    "dateOfBirth": "10/06/1980",
+    "gender": "MALE"
   }
 ]

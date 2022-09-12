@@ -93,7 +93,6 @@ export default {
     searchByTypeOrAvgGrade(e) {
       let safeSearchText = this.escapeInput(this.searchText);
       let searchText = safeSearchText + "&" + this.selectedType + "&" + this.selectedAvgGrade;
-      console.log(safeSearchText);
       if(searchText === "&ALL&ALL") {
         this.searchFacilities("");
         return;

@@ -31,7 +31,7 @@
 					<h3 class="display-5 text-center mb-4">Type</h3>
 					<div v-if="user.type" style="width: 100%;">
 						<div class="card text-center" style="width: 100%;">
-							<div class="card-header fw-bold" :style="{background: price.color}">
+							<div class="card-header fw-bold" :style="{background: price ? price.color : '#CD7F32'}">
 								{{ user.type.type }}
 							</div>
 							<div class="card-body">
@@ -66,7 +66,7 @@ export default {
 			const user = store.getters['auth/user'];
 			let price;
 			if(user.userType === 'CUSTOMER') {
-				price = store.getters['memberships/getPriceByAmount'](user.membership.cost);
+				price = store.getters['memberships/getPriceByAmount'](user.membership ? user.membership.cost : 0);
 			}
 
 			return { loggedUserType, user, price }

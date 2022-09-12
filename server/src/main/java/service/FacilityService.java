@@ -40,14 +40,40 @@ public class FacilityService {
     		// Samo po tekstu
     		if(avgGradeRange.equalsIgnoreCase("all")) {
         		requestedFacilities = facilityRepository.getAll().stream()
-    					.filter(facility -> facility.contains(searchText.toLowerCase().trim()))
+    					.filter(facility -> {
+    						String name = facility.name != null ? facility.name : "";
+    						String city = facility.location != null && facility.location.getCity() != null ? 
+    								facility.location.getCity().toLowerCase() : 
+    								"";
+    						String country = facility.location != null && facility.location.getCountry() != null ?
+    								facility.location.getCountry().toLowerCase() :
+    								"";
+    						String processedSearch = searchText.toLowerCase().trim();
+    						boolean nameContains = name.contains(processedSearch);
+    						boolean cityContains = city.contains(processedSearch);
+    						boolean countryContains = country.contains(processedSearch);
+    						return nameContains || cityContains || countryContains;
+    					})
     					.collect(Collectors.toList());
     		} else {
     			// Po tekstu i po oceni
     			AvgGradeRangeDTO avgGradeRangeDTO = AvgGradeRangeDTO.valueOf(avgGradeRange);
     			requestedFacilities = facilityRepository.getAll().stream()
-    				.filter(facility -> facility.contains(searchText.toLowerCase().trim()) 
-    					&& (facility.grade >= avgGradeRangeDTO.lowerBound && facility.grade <= avgGradeRangeDTO.upperBound))
+    				.filter(facility -> {
+    					String name = facility.name != null ? facility.name : "";
+						String city = facility.location != null && facility.location.getCity() != null ? 
+								facility.location.getCity().toLowerCase() : 
+								"";
+						String country = facility.location != null && facility.location.getCountry() != null ?
+								facility.location.getCountry().toLowerCase() :
+								"";
+						String processedSearch = searchText.toLowerCase().trim();
+						boolean nameContains = name.contains(processedSearch);
+						boolean cityContains = city.contains(processedSearch);
+						boolean countryContains = country.contains(processedSearch);
+						return (nameContains || cityContains || countryContains) && 
+		    					(facility.grade >= avgGradeRangeDTO.lowerBound && facility.grade <= avgGradeRangeDTO.upperBound);
+    				})
     				.collect(Collectors.toList());
     		}
     	} else {
@@ -55,17 +81,43 @@ public class FacilityService {
     			// Po tekstu i po tipu
     			FacilityType facilityType = getFacilityTypeFromText(facType);
     			requestedFacilities = facilityRepository.getAll().stream()
-    					.filter(facility -> facility.contains(searchText.toLowerCase().trim()) &&
-    							(facility.facilityType == facilityType))
+    					.filter(facility -> {
+    						String name = facility.name != null ? facility.name : "";
+    						String city = facility.location != null && facility.location.getCity() != null ? 
+    								facility.location.getCity().toLowerCase() : 
+    								"";
+    						String country = facility.location != null && facility.location.getCountry() != null ?
+    								facility.location.getCountry().toLowerCase() :
+    								"";
+    						String processedSearch = searchText.toLowerCase().trim();
+    						boolean nameContains = name.contains(processedSearch);
+    						boolean cityContains = city.contains(processedSearch);
+    						boolean countryContains = country.contains(processedSearch);
+    						return (nameContains || cityContains || countryContains) &&
+    								facility.facilityType == facilityType;
+    					})
     					.collect(Collectors.toList());
     		} else {
     			// Po svemu
     			FacilityType facilityType = getFacilityTypeFromText(facType);
     			AvgGradeRangeDTO avgGradeRangeDTO = AvgGradeRangeDTO.valueOf(avgGradeRange);
     			requestedFacilities = facilityRepository.getAll().stream()
-    					.filter(facility -> facility.contains(searchText.toLowerCase().trim()) &&
-    						(facility.grade >= avgGradeRangeDTO.lowerBound && facility.grade <= avgGradeRangeDTO.upperBound) &&
-    						(facility.facilityType == facilityType))
+    					.filter(facility -> {
+    						String name = facility.name != null ? facility.name : "";
+    						String city = facility.location != null && facility.location.getCity() != null ? 
+    								facility.location.getCity().toLowerCase() : 
+    								"";
+    						String country = facility.location != null && facility.location.getCountry() != null ?
+    								facility.location.getCountry().toLowerCase() :
+    								"";
+    						String processedSearch = searchText.toLowerCase().trim();
+    						boolean nameContains = name.contains(processedSearch);
+    						boolean cityContains = city.contains(processedSearch);
+    						boolean countryContains = country.contains(processedSearch);
+    						return (nameContains || cityContains || countryContains) &&
+    								facility.facilityType == facilityType &&
+    			    				(facility.grade >= avgGradeRangeDTO.lowerBound && facility.grade <= avgGradeRangeDTO.upperBound);
+    					})
     					.collect(Collectors.toList());
     		}
     	}

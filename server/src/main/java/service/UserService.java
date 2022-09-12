@@ -48,9 +48,9 @@ public class UserService {
     	newCustomer.gender = registerDTO.getResolveGender();
     	newCustomer.points = 0;
 
-		CustomerType customerType = new CustomerType();
-		customerType.type = CustomerType.CustomerTypeEnum.BRONZE;
-		newCustomer.customerType = customerType;
+//		CustomerType customerType = new CustomerType();
+//		customerType.type = CustomerType.CustomerTypeEnum.BRONZE;
+//		newCustomer.customerType = customerType;
     	
     	userRepository.addNewUser(newCustomer);
     	

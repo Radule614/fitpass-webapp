@@ -4,7 +4,6 @@ import FacilityDetails from '@/components/facility/FacilityDetails.vue';
 import AddComment from '@/components/facility/AddComment.vue';
 import RateFacility from '../components/facility/RateFacility.vue';
 import FacilityOffer from '@/components/facility/facility-list/FacilityOffer.vue';
-import { STATEMENT_OR_BLOCK_KEYS } from '@babel/types';
 
 export default {
   components: { CommentList, FacilityDetails, AddComment, RateFacility, FacilityOffer },
@@ -33,8 +32,11 @@ export default {
 		visitedFacility() {
 			if(this.loggedUserType !== 'CUSTOMER') return true;
 			return this.loggedUser.visitedFacilities ? this.loggedUser.visitedFacilities.includes(this.facility_id) : false;
-		}
-  }
+		},
+  },
+	beforeMount() {
+		this.$store.dispatch('trainings/fetchTrainings');
+	} 
 }
 </script>
 
@@ -43,7 +45,7 @@ export default {
     <div class="container" v-if="facility">
       <facility-details :facility="facility"></facility-details>
 			<facility-offer :facility="facility"/>
-			<rate-facility v-if="loggedUser"/>
+			<rate-facility v-if="loggedUser && visitedFacility"/>
       <div class="comments">
         <comment-list :forPublic="true" :admin="loggedUserType == 'ADMIN'"></comment-list>
       </div>

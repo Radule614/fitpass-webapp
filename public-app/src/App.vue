@@ -20,11 +20,10 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
     this.$store.dispatch('auth/checkAuthentication');
     this.$store.dispatch('facility/fetchFacilities');
-		this.$store.dispatch('trainings/fetchTrainings');
   },
   unmounted () {
     window.removeEventListener('scroll', this.handleScroll);
-  },
+  },	
   methods: {
     btnUpClick(event){
       window.scrollTo(0, 0);

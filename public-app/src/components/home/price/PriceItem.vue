@@ -115,7 +115,8 @@ import settings from '@/settings';
 					const user = this.$store.getters['auth/user'];
 					if(user.membership) {
 						const res = await fetch(`${Settings.serverUrl}/api/memberships/remove/${user.username}/${user.membership.id}`, {
-							method: 'DELETE'
+							method: 'DELETE',
+							headers: { 'Authorization': 'Bearer ' + this.$store.getters['auth/token'] }
 						});
 						const message = await res.json();
 						console.log(message);
@@ -124,7 +125,7 @@ import settings from '@/settings';
 				async addMembership(newMembership) {
 					const res = await fetch(`${Settings.serverUrl}/api/memberships/create`, {
 						method: 'POST',
-						headers: { 'Content-Type': 'application/json', 'Data-Type': 'application/json' },
+						headers: { 'Content-Type': 'application/json', 'Data-Type': 'application/json', 'Authorization': 'Bearer ' + this.$store.getters['auth/token'] },
 						body: JSON.stringify(newMembership)
 					});
 					const membership = await res.json();
@@ -152,10 +153,10 @@ import settings from '@/settings';
 						headers: { 'Content-Type': 'application/json', 'Data-Type': 'application/json', 'Authorization': 'Bearer ' + this.$store.getters['auth/token']},
 						body: JSON.stringify(this.promoCode)
 					});
-					const valid = await res.json();
+					const discount = await res.json();
 					if(!res.ok) throw new Error('Error validating promo code');
-					if(valid) {
-						this.newAmount = Math.floor(this.price.amount / 100 * 95);
+					if(discount != null) {
+						this.newAmount = Math.floor(this.amountWithDiscount / 100 * (100 - discount));
 						this.$refs.priceRef.style.textDecoration = 'line-through';
 						this.showNewAmount = true;
 					} else {
@@ -188,7 +189,7 @@ import settings from '@/settings';
 					<div class="d-flex align-items-center mb-3">
 						<input class="me-3" type="text" v-model="promoCode" placeholder="Promo code(optional)">
 						<span v-if="showNewAmount" class="text-success">
-							New price: {{ newAmount }}
+							New price: {{ newAmount }} rsd
 						</span>
 						<span class="error">
 							{{ promoCodeError }}

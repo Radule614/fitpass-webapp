@@ -121,11 +121,11 @@ export default {
 						showModal.value = false;
 						console.log(store.getters['auth/user']);
 						showMessage("Your password has been updated successfully.", 'top');
+						oldPassword.value = '';
+						newPassword.value = '';
 					} catch(ex) {
 						passwordChangeError.value = ex.message;
 					}
-					oldPassword.value = '';
-					newPassword.value = '';
 				};
 
         return { username, firstName, lastName, dateOfBirth, gender, handleSave, errors, errorState, showModal, handlePasswordChange 

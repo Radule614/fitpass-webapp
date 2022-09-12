@@ -55,15 +55,15 @@ public class MembershipService {
 	
 	public void deactivateIfExpired(String username) {
 		Membership m = getByCustomer(username);
-		if(m != null && m.expirationDate.isBefore(LocalDate.now())) {
+		if(m != null && m.active && m.expirationDate.isBefore(LocalDate.now())) {
 			membershipRepo.deactivate(m);
+			new UserService().calculateCustomerPoints(username);
 		}
 	}
 	
 	public boolean canCheckIn(String username) {
 		Membership membership = getByCustomer(username);
-		if(membership == null) return false;
-		if(membership.appointmentNumber == 0) return false;
+		if(membership == null || !membership.active || membership.appointmentNumber == 0) return false;
 		
 		return true;
 	}

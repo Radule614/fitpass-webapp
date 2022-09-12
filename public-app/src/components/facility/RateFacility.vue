@@ -46,7 +46,7 @@ export default {
 					};
 					const res = await fetch(`${Settings.serverUrl}/api/grades/add`, {
 						method: 'POST',
-						headers: {'Content-Type': 'application/json', 'Data-Type': 'applicaiton/json'},
+						headers: {'Content-Type': 'application/json', 'Data-Type': 'applicaiton/json', 'Authorization': 'Bearer ' + store.getters['auth/token']},
 						body: JSON.stringify(data)
 					});
 					const resData = await res.json();
