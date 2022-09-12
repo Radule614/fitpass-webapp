@@ -1,15 +1,10 @@
 package dto.user;
 
-import java.time.LocalDate;
-
 import model.User;
 import model.UserType;
-import model.admin.Admin;
-import model.customer.Customer;
-import model.manager.Manager;
-import model.trainer.Trainer;
 import model.utility.Gender;
-import repository.util.LocalDateAdapter;
+
+import java.time.LocalDate;
 
 public abstract class UserDTO {
     public UserType userType;

@@ -9,12 +9,9 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
-    "points": 25,
-    "customerType": null,
-    "username": "Radule614",
-    "userType": "CUSTOMER",
+    "facility_id": null,
+    "username": "radule614",
+    "userType": "MANAGER",
     "password": "123",
     "firstname": "Rade",
     "lastname": "Stojanovic",
@@ -22,72 +19,108 @@
     "gender": "MALE"
   },
   {
-    "facility": null,
+    "facility_id": "T E R E T A N A",
     "username": "manager",
     "userType": "MANAGER",
     "password": "123",
-    "firstname": "ime",
-    "lastname": "prezime",
-    "dateOfBirth": "25/02/1990",
-    "gender": "FEMALE"
+    "firstname": "Pavle1",
+    "lastname": "Aleksic",
+    "dateOfBirth": "30/01/1986",
+    "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
-    "points": 0,
-    "customerType": null,
+    "membershipId": "f77b4b0b88c24e91b5f49200d6ba261c",
+    "visitedFacilities": [
+      {
+        "facilityName": "T E R E T A N A",
+        "checkinDate": "07/09/2022"
+      },
+      {
+        "facilityName": "djim",
+        "checkinDate": "07/09/2022"
+      }
+    ],
+    "points": 69048,
+    "customerType": {
+      "type": "GOLD",
+      "discount": 5.0,
+      "requiredPoints": 4500
+    },
+    "trainingHistory": [
+      "1b13aac61e16459cb17d14ec8bd3ed95",
+      "398308d627a14b6c9e420f2dc5276f16",
+      "57442351d7924d309185853390c78eb6",
+      "126653d6e90747399ca2a3a9d4f4609d",
+      "82aac651dc1442f395c80b73b428ae29",
+      "c1f6812a92be44ebb80fa3ec0306fc2c"
+    ],
     "username": "Ljubica123",
     "userType": "CUSTOMER",
     "password": "ljubi123",
     "firstname": "Ljubica",
     "lastname": "Lukic",
-    "dateOfBirth": "9/06/1999",
+    "dateOfBirth": "24/06/1999",
     "gender": "FEMALE"
   },
   {
-    "membership": null,
+    "membershipId": null,
     "visitedFacilities": null,
     "points": 0,
     "customerType": null,
+    "trainingHistory": null,
     "username": "Dragan123",
     "userType": "CUSTOMER",
-    "password": "dragan123",
-    "firstname": "Dragan",
-    "lastname": "Djukic",
-    "dateOfBirth": "11/06/1996",
+    "password": "ovojenovasifra",
+    "firstname": "Dragomir",
+    "lastname": "Lukanovic",
+    "dateOfBirth": "20/10/1996",
     "gender": "MALE"
   },
   {
-    "membership": null,
+    "membershipId": null,
     "visitedFacilities": null,
     "points": 0,
     "customerType": null,
+    "trainingHistory": null,
     "username": "Petar123",
     "userType": "CUSTOMER",
     "password": "perica123",
     "firstname": "Petar",
     "lastname": "Petrovic",
-    "dateOfBirth": "6/05/1996",
+    "dateOfBirth": "06/05/1996",
     "gender": "MALE"
   },
   {
-    "membership": null,
-    "visitedFacilities": null,
+    "membershipId": "37e7b7756f904074bd5c4c2005b7e7e3",
+    "visitedFacilities": [
+      {
+        "facilityName": "T E R E T A N A",
+        "checkinDate": "12/09/2022"
+      }
+    ],
     "points": 0,
     "customerType": null,
+    "trainingHistory": [
+      "1b13aac61e16459cb17d14ec8bd3ed95"
+    ],
     "username": "Luka123",
     "userType": "CUSTOMER",
     "password": "luka123",
-    "firstname": "Luka",
-    "lastname": "Lukic",
+    "firstname": "Luka1",
+    "lastname": "Lukic1",
     "dateOfBirth": "17/02/1994",
     "gender": "MALE"
   },
   {
-    "membership": null,
+    "membershipId": "6ed6818337d24c7fb87bd7d12aab00cd",
     "visitedFacilities": null,
-    "points": 0,
-    "customerType": null,
+    "points": 6199,
+    "customerType": {
+      "type": "GOLD",
+      "discount": 5.0,
+      "requiredPoints": 4500
+    },
+    "trainingHistory": null,
     "username": "Milutin123",
     "userType": "CUSTOMER",
     "password": "milutin123",
@@ -97,20 +130,21 @@
     "gender": "MALE"
   },
   {
-    "membership": null,
+    "membershipId": null,
     "visitedFacilities": null,
     "points": 0,
     "customerType": null,
+    "trainingHistory": null,
     "username": "Radovan123",
     "userType": "CUSTOMER",
     "password": "radovan123",
     "firstname": "Luka",
     "lastname": "Lukovic",
-    "dateOfBirth": "7/01/1997",
+    "dateOfBirth": "07/01/1997",
     "gender": "MALE"
   },
   {
-    "membership": null,
+    "membershipId": null,
     "visitedFacilities": null,
     "points": 0,
     "customerType": {
@@ -118,6 +152,7 @@
       "discount": 0.0,
       "requiredPoints": 0
     },
+    "trainingHistory": null,
     "username": "user123456",
     "userType": "CUSTOMER",
     "password": "12345678",
@@ -125,16 +160,6 @@
     "lastname": "prezime2",
     "dateOfBirth": "28/06/2022",
     "gender": "MALE"
-  },
-  {
-    "facility": null,
-    "username": "admin2",
-    "userType": "MANAGER",
-    "password": "12345678",
-    "firstname": "i",
-    "lastname": "p",
-    "dateOfBirth": "28/06/2022",
-    "gender": null
   },
   {
     "workoutHistory": null,
@@ -145,5 +170,117 @@
     "lastname": "prezime3",
     "dateOfBirth": "14/07/2022",
     "gender": null
+  },
+  {
+    "facility_id": null,
+    "username": "manager_2",
+    "userType": "MANAGER",
+    "password": "123",
+    "firstname": "ime2",
+    "lastname": "prezime2",
+    "dateOfBirth": "09/07/2022",
+    "gender": "MALE"
+  },
+  {
+    "facility_id": "djim",
+    "username": "manager_4",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "ime3",
+    "lastname": "prezime3",
+    "dateOfBirth": "03/09/1991",
+    "gender": "FEMALE"
+  },
+  {
+    "membershipId": null,
+    "visitedFacilities": null,
+    "points": 0,
+    "customerType": {
+      "type": "BRONZE",
+      "discount": 0.0,
+      "requiredPoints": 0
+    },
+    "trainingHistory": null,
+    "username": "Branimir123",
+    "userType": "CUSTOMER",
+    "password": "b123123",
+    "firstname": "Branimir",
+    "lastname": "Todorovic",
+    "dateOfBirth": "07/07/1990",
+    "gender": "MALE"
+  },
+  {
+    "facility_id": "teretana",
+    "username": "manager_123",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "manager_123",
+    "lastname": "manager_123_prezime",
+    "dateOfBirth": "06/04/1997",
+    "gender": "MALE"
+  },
+  {
+    "facility_id": null,
+    "username": "manager5152521",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "novi",
+    "lastname": "novi_l",
+    "dateOfBirth": "02/03/1995",
+    "gender": "FEMALE"
+  },
+  {
+    "workoutHistory": null,
+    "username": "trener123",
+    "userType": "TRAINER",
+    "password": "12345678",
+    "firstname": "Neko",
+    "lastname": "Nekic",
+    "dateOfBirth": "05/05/1999",
+    "gender": "FEMALE"
+  },
+  {
+    "workoutHistory": null,
+    "username": "ttttrener",
+    "userType": "TRAINER",
+    "password": "12345678",
+    "firstname": "12345678",
+    "lastname": "11111111",
+    "dateOfBirth": "02/09/2022",
+    "gender": "MALE"
+  },
+  {
+    "workoutHistory": null,
+    "username": "tren123",
+    "userType": "TRAINER",
+    "password": "12345678",
+    "firstname": "2131",
+    "lastname": "231312231",
+    "dateOfBirth": null,
+    "gender": "MALE"
+  },
+  {
+    "facility_id": null,
+    "username": "user2",
+    "userType": "MANAGER",
+    "password": "12345678",
+    "firstname": "123",
+    "lastname": "123",
+    "dateOfBirth": "13/09/2022",
+    "gender": "FEMALE"
+  },
+  {
+    "membershipId": null,
+    "visitedFacilities": null,
+    "points": 0,
+    "customerType": null,
+    "trainingHistory": null,
+    "username": "Drago",
+    "userType": "CUSTOMER",
+    "password": "22222222",
+    "firstname": "Dragomir",
+    "lastname": "Aleksic",
+    "dateOfBirth": "10/06/1980",
+    "gender": "MALE"
   }
 ]

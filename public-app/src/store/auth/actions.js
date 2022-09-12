@@ -1,9 +1,10 @@
 import Settings from '../../settings.js';
 import { router } from '../../router.js';
 import axios from 'axios';
+import store from "../../store/index.js";
 
 let timer;
-
+let membershipInterval;
 
 export default {
   async login(context, payload) {
@@ -24,11 +25,9 @@ export default {
 
     timer = setTimeout(() => { context.dispatch('logout') }, expiresIn)
 
-    context.commit('setToken', {
-      token: responseData.token
-    });
+    context.commit('setToken', { token: responseData.token });
     context.dispatch('getUserData', {token: responseData.token});
-    
+
   },
   async signup(context, payload) {
     const response = await axios.post(`${Settings.serverUrl}/api/auth/register`, payload);
@@ -54,22 +53,19 @@ export default {
     })
     const responseData = await response.json();
     if (!response.ok) throw new Error(responseData.message || 'Failed to fetch user data.');
-
-    context.commit('setUserData', {
-      user: responseData
-    });
+    console.log(responseData);
+    context.commit('setUserData', { user: responseData });
   },
   logout(context, payload){
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpiration');
     
     clearTimeout(timer);
-    
-    context.commit('setUser', {
-      token: null,
-      user: null
-    });
-    if(router) router.push('home');
+		clearInterval(membershipInterval);
+
+    context.commit('setUser', { token: null, user: null });
+    store.commit('comments/setComments', []);
+    if(router) router.push('/home');
   },
   async checkAuthentication(context, payload){
     const token = localStorage.getItem('token');
@@ -81,9 +77,7 @@ export default {
     timer = setTimeout(() => { context.dispatch('logout') }, expiresIn);
 
     if(token){
-      context.commit('setToken', {
-        token: token
-      });
+      context.commit('setToken', { token: token });
       await context.dispatch('getUserData', {token: token});
     }
   }

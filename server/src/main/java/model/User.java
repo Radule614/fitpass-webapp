@@ -1,17 +1,15 @@
 package model;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-
 import dto.user.UserDTO;
 import model.admin.Admin;
 import model.customer.Customer;
 import model.manager.Manager;
 import model.trainer.Trainer;
 import model.utility.Gender;
+
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public abstract class User {
 	public static final HashMap<String, Comparator<User>> COMPARATORS = initComparators();
@@ -45,6 +43,7 @@ public abstract class User {
 	}
 
 	public abstract UserDTO getDTO();
+	public abstract UserDTO getDTO(boolean __);
 
 	private static HashMap<String, Comparator<User>> initComparators(){
 		return new HashMap<String, Comparator<User>>(){{
@@ -76,8 +75,8 @@ public abstract class User {
 	private static class ByPoints implements Comparator<User>{
 		public int compare(User user1, User user2){
 			if		(user1 instanceof Customer && user2 instanceof Customer) 	return ((Customer) user2).points - ((Customer) user1).points;
-			else 	if(user1 instanceof Customer) 								return -1;
-			else 	if(user2 instanceof Customer) 								return 1;
+			else if	(user1 instanceof Customer) 								return -1;
+			else if	(user2 instanceof Customer) 								return 1;
 			else 																return 0;
 		}
 	}

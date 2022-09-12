@@ -23,7 +23,7 @@ export default{
       loading: false
     }
   },
-  beforeMount(){
+  mounted(){
     if(this.locationProp) this.location = this.locationProp;
   },
   methods:{

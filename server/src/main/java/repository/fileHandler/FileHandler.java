@@ -1,18 +1,15 @@
 package repository.fileHandler;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import repository.util.LocalDateAdapter;
+import repository.util.LocalDateTimeAdapter;
+
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class FileHandler<T> implements IFileHandler<T> {
 	private String filePath;
@@ -30,7 +27,6 @@ public class FileHandler<T> implements IFileHandler<T> {
 	public ArrayList<T> readAll() {
     	ArrayList<T> readData = null;
     	try {
-    		System.out.println(filePath);
     		File file = new File(filePath);
     		if(!file.exists()) {
     			readData = new ArrayList<T>();
@@ -49,6 +45,7 @@ public class FileHandler<T> implements IFileHandler<T> {
 	public void saveAll(ArrayList<T> data) {
 		Gson gson = new GsonBuilder()
 				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
 				.setPrettyPrinting()
 				.serializeNulls()
 				.create();

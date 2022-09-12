@@ -25,39 +25,39 @@ export default {
     LPolygon,
     LRectangle,
   },
-  props:{
+  props: {
     locationProp: {
-      lat:Number,
-      lng:Number
+      lat: Number,
+      lng: Number
     },
     showOnly: Boolean,
-    markerTooltip: String 
+    markerTooltip: String
   },
-  emits:['locationChanged'],
+  emits: ['locationChanged'],
   data() {
     return {
       zoom: 2,
       center: [0, 0],
-      location: {lat:0, lng:0}
+      location: { lat: 0, lng: 0 }
     };
   },
-  computed:{
-    getLocation(){
+  computed: {
+    getLocation() {
       return this.showOnly ? this.locationProp : this.location;
     }
   },
-  beforeMount(){
-    if(this.showOnly){
+  beforeMount() {
+    if (this.showOnly) {
       this.zoom = 12;
     }
-    if(this.locationProp){
+    if (this.locationProp) {
       this.location = this.locationProp;
     }
-    if(this.location && this.location.lat && this.location.lng) this.center = [this.location.lat, this.location.lng];
+    if (this.location && this.location.lat && this.location.lng) this.center = [this.location.lat, this.location.lng];
   },
   methods: {
-    setNewLocation(event){
-      if(!this.showOnly&&event.latlng){
+    setNewLocation(event) {
+      if (!this.showOnly && event.latlng) {
         this.location = event.latlng;
         this.$emit('locationChanged', this.location);
       }
@@ -68,18 +68,9 @@ export default {
 
 <template>
   <div style="height: 300px; width: 300px;">
-    <l-map
-      v-model="zoom"
-      v-model:zoom="zoom"
-      :maxZoom="19"
-      :minZoom="1"
-      :center="getLocation"
-      @click="setNewLocation($event)"
-    >
-      <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      ></l-tile-layer>
-
+    <l-map v-model="zoom" v-model:zoom="zoom" :maxZoom="19" :minZoom="1" :center="getLocation"
+      @click="setNewLocation($event)">
+      <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
       <l-marker :lat-lng="getLocation">
         <l-tooltip>
           <div v-if="showOnly">{{markerTooltip}}</div>

@@ -5,17 +5,33 @@ export default{
   props: {
     user: Object,
     selectable: Boolean,
-    selected: Boolean
+    selected: Boolean,
+    compact: Boolean,
+    userType: String
   },
-  emits: ["selectedEvent"]
+  emits: ["selectedEvent"],
+  computed:{
+    isManagerFree(){
+      return  !(this.user && this.user.facility);
+    }
+  },
+  methods:{
+    selectedEvent(){
+      if(this.userType === 'MANAGER'){
+        if(this.isManagerFree) this.$emit('selectedEvent');
+      }else{
+        this.$emit('selectedEvent');
+      }
+    }
+  }
 }
 </script>
 
 <template>
-  <div class="grid-item-wrap" @click="$emit('selectedEvent')" :class="{'selectable': selectable,'selected': selected}">
+  <div class="grid-item-wrap" @click="selectedEvent" :class="{'selectable': selectable, 'selected': selected, 'manager-engaged': !isManagerFree&&this.userType==='MANAGER'}">
     <div class="background"></div>
     <div class="grid-item">
-      <user-details :user="user"></user-details>
+      <user-details :user="user" :compact="compact" :userType="userType"></user-details>
     </div>
   </div>
 </template>
@@ -29,6 +45,9 @@ export default{
   transition: box-shadow 0.2s;
   &.selectable{
     cursor: pointer;
+  }
+  &.manager-engaged{
+    cursor: default;
   }
   &.selected{
     box-shadow: 5px -5px 25px 0px rgba(0, 0, 0, 0.3);
@@ -82,6 +101,13 @@ export default{
     position: absolute;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+  }
+  &.manager-engaged{
+    opacity: 0.5;
+    .grid-item{
+      background-color: #eee;
+    }
   }
 }
 </style>

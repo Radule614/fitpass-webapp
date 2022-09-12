@@ -1,7 +1,8 @@
 package repository.generic;
 
-import java.util.ArrayList;
 import repository.fileHandler.FileHandler;
+
+import java.util.ArrayList;
 
 public abstract class GenericRepository<T> implements IRepository<T> {
     protected ArrayList<T> data;
@@ -28,5 +29,7 @@ public abstract class GenericRepository<T> implements IRepository<T> {
         return data.remove(item);
     }
     
+    
     protected abstract void createFileHandlerAndReadData();
+
 }

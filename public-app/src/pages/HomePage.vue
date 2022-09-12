@@ -1,6 +1,6 @@
 <script>
   import PriceSection from '@/components/home/price/PriceSection.vue';
-  import FacilityList from '@/components/facility/FacilityList.vue';
+  import FacilityList from '@/components/facility/facility-list/FacilityList.vue';
   import { throttle } from 'lodash';
   export default {
     components:{
@@ -17,9 +17,11 @@
         const elements = this.scrollAnimated;
         let windowHeight = window.innerHeight;
         for(let element of elements){
-          let distanceFromTop = element.getBoundingClientRect().top;
-          if (distanceFromTop - windowHeight + element.offsetHeight <= 0){
-            element.classList.add('appear');
+          if(element){
+            let distanceFromTop = element.getBoundingClientRect().top;
+            if (distanceFromTop - windowHeight + element.offsetHeight <= 0){
+              element.classList.add('appear');
+            }
           }
         }
       }, 200)
@@ -30,6 +32,7 @@
     },
     mounted(){
       this.checkAnimations();
+			//this.setIntervalForMemberships();
     },
     methods: {
       handleScroll(){

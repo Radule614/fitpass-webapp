@@ -7,6 +7,7 @@ import dto.auth.RegisterDTO;
 import dto.auth.RegisterResponseDTO;
 import model.customer.Customer;
 import service.AuthService;
+import service.MembershipService;
 import spark.Request;
 import spark.Response;
 
@@ -54,6 +55,8 @@ public class AuthController {
         if(username == null){
             halt(401, "{\"message\": \"authentication error\"}");
         }
+        // Check did membership expired
+        new MembershipService().deactivateIfExpired(username);
         request.attribute("username", username);
     }
 }

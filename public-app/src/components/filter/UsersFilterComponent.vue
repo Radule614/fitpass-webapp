@@ -42,7 +42,7 @@ export default{
   },
   beforeUnmount() {
     this.parameterHandler.cancel();
-    this.$store.dispatch('users/fetchUsers');
+    //this.$store.dispatch('users/fetchUsers');
   },
   methods:{
     paramsHandler(event, objectKey){

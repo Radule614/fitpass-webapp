@@ -8,7 +8,7 @@
       "lng": 18.301409482955936,
       "country": "Bosnia and Herzegovina",
       "state": "Republika Srpska",
-      "city": null,
+      "city": "Modriča",
       "town": "Modriča",
       "road": "Svetosavska",
       "number": null,
@@ -22,7 +22,7 @@
       "endHour": 20,
       "endMinute": 20
     },
-    "content": "123"
+    "manager_id": "manager_4"
   },
   {
     "name": "teretana",
@@ -35,7 +35,7 @@
       "state": "Vojvodina",
       "city": "Novi Sad City",
       "town": "Petrovaradin",
-      "road": "Булевар Цара Лазара",
+      "road": "Ð‘ÑƒÐ»ÐµÐ²Ð°Ñ€ Ð¦Ð°Ñ€Ð° Ð›Ð°Ð·Ð°Ñ€Ð°",
       "number": null,
       "postcode": "21101"
     },
@@ -47,7 +47,7 @@
       "endHour": 19,
       "endMinute": 23
     },
-    "content": "542"
+    "manager_id": "manager_123"
   },
   {
     "name": "teretana2",
@@ -59,7 +59,7 @@
       "country": "United States",
       "state": "District of Columbia",
       "city": "Washington",
-      "town": null,
+      "town": "Washington",
       "road": "Pennsylvania Avenue Northwest",
       "number": null,
       "postcode": "20004"
@@ -72,7 +72,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "manager_id": null
   },
   {
     "name": "bazen",
@@ -83,8 +83,8 @@
       "lng": 2.3432394862174992,
       "country": "France",
       "state": "Ile-de-France",
-      "city": null,
-      "town": null,
+      "city": "Paris",
+      "town": "Paris",
       "road": "Rue Brillat-Savarin",
       "number": "82",
       "postcode": "75013"
@@ -97,7 +97,7 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "manager_id": null
   },
   {
     "name": "zenba",
@@ -108,21 +108,21 @@
       "lng": 18.308198466567976,
       "country": "Bosnia and Herzegovina",
       "state": "Republika Srpska",
-      "city": null,
+      "city": "Modriča",
       "town": "Modriča",
       "road": "Berlinska",
       "number": null,
       "postcode": "74480"
     },
     "logoUrl": "img/facilities/30293591714018319.jpg",
-    "grade": 0.0,
+    "grade": 2.0,
     "workingHours": {
       "startHour": 0,
       "startMinute": 0,
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "manager_id": null
   },
   {
     "name": "teretana3",
@@ -134,20 +134,20 @@
       "country": "Italy",
       "state": "Sardinia",
       "city": "Sassari",
-      "town": null,
+      "town": "Sassari",
       "road": "Via Stintino",
       "number": "2",
       "postcode": "07100"
     },
     "logoUrl": "img/facilities/3307605990498938950.jpg",
-    "grade": 0.0,
+    "grade": 4.0,
     "workingHours": {
       "startHour": 2,
       "startMinute": 27,
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "manager_id": null
   },
   {
     "name": "bazen2",
@@ -159,7 +159,7 @@
       "country": "Jordan",
       "state": "Amman",
       "city": "Amman",
-      "town": null,
+      "town": "Amman",
       "road": "Najeeb Ash Shraydeh Street",
       "number": null,
       "postcode": "11110"
@@ -172,6 +172,81 @@
       "endHour": 24,
       "endMinute": 0
     },
-    "content": ""
+    "manager_id": null
+  },
+  {
+    "name": "T E R E T A N A",
+    "facilityType": "GYM",
+    "available": true,
+    "location": {
+      "lat": 32.54681317351517,
+      "lng": 94.921875,
+      "country": "China",
+      "state": "Qinghai",
+      "city": "Suruk",
+      "town": "Suruk",
+      "road": null,
+      "number": null,
+      "postcode": null
+    },
+    "logoUrl": "img/facilities/8940009800836254371.png",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 15,
+      "startMinute": 4,
+      "endHour": 22,
+      "endMinute": 2
+    },
+    "manager_id": "manager"
+  },
+  {
+    "name": "DZim",
+    "facilityType": "GYM",
+    "available": true,
+    "location": {
+      "lat": 59.17592824927138,
+      "lng": 202.85156250000003,
+      "country": null,
+      "state": null,
+      "city": null,
+      "town": null,
+      "road": null,
+      "number": null,
+      "postcode": null
+    },
+    "logoUrl": "img/facilities/9575382261366067928.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 18,
+      "startMinute": 35,
+      "endHour": 18,
+      "endMinute": 38
+    },
+    "manager_id": null
+  },
+  {
+    "name": "DZim2",
+    "facilityType": "GYM",
+    "available": true,
+    "location": {
+      "lat": 59.17592824927138,
+      "lng": 202.85156250000003,
+      "country": null,
+      "state": null,
+      "city": null,
+      "town": null,
+      "road": null,
+      "number": null,
+      "postcode": null
+    },
+    "logoUrl": "img/facilities/4911742570555301156.jpg",
+    "grade": 0.0,
+    "workingHours": {
+      "startHour": 18,
+      "startMinute": 35,
+      "endHour": 18,
+      "endMinute": 38
+    },
+    "manager_id": null
   }
 ]

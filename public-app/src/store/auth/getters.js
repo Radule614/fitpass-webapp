@@ -10,5 +10,14 @@ export default {
   },
   userType(state){
     return state.user ? state.user.userType : null; 
-  }
+  },
+  managerFacility(state){
+    return state.user && state.user.facility ? state.user.facility : null;
+  },
+	username(state) {
+		return state.user.username;
+	},
+	customerTrainingHistory(state) {
+		return state.user.trainingHistory ? state.user.trainingHistory : [];
+	}
 }

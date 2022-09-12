@@ -1,18 +1,19 @@
 <script>
-  import PriceItem from './PriceItem.vue'
+  import { ref } from 'vue';
+import PriceItem from './PriceItem.vue'
+import { useStore } from 'vuex';
+import { computed } from '@vue/reactivity';
   export default{
     components:{
       PriceItem
     },
-    data(){
-      return {
-        prices: [
-          {title: "bronze", color: "#CD7F32", amount:3000, text: "lorem ipsum", bold: false},
-          {title: "silver", color: "#C0C0C0", amount:3000, text: "dolor sit amet", bold: false},
-          {title: "gold", color: "#FFD700", amount:3000, text: "consectetur adipiscing", bold: true}
-        ]
-      }
-    }
+		setup() {
+			const store = useStore();
+			const prices = computed(() => store.getters['memberships/getPrices']);
+
+
+			return { prices }
+		}
   }
 </script>
 

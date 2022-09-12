@@ -1,0 +1,34 @@
+[
+  {
+    "id": "64060a57220d4ab9a164fa0d3ec8dda5",
+    "facility_id": "djim",
+    "user_id": "Milutin123",
+    "postedOn": "28/08/2022",
+    "content": "test",
+    "approved": true
+  },
+  {
+    "id": "1541e66061924de1a43c361b9edcf0a7",
+    "facility_id": "djim",
+    "user_id": "manager_2",
+    "postedOn": "01/09/2022",
+    "content": "ne valja\n",
+    "approved": true
+  },
+  {
+    "id": "7e89d21b2c8e4b1b820c115a184660d2",
+    "facility_id": "T E R E T A N A",
+    "user_id": "Ljubica123",
+    "postedOn": "04/09/2022",
+    "content": "Jedan jedinica",
+    "approved": false
+  },
+  {
+    "id": "3ae4abc9d2a246879567545d5ed0c3be",
+    "facility_id": "djim",
+    "user_id": "manager_4",
+    "postedOn": "11/09/2022",
+    "content": "asdbsa dasd sa",
+    "approved": false
+  }
+]

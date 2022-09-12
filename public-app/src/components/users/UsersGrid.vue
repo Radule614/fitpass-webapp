@@ -3,51 +3,64 @@ import UsersGridItem from './UsersGridItem.vue';
 import FilterComponent from '../filter/UsersFilterComponent.vue';
 import CustomLink from '../utility/CustomLink.vue';
 export default{
-  components:{
-    UsersGridItem,
-    FilterComponent,
-    CustomLink
+  components: { UsersGridItem, FilterComponent, CustomLink },
+  props: {
+    selectable: Boolean,
+    compact: Boolean,
+    userType: String,
+    noDispatch: Boolean,
+    noPadding: Boolean
   },
-  props:{
-    selectable: Boolean
-  },
-  data(){
-    return{
+  emits: ['userSelected'],
+  data() {
+    return {
       selectedUser: null,
       filterVisible: false
     }
   },
-  created(){
-    this.$store.dispatch('users/fetchUsers');
+  created() {
+    if(!this.noDispatch){
+      if(this.userType){
+        this.$store.dispatch('users/fetchUsers', { userFilter: { type: this.userType } });
+      }else {
+        this.$store.dispatch('users/fetchUsers');
+      }
+    }
   },
-  computed:{
-    users(){
-      return this.$store.getters['users/users'];
+  computed: {
+    users() {
+      let users = this.$store.getters['users/users'];
+      if (this.userType && this.userType === 'MANAGER' && users) users.sort((a, b) => b.facility && !a.facility ? -1 : 0);
+      return users;
     },
-    currentRouteName(){
+    currentRouteName() {
       return this.$router.currentRoute.value.name;
     }
   },
   methods:{
-    async parametersHandler(event){
-      try{
+    async parametersHandler(event) {
+      try {
         await this.$store.dispatch('users/fetchUsers', event);
-      }catch(error){
+      } catch(error){
         console.error(error);
       }
     },
-    toggleFilters(event){
-      if(!this.filterVisible) this.$router.push('/users/filter');
+    toggleFilters(event) {
+      if (!this.filterVisible) this.$router.push('/users/filter');
       else this.$router.push('/users');
       this.filterVisible = !this.filterVisible;
+    },
+    selectedHandler(user){
+      this.selectedUser = user.username;
+      this.$emit('userSelected', user);
     }
   }
 }
 </script>
 
 <template>
-  <div class="grid-wrapper" :class="{ 'users-page': currentRouteName == 'users' }">
-    <div class="parameter-block">
+  <div class="grid-wrapper" :class="{'compact': compact, 'no-padding': noPadding}">
+    <div v-if="!compact" class="parameter-block">
       <router-view v-slot="{ Component }">
         <transition name="slide-bottom">
           <component :is="Component" class="child" :selectedUser="selectedUser" @parametersChanged="parametersHandler($event)"/>
@@ -59,9 +72,11 @@ export default{
       <users-grid-item  v-for="(user, index) in users" 
                         :key="index" 
                         :user="user" 
-                        :selectable="selectable" 
+                        :compact="compact"
+                        :selectable="selectable"
+                        :userType="userType"
                         :selected="selectable && selectedUser==user.username" 
-                        @selectedEvent="selectedUser=user.username">
+                        @selectedEvent="selectedHandler(user)">
       </users-grid-item>
       <div v-if="!users || users.length == 0" class="message">No users found</div>
     </div>
@@ -82,7 +97,6 @@ export default{
       transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out, opacity 0.4s ease-in-out;
       overflow: hidden;
       max-height: 420px;
-      
     }
     .slide-bottom-enter-from {
       max-height: 0px;
@@ -92,7 +106,7 @@ export default{
     }
     .slide-bottom-leave-active{
       &.control-block{
-        transition: max-height 0.1s ease-in-out, padding 0.1s ease-in-out, opacity 0.1s ease-in-out;
+        transition: max-height 0.16s ease-in, padding 0.16s ease-in, opacity 0.16s ease-in;
       }
     }
     .slide-bottom-leave-to {
@@ -102,11 +116,18 @@ export default{
       opacity: 0;
     }
   }
+  &.compact .grid{
+    padding-top:30px;
+  }
+  &.no-padding .grid{
+    padding:0px;
+  }
   .grid{
     padding:30px;
     padding-top: 60px;
+    padding-bottom: 100px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 30px;
     background-color: #fff;
     position: relative;
@@ -116,22 +137,6 @@ export default{
     font-style: italic;
     color: $active-primary;
     font-size:18px;
-  }
-}
-
-@media screen and (max-width: 1700px) {
-  .grid-wrapper .grid{
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-@media screen and (max-width: 1350px) {
-  .grid-wrapper .grid{
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media screen and (max-width: 900px) {
-  .grid-wrapper .grid{
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>

@@ -1,20 +1,16 @@
 package repository;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.facility.Facility;
-import model.facility.FacilityType;
-import model.facility.Location;
-import model.facility.WorkingHours;
 import repository.fileHandler.FileHandler;
 import repository.generic.GenericRepository;
 
+import java.io.File;
+import java.util.ArrayList;
+
 public class FacilityRepository extends GenericRepository<Facility> {
     private static FacilityRepository instance;
-    
     public static FacilityRepository getInstance(){
         if (instance == null)
             instance = new FacilityRepository();
